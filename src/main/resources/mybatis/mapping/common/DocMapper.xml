@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atecher.tools.mapper.DocMapper" >
+    <sql id="base_doc_select">
+        SELECT t.id,t.code,t.target,t.relative,t.type,t.title,t.href,t.icon,t.description,t.tag FROM sys_resource t where t.type='doc'
+    </sql>
+
+    <select id="findDocAll" resultType="java.util.HashMap">
+        <include refid="base_doc_select"/>
+    </select>
+
+</mapper>
