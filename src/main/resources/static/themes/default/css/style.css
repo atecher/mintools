@@ -40,7 +40,7 @@ textarea.height-large{height: 300px;}
 .mt-footer{text-align: center;background: #ffffff;border-top: 1px solid #e4eaec;margin-top: 70px;padding: 30px 0;}
 .mt-head{border-bottom: 1px solid #eeeeee;margin-bottom: 15px;}
 .mt-head h1,.mt-head h2{padding: 1px;font-size: 22px;margin-bottom: 6px;text-align: left;}
-.mt-form-search .search{height: 50px;border-radius: 0;font-size: 16px;}
+.mt-form-search .search{height: 50px;border-radius: 0;font-size: 16px;border-color: #e4eaec;box-shadow: none;}
 .mt-form-search .btn{height: 50px;border-radius: 0;font-size: 16px;}
 .mt-result h2{font-size: 18px;font-weight: 700;margin-bottom: 15px;}
 .mt-result .content{line-height: 30px;padding: 10px 20px;background-color:#f9f9f9;}
