@@ -58,7 +58,7 @@ public class StringCommonUtils {
 	 */
 	public static String getRandomString(int length) {
 		Random random = new Random();
-		StringBuffer sf = new StringBuffer();
+		StringBuilder sf = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			int number = random.nextInt(62);
 			sf.append(src.charAt(number));

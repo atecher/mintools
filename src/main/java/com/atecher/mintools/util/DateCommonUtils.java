@@ -154,7 +154,7 @@ public class DateCommonUtils {
 	    public static String getpreHour(String format, int h){
 	        SimpleDateFormat sdf = new SimpleDateFormat(format);
 	        Date date = new Date();
-			long time= Long.valueOf(h*60*60*1000).longValue()+date.getTime();
+			long time= Long.valueOf(h * 60 * 60 * 1000) +date.getTime();
 	        date.setTime(time);
 	        return sdf.format(date);
 	    }

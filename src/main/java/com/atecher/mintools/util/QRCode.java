@@ -34,9 +34,7 @@ public class QRCode {
 				if(qrCodeSetting.getLogoPath()!=null)//如果有logo则添加
 					insertImage(bufferedImage, qrCodeSetting, true);
 				ImageIO.write(bufferedImage,"jpg", new File(qrCodeSetting.getOutputPath()));
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (WriterException e) {
+			} catch (IOException | WriterException e) {
 				e.printStackTrace();
 			}
 		}
@@ -94,7 +92,7 @@ public class QRCode {
 		 */
 
 		private static BufferedImage genBarcode(QRCodeSetting qrCodeSetting) throws WriterException,IOException {
-			Hashtable<EncodeHintType,Object> hint = new Hashtable<EncodeHintType,Object>();
+			Hashtable<EncodeHintType,Object> hint = new Hashtable<>();
 			hint.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 			hint.put(EncodeHintType.DATA_MATRIX_SHAPE, SymbolShapeHint.FORCE_SQUARE);
 			hint.put(EncodeHintType.ERROR_CORRECTION, qrCodeSetting.getCorrectionLevel());

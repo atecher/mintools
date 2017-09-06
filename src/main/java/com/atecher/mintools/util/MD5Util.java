@@ -13,7 +13,7 @@ import java.security.MessageDigest;
  * @版本    v1.0
  */
 public class MD5Util {
-	public static final String md5(String s) {
+	public static String md5(String s) {
 		char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','A', 'B', 'C', 'D', 'E', 'F' };
 		try {
 			byte[] btInput = s.getBytes(Constants.DEFAULT_CHARSET);
@@ -27,8 +27,7 @@ public class MD5Util {
 			int j = md.length;
 			char str[] = new char[j * 2];
 			int k = 0;
-			for (int i = 0; i < j; i++) {
-				byte byte0 = md[i];
+			for (byte byte0 : md) {
 				str[k++] = hexDigits[byte0 >>> 4 & 0xf];
 				str[k++] = hexDigits[byte0 & 0xf];
 			}
@@ -43,7 +42,7 @@ public class MD5Util {
 		System.out.println(MD5Util.md5("admin"));
 	}
 	
-	public static final String md5(String sourceStr, int len) {
+	public static String md5(String sourceStr, int len) {
 		String result=md5(sourceStr);
 		if(len==16){
 			return result.substring(8,24);

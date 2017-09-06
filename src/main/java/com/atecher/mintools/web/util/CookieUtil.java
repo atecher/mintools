@@ -16,12 +16,12 @@ public class CookieUtil {
 	     if (cookies == null || name == null || name.length() == 0) {
 	       return null;
 	     }
-	     for (int i = 0; i < cookies.length; i++) {
-	       if (name.equals(cookies[i].getName())
-	           && request.getServerName().equals(cookies[i].getDomain())) {
-	         return cookies[i];
-	       }
-	     }
+		for (Cookie cooky : cookies) {
+			if (name.equals(cooky.getName())
+					&& request.getServerName().equals(cooky.getDomain())) {
+				return cooky;
+			}
+		}
 	     return null;
 	   }
 
@@ -55,7 +55,7 @@ public class CookieUtil {
 	   
 	   private static String generateString(int length) //参数为返回随机数的长度
 	    {
-	     StringBuffer sb = new StringBuffer();
+	     StringBuilder sb = new StringBuilder();
 	     Random random = new Random();
 	     for (int i = 0; i < length; i++)
 	     {

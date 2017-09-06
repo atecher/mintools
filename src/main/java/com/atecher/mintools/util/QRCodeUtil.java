@@ -33,7 +33,7 @@ public class QRCodeUtil {
    private static final int HEIGHT = 60; 
 
 	private static BufferedImage createImage(String content, String imgPath, boolean needCompress) throws Exception {
-		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
+		Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
 		hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 		hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
 		hints.put(EncodeHintType.MARGIN, 1);
@@ -195,7 +195,7 @@ public class QRCodeUtil {
 			BufferedImageLuminanceSource source = new BufferedImageLuminanceSource(image);
 			BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 			Result result;
-			Hashtable<DecodeHintType, Object> hints = new Hashtable<DecodeHintType, Object>();
+			Hashtable<DecodeHintType, Object> hints = new Hashtable<>();
 			hints.put(DecodeHintType.CHARACTER_SET, CHARSET);
 			result = new MultiFormatReader().decode(bitmap, hints);
 			String resultStr = result.getText();
@@ -218,7 +218,7 @@ public class QRCodeUtil {
 		}
 
 	
-	public static final void visitingCard(String name, String tel, String email, String url, String org, String address, String imgPath, OutputStream output) throws Exception {
+	public static void visitingCard(String name, String tel, String email, String url, String org, String address, String imgPath, OutputStream output) throws Exception {
 		StringBuilder sb=new StringBuilder("MECARD:");
 		if(StringUtils.isNotEmpty(name)){
 			sb.append("N:");

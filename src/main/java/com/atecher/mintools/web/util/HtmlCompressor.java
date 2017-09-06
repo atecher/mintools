@@ -48,11 +48,11 @@ public class HtmlCompressor {
 			return html;
 		}
 		
-		List<String> preBlocks = new ArrayList<String>();
-		List<String> taBlocks = new ArrayList<String>();
-		List<String> scriptBlocks = new ArrayList<String>();
-		List<String> styleBlocks = new ArrayList<String>();
-		List<String> jspBlocks = new ArrayList<String>();
+		List<String> preBlocks = new ArrayList<>();
+		List<String> taBlocks = new ArrayList<>();
+		List<String> scriptBlocks = new ArrayList<>();
+		List<String> styleBlocks = new ArrayList<>();
+		List<String> jspBlocks = new ArrayList<>();
 		
 		String result = html;
 		
@@ -235,7 +235,7 @@ public class HtmlCompressor {
 		while(stringMatcher.find()){
 			String tmpStr = stringMatcher.group(0);
 			
-			if(tmpStr.indexOf("//") != -1 || tmpStr.indexOf("/*") != -1 || tmpStr.indexOf("*/") != -1){
+			if(tmpStr.contains("//") || tmpStr.contains("/*") || tmpStr.contains("*/")){
 				String blockStr = tmpStr.replaceAll("//", tempSingleCommentBlock).replaceAll("/\\*", tempMulitCommentBlock1)
 								.replaceAll("\\*/", tempMulitCommentBlock2);
 				result = result.replace(tmpStr, blockStr);
