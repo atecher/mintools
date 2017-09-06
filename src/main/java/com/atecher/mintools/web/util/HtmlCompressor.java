@@ -21,7 +21,7 @@ public class HtmlCompressor {
 	
 	private static Pattern commentPattern = Pattern.compile("<!--\\s*[^\\[].*?-->", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 	private static Pattern itsPattern = Pattern.compile(">\\s+?<", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-	private static Pattern prePattern = Pattern.compile("<pre[^>]*?>.*?</pre>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE); 
+	private static Pattern prePattern = Pattern.compile("<pre[^>]*?>.*?</pre>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 	private static Pattern taPattern = Pattern.compile("<textarea[^>]*?>.*?</textarea>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 	private static Pattern jspPattern = Pattern.compile("<%([^-@][\\w\\W]*?)%>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 	// <script></script>
@@ -33,8 +33,8 @@ public class HtmlCompressor {
 	// 字符串匹配
 	private static Pattern stringPattern = Pattern.compile("(\"[^\"\\n]*?\"|'[^'\\n]*?')");
 	// trim去空格和换行符
-	private static Pattern trimPattern = Pattern.compile("\\n\\s*",Pattern.MULTILINE);
-	private static Pattern trimPattern2 = Pattern.compile("\\s*\\r",Pattern.MULTILINE);
+	private static Pattern trimPattern = Pattern.compile("\\n\\s*", Pattern.MULTILINE);
+	private static Pattern trimPattern2 = Pattern.compile("\\s*\\r", Pattern.MULTILINE);
 	// 多行注释
 	private static Pattern multiCommentPattern = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 

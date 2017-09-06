@@ -24,10 +24,10 @@ public class FileCommonUtils {
 	 * @param urlString
 	 * @param filename
 	 * @param savePath
-	 * @throws IOException 
+	 * @throws IOException
 	 * @throws Exception
 	 */
-	public static void download(String urlString, String filename,String savePath) throws IOException {
+	public static void download(String urlString, String filename, String savePath) throws IOException {
 		InputStream is = null;
 		OutputStream os = null;
 		try{

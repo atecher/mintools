@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>在线使用格式化sql语句-MinTools</title>
+    <meta name="keywords" content="在线工具,加密,解密,压缩,格式化,净化"/>
+    <meta name="description" content="为开发设计人员提供在线工具，提供js在线 CSS、JS 调试等其他在线工具"/>
+    <link rel="stylesheet" th:href="@{/assets/js/codemirror/lib/codemirror.css}"/>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/lib/codemirror.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/mode/sql/sql.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/sql/sql.js}"></script>
+
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="mt-head"><h1>在线使用格式化sql语句</h1></div>
+            <div class="form-group"><textarea id="content" ></textarea></div>
+            <div class="form-group">
+                <button id="format" class="btn btn-danger">格式化</button>
+                <label class="checkbox-inline"><input type="radio" value="mysql" name="type" id="type-mysql"  checked="checked"/>Mysql</label>
+                <label class="checkbox-inline"><input type="radio" value="oracle" name="type" id="type-oracle" />Oracle</label>
+                <label class="checkbox-inline"><input type="radio" value="sqlserver" name="type" id="type-sqlserver" />SqlServer</label>
+            </div>
+            <div class="form-group"><textarea id="result" ></textarea></div>
+            <div th:include="module :: comment"></div>
+        </div>
+        <div class="col-xs-4" th:include="module :: sidebar"></div>
+    </div>
+</div>
+</body>
+</html>

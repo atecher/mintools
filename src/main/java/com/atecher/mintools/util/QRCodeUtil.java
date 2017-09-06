@@ -5,7 +5,7 @@ import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,8 +22,8 @@ import java.util.Random;
  *
  */
 public class QRCodeUtil {
-    private static final String CHARSET = "utf-8";  
-    private static final String FORMAT_NAME = "JPG";  
+    private static final String CHARSET = "utf-8";
+    private static final String FORMAT_NAME = "JPG";
     private static final boolean needCompress=true;
   // 二维码尺寸  
    private static final int QRCODE_SIZE = 300;  
@@ -40,7 +40,7 @@ public class QRCodeUtil {
 		BitMatrix bitMatrix = new MultiFormatWriter().encode(content,BarcodeFormat.QR_CODE, QRCODE_SIZE, QRCODE_SIZE, hints);
 		int width = bitMatrix.getWidth();
 		int height = bitMatrix.getHeight();
-		BufferedImage image = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				image.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000: 0xFFFFFFFF);
@@ -61,7 +61,7 @@ public class QRCodeUtil {
 		 * @param needCompress 是否压缩
 		 * @throws Exception
 		 */
-		private static void insertImage(BufferedImage source, String imgPath,boolean needCompress) throws Exception {
+		private static void insertImage(BufferedImage source, String imgPath, boolean needCompress) throws Exception {
 			File file = new File(imgPath);
 			if (!file.exists()) {
 				System.err.println(""+imgPath+"   该文件不存在！");
@@ -77,8 +77,8 @@ public class QRCodeUtil {
 				if (height > HEIGHT) {
 					height = HEIGHT;
 				}
-				Image image = src.getScaledInstance(width, height,Image.SCALE_SMOOTH);
-				BufferedImage tag = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
+				Image image = src.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 				Graphics g = tag.getGraphics();
 				g.drawImage(image, 0, 0, null); // 绘制缩小后的图
 				g.dispose();
@@ -103,7 +103,7 @@ public class QRCodeUtil {
 		 * @param needCompress 是否压缩LOGO
 		 * @throws Exception
 		 */
-		public static void encode(String content, String imgPath, String destPath,boolean needCompress) throws Exception {
+		public static void encode(String content, String imgPath, String destPath, boolean needCompress) throws Exception {
 			BufferedImage image = QRCodeUtil.createImage(content, imgPath,needCompress);
 			mkdirs(destPath);
 			String file = new Random().nextInt(99999999)+".jpg";
@@ -118,7 +118,7 @@ public class QRCodeUtil {
 		 * @param destPath 存放目录
 		 */
 		public static void mkdirs(String destPath) {
-			File file =new File(destPath);    
+			File file =new File(destPath);
 			//当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)
 			if (!file.exists() && !file.isDirectory()&&file.mkdirs()) {
 
@@ -143,7 +143,7 @@ public class QRCodeUtil {
 		 * @param needCompress 是否压缩LOGO
 		 * @throws Exception
 		 */
-		public static void encode(String content, String destPath,boolean needCompress) throws Exception {
+		public static void encode(String content, String destPath, boolean needCompress) throws Exception {
 			QRCodeUtil.encode(content, null, destPath, needCompress);
 		}
 
@@ -165,7 +165,7 @@ public class QRCodeUtil {
 		 * @param needCompress 是否压缩LOGO
 		 * @throws Exception
 		 */
-		public static void encode(String content, String imgPath,OutputStream output, boolean needCompress) throws Exception {
+		public static void encode(String content, String imgPath, OutputStream output, boolean needCompress) throws Exception {
 			BufferedImage image = QRCodeUtil.createImage(content, imgPath,needCompress);
 			ImageIO.write(image, FORMAT_NAME, output);
 		}
@@ -218,7 +218,7 @@ public class QRCodeUtil {
 		}
 
 	
-	public static final void visitingCard(String name,String tel,String email,String url,String org,String address,String imgPath,OutputStream output) throws Exception{
+	public static final void visitingCard(String name, String tel, String email, String url, String org, String address, String imgPath, OutputStream output) throws Exception {
 		StringBuilder sb=new StringBuilder("MECARD:");
 		if(StringUtils.isNotEmpty(name)){
 			sb.append("N:");

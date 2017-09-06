@@ -23,7 +23,7 @@ public class StringCommonUtils {
 		return m.replaceAll("").trim();
 	}
 	
-	public static String trimByRegEx(String source,String regEx){
+	public static String trimByRegEx(String source, String regEx){
 		if(source!=null){
 			return source.replaceAll(regEx, "");
 		}else{

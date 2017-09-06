@@ -1,0 +1,65 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>在线JS格式化/净化、加密/解密—MinTools在线工具</title>
+    <meta name="keywords" content="在线工具,加密,解密,压缩,格式化,净化"/>
+    <meta name="description" content="为开发设计人员提供在线工具，提供js在线 CSS、JS 调试等其他在线工具"/>
+    <link rel="stylesheet" th:href="@{/assets/js/codemirror/lib/codemirror.css}"/>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/js/box.js.format.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/js/box.my.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/js/box.packer.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/js/box.words.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/js/js.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/lib/codemirror.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/mode/javascript/javascript.js}"></script>
+
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="mt-head"><h1>在线JS格式化/净化、加密/解密</h1></div>
+            <div class="form-group">
+				<textarea id="content" class="form-control height-large">/*   美化：格式化代码，使之容易阅读	*/
+/*   净化：去掉代码中多余的注释、换行、空格等	*/
+/*   压缩：将代码压缩为更小体积，便于传输		*/
+/*   解压：将压缩后的代码转换为人可以阅读的格式	*/
+/*   混淆：将代码的中变量名简短化以减小体积，但可读性差，经混淆后的代码无法还原	*/
+/*   如果有用，请别忘了推荐给你的朋友：		*/
+/*   javascript在线格式化/净化、加密/解密  */
+/*   以下是演示代码*/
+var Inote = {};
+Inote.JSTool = function(options) {
+this.options = options || {};
+};
+Inote.JSTool.prototype = {
+	_name: 'Javascript工具',
+_history: {
+		'v1.0': ['2014-12-18', 'javascript工具上线'],
+		'v1.1': ['2012-12-23', '增加混淆功能'],
+		'v1.5':	['2015-01-09', '升级js压缩引擎']
+	},
+	options: {},
+	getName: function() {return this._name;},
+	getHistory: function() {
+		return this._history;}
+};
+var jstool = new Inote.JSTool();
+	</textarea>
+
+            </div>
+            <div class="form-group">
+                <button class="btn btn-danger" id="btnJSFormat" >格式化(Format)</button>
+                <button class="btn btn-danger" id="btnPurify" >净化(Purify)</button>
+                <button class="btn btn-danger" id="btnEncrypt" >加密(Encrypt)</button>
+                <button class="btn btn-danger" id="btnDecode" >解密(Decrypt)</button>
+            </div>
+
+            <div class="form-group"><textarea id="result" class="form-control height-large" ></textarea></div>
+                <div th:include="module :: comment"></div>
+        </div>
+        <div class="col-xs-4" th:include="module :: sidebar"></div>
+    </div>
+</div>
+</body>
+</html>

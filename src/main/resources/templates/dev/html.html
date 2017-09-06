@@ -1,0 +1,59 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>在线html格式化、获取文本内容 、压缩-MinTools</title>
+    <meta name="keywords" content="在线工具,加密,解密,压缩,格式化,净化"/>
+    <meta name="description" content="为开发设计人员提供在线工具，提供js在线 CSS、JS 调试等其他在线工具"/>
+    <link rel="stylesheet" th:href="@{/assets/js/codemirror/lib/codemirror.css}"/>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/lib/codemirror.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/mode/javascript/javascript.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/mode/xml/xml.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/mode/css/css.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/mode/htmlmixed/htmlmixed.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/html/html.js}"></script>
+
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="mt-head"><h1>在线html格式化、获取文本内容 、压缩</h1></div>
+            <div class="form-group">
+			<textarea id="content">
+<!DOCTYPE html><html>
+<head>
+    <meta charset="utf-8"/>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+    <div id="header"><h1>html在线工具</h1>
+        <!--   如果有用，请别忘了推荐给你的朋友：		-->
+        <!--   Html在线格式化-->
+    </div>
+    <div id="main">
+        <p>
+        <dl>
+            <dd>2015-11-14 修复格式化功能，增加压缩</dd>
+            <dd>2016-06-05 修改 html 压缩引擎</dd>
+        </dl>
+        </p>
+    </div>
+    <div id="footer">This is just an example.</div>
+</div>
+</body>
+</html></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-danger" id="btnHtmlFormat">格式化(Beutify)</button>
+                <button class="btn btn-danger" id="btnHtmlClear">获取文本(Text)</button>
+                <button class="btn btn-danger" id="btnHtmlYS">压缩(Pack)</button>
+            </div>
+            <div class="form-group"><textarea id="result"></textarea></div>
+            <div th:include="module :: comment"></div>
+        </div>
+        <div class="col-xs-4" th:include="module :: sidebar"></div>
+    </div>
+</div>
+</body>
+</html>

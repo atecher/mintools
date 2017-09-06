@@ -43,7 +43,7 @@ public class MD5Util {
 		System.out.println(MD5Util.md5("admin"));
 	}
 	
-	public static final String md5(String sourceStr,int len) {
+	public static final String md5(String sourceStr, int len) {
 		String result=md5(sourceStr);
 		if(len==16){
 			return result.substring(8,24);

@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>自动外链工具 在线外链推广-MinTools</title>
+    <meta name="keywords" content="在线工具,加密,解密,压缩,格式化,净化"/>
+    <meta name="description" content="为开发设计人员提供在线工具，提供js在线 CSS、JS 调试等其他在线工具"/>
+    <link rel="stylesheet" th:href="@{/assets/js/codemirror/lib/codemirror.css}"/>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/lib/codemirror.js}"></script>
+    <script type="text/javascript" th:src="@/assets/thirdparty/extlink/extlink.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="mt-head"><h1>自动外链工具</h1></div>
+            <div class="form-group">
+                <div class="input-group mt-form-search">
+                    <input type="text" class="form-control search" id="domain" value="www.mintools.net" placeholder="请输入网址：例如mintools.net">
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button" id="searchBtn">开始推广</button>
+                      </span>
+                </div>
+            </div>
+            <div class="form-group mt-result" id="result">
+                <div id="loadTips" style="display: none;color: red;text-align: right;margin-bottom: 10px;">
+                    <span id="timeDown">20</span>秒后执行下一批外链…发布<span id="count">0</span>/<span id="total">1000</span>条外链
+                </div>
+                <table width="100%" border="0" cellpadding="8" cellspacing="1" class="table-bordered table-hover table" id="extLinkResult">
+                    <thead>
+                    <tr>
+                        <th width="60" class="text-center">序号</th>
+                        <th>链接</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div th:include="module :: comment"></div>
+        </div>
+        <div class="col-xs-4" th:include="module :: sidebar"></div>
+    </div>
+</div>
+</body>
+</html>

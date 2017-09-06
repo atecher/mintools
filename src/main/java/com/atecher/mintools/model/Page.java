@@ -3,7 +3,7 @@ package com.atecher.mintools.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Page <T> implements Serializable {
+public class Page<T> implements Serializable {
 	
 	private static final long serialVersionUID = 2438037063942588690L;
 	private int total;
@@ -11,7 +11,7 @@ public class Page <T> implements Serializable {
 	public Page(){
 		
 	}
-	public Page(int total,List<T> rows){
+	public Page(int total, List<T> rows){
 		this.total=total;
 		this.rows=rows;
 	}

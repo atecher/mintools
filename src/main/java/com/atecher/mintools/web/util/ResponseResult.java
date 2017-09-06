@@ -5,11 +5,11 @@ import java.io.Serializable;
 /**
  * Created by hanhongwei on 2016/6/22.
  */
-public class ResponseResult implements Serializable{
+public class ResponseResult implements Serializable {
     private String code;
     private Object result;
 
-    public ResponseResult(String code,Object result){
+    public ResponseResult(String code, Object result){
         this.result=result;
         this.code=code;
     }

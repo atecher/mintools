@@ -14,7 +14,7 @@ public class WhoisUtils {
     private static final String aliyun_app_regionId="cn-hangzhou";
     private static final String aliyun_app_accessKeyId="2l7Jg3feKTZrp4yp";
     private static final String aliyun_app_secret="OAJF9Y27bhaJzh2NlmKi6c6mdEesxf";
-    public static GetWhoisInfoResponse getWhoisInfo(String domainName) throws Exception{
+    public static GetWhoisInfoResponse getWhoisInfo(String domainName) throws Exception {
         GetWhoisInfoRequest request=new GetWhoisInfoRequest();
         request.setDomainName(domainName);
         IClientProfile profile = DefaultProfile.getProfile(aliyun_app_regionId, aliyun_app_accessKeyId,aliyun_app_secret);

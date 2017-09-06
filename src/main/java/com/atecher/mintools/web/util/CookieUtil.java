@@ -1,10 +1,9 @@
 package com.atecher.mintools.web.util;
 
-import java.util.Random;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Random;
 
 public class CookieUtil {
 	private static final String allChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -27,7 +26,7 @@ public class CookieUtil {
 	   }
 
 	   public static void deleteCookie(HttpServletRequest request,
-	       HttpServletResponse response, Cookie cookie) {
+                                       HttpServletResponse response, Cookie cookie) {
 	     if (cookie != null) {
 	       cookie.setPath(getPath(request));
 	       cookie.setValue("");
@@ -37,12 +36,12 @@ public class CookieUtil {
 	   }
 
 	   public static void setCookie(HttpServletRequest request,
-	       HttpServletResponse response, String name, String value) {
+                                    HttpServletResponse response, String name, String value) {
 	     setCookie(request, response, name, value, 0x278d00);
 	   }
 
 	   public static void setCookie(HttpServletRequest request,
-	       HttpServletResponse response, String name, String value, int maxAge) {
+                                    HttpServletResponse response, String name, String value, int maxAge) {
 	     Cookie cookie = new Cookie(name, value == null ? "" : value);
 	     cookie.setMaxAge(maxAge);
 	     cookie.setPath(getPath(request));

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atecher.mintools.mapper.SearchMapper" >
+    <sql id="base_search_select">
+        SELECT t.id,t.code,t.target,t.relative,t.type,t.title,t.href,t.icon,t.description,t.tag FROM sys_resource t
+    </sql>
+    <select id="search" parameterType="string" resultType="java.util.HashMap">
+        <include refid="base_search_select"/> where t.tag like "%${value}%" or t.title like "%${value}%"
+    </select>
+
+
+</mapper>

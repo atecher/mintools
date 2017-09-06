@@ -7,7 +7,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.datamatrix.encoder.SymbolShapeHint;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import org.apache.commons.lang.StringUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -27,12 +26,12 @@ public class QRCode {
 		 * @作者 mark.han
 		 * @日期 2014-9-28
 		 * @邮箱 hongwei.han@qq.com
-		 * @throws Exception 
+		 * @throws Exception
 		 */
 		public static void encode(QRCodeSetting qrCodeSetting) throws Exception {
 			try {
 				BufferedImage bufferedImage=genBarcode(qrCodeSetting);
-				if(StringUtils.isNotEmpty(qrCodeSetting.getLogoPath()))//如果有logo则添加
+				if(qrCodeSetting.getLogoPath()!=null)//如果有logo则添加
 					insertImage(bufferedImage, qrCodeSetting, true);
 				ImageIO.write(bufferedImage,"jpg", new File(qrCodeSetting.getOutputPath()));
 			} catch (IOException e) {
@@ -65,8 +64,8 @@ public class QRCode {
 				if (height > qrCodeSetting.getLogoHeight()) {
 					height = qrCodeSetting.getLogoHeight();
 				}
-				Image image = src.getScaledInstance(width, height,Image.SCALE_SMOOTH);
-				BufferedImage tag = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB);
+				Image image = src.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+				BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 				Graphics g = tag.getGraphics();
 				g.drawImage(image, 0, 0, null); // 绘制缩小后的图
 				g.dispose();
@@ -105,7 +104,7 @@ public class QRCode {
 			Color fadingColor=new Color(Integer.parseInt(qrCodeSetting.getFadingColor(), 16));
 			int backgroundColorRGB=new Color(Integer.parseInt(qrCodeSetting.getBackgroundColor(), 16)).getRGB();
 			
-			BufferedImage image = new BufferedImage(qrCodeSetting.getQrWidth(), qrCodeSetting.getQrHeight(),BufferedImage.TYPE_INT_RGB);
+			BufferedImage image = new BufferedImage(qrCodeSetting.getQrWidth(), qrCodeSetting.getQrHeight(), BufferedImage.TYPE_INT_RGB);
 			
 			//渐变色和背景色相同，不做渐变操作
 			if(fadingColor.equals(color)||qrCodeSetting.getFadeType()==0){
@@ -190,7 +189,7 @@ public class QRCode {
 			return image;
 		}
 		public static double getResult(int radius,int c_x,int c_y,int x,int y){
-			double len=Math.sqrt(Math.pow(x-c_x,2)+Math.pow(y-c_y, 2));
+			double len= Math.sqrt(Math.pow(x-c_x,2)+ Math.pow(y-c_y, 2));
 			if(len>radius){
 				len=radius;
 			}

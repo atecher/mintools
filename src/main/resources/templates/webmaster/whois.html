@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>Whois查询-MinTools</title>
+    <meta name="keywords" content="在线工具,加密,解密,压缩,格式化,净化"/>
+    <meta name="description" content="为开发设计人员提供在线工具，提供js在线 CSS、JS 调试等其他在线工具"/>
+    <link rel="stylesheet" th:href="@{/assets/js/codemirror/lib/codemirror.css}"/>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/lib/codemirror.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/whois/whois.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="mt-head"><h1>Whois查询</h1></div>
+            <div class="form-group">
+                <div class="input-group mt-form-search">
+                    <input type="text" class="form-control search" id="whois_search" placeholder="请输入网址：例如mintools.net">
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button" id="searchBtn">查询</button>
+                      </span>
+                </div>
+            </div>
+            <div class="form-group mt-result" id="result"></div>
+            <div th:include="module :: comment"></div>
+        </div>
+        <div class="col-xs-4" th:include="module :: sidebar"></div>
+    </div>
+</div>
+</body>
+</html>

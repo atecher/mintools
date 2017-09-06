@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" >
+<div th:fragment="comment" >
+    <div id="SOHUCS"></div>
+    <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+    <script type="text/javascript">
+        window.changyan.api.config({
+            appid: 'cyrbtS4K4',
+            conf: 'prod_84542c496902ff016781c3cbad0b84bc'
+        });
+    </script>
+    <style>
+        #SOHUCS #SOHU_MAIN .module-cmt-footer{display:none!important;}
+    </style>
+</div>
+<div class="col-xs-4" th:fragment="sidebar">
+    <div class="panel panel-default panel-custom">
+        <div class="panel-heading">快捷操作</div>
+        <div class="panel-body">
+            <button type="button" class="btn btn-link" onclick="AddFavorite(window.location,document.title)">+ 添加收藏</button>
+            <button type="button" class="btn btn-link" onclick="setHome(this,window.location)">+ 设为首页</button>
+        </div>
+    </div>
+
+    <p>
+        <iframe width="100%" height="550" class="share_self" frameborder="0" scrolling="no"
+                src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=5&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=5123461973&verifier=5987516b&dpc=1"></iframe>
+    </p>
+</div>
+</body>
+</html>

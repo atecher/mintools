@@ -1,0 +1,88 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>在线CSS格式化/净化 、压缩-MinTools</title>
+    <meta name="keywords" content="在线工具,加密,解密,压缩,格式化,净化"/>
+    <meta name="description" content="为开发设计人员提供在线工具，提供js在线 CSS、JS 调试等其他在线工具"/>
+    <link rel="stylesheet" th:href="@{/assets/js/codemirror/lib/codemirror.css}"/>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/lib/codemirror.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/codemirror/mode/css/css.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/css/yahoo.compressor.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/thirdparty/css/css.js}"></script>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="mt-head"><h1>在线CSS格式化/净化 、压缩</h1></div>
+            <div class="form-group">
+                <textarea id="content" class="content">/*   美化：格式化代码，使之容易阅读			*/
+/*   净化：将代码单行化，并去除注释   */
+/*   整理：按照一定的顺序，重新排列css的属性   */
+/*   压缩：将代码最小化，加快加载速度   */
+
+/*   如果有用，请别忘了推荐给你的朋友：		*/
+/*   在线CSS格式化/净化 、压缩  */
+/*   v1.1 2014-12-11   */
+
+/*   以下是演示代码				*/
+
+body, div, dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6, pre, code,
+form, fieldset, legend, input, button,
+textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+fieldset, img {
+    border: 0;
+}
+/* remember to define focus styles! */
+:focus {
+    outline: 0;
+}
+address, caption, cite, code, dfn,
+em, strong, th, var, optgroup {
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-size: 100%;
+}
+abbr, acronym {
+    border: 0;
+    font-variant: normal;
+}
+
+input, button, textarea,
+select, optgroup, option {
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: inherit;
+    font-family: inherit;
+}
+code, kbd, samp, tt {
+    font-size: 100%;
+}
+/*@purpose To enable resizing for IE */
+/*@branch For IE6-Win, IE7-Win */
+input, button, textarea, select {
+    *font-size: 100%;
+}
+</textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-danger" id="btnCSSFormat">格式化(Format)</button>
+                <button class="btn btn-danger" id="btnCSSClear">净化(Purify)</button>
+                <button class="btn btn-danger" id="btnCSSYS">压缩(Pack)</button>
+            </div>
+            <div class="form-group"><textarea id="result"></textarea></div>
+                <div th:include="module :: comment"></div>
+        </div>
+        <div class="col-xs-4" th:include="module :: sidebar"></div>
+    </div>
+</div>
+</body>
+</html>
