@@ -20,8 +20,6 @@ public class WhoisUtils {
         IClientProfile profile = DefaultProfile.getProfile(aliyun_app_regionId, aliyun_app_accessKeyId,aliyun_app_secret);
         IAcsClient client=new DefaultAcsClient(profile);
         GetWhoisInfoResponse response= client.getAcsResponse(request);
-        System.out.println(response.toString());
-
         return response;
 
     }

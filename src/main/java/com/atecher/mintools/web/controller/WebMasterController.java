@@ -46,7 +46,7 @@ public class WebMasterController {
 	public ResponseResult getData(@RequestParam(value = "domain",defaultValue = "www.mintools.net") String domain, @RequestParam(value="page",defaultValue = "1") Integer page, @RequestParam(value="size",defaultValue = "20") Integer size) throws Exception {
 		Page<String> extLinks= websiteService.queryExtlinkForPage(page,size,new HashMap<String, Object>());
 		List<String> datas=extLinks.getRows();
-		List<String> result=new ArrayList<String>();
+		List<String> result= new ArrayList<>();
 		for(String data:datas){
 			result.add(MessageFormat.format(data,domain));
 		}

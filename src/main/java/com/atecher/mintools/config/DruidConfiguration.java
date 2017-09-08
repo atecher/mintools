@@ -2,8 +2,7 @@ package com.atecher.mintools.config;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -13,10 +12,9 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by mark on 2017/6/16.
  */
+@Slf4j
 @Configuration
 public class DruidConfiguration {
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
     @Value("${spring.druid.username:druid}")
     private String druidLoginName;
     @Value("${spring.druid.passport:druid}")

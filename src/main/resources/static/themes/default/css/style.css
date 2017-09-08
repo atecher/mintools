@@ -49,3 +49,6 @@ textarea.height-large{height: 300px;}
 .panel-custom > .panel-heading{background:#f1f1f1;border-width: 0px;}
 .big> span>a{font-size: 14px;line-height: 20px;color:#666;}
 .btn-dropdown .fa{font-weight: 200;line-height:1.42857143;}
+div.Canvas{border-color: #e4eaec;}
+.CodeMirror{border-color: #e4eaec;}
+.CodeMirror-guttersP{border-right-color: #e4eaec;}

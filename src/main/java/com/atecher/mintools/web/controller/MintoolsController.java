@@ -2,6 +2,7 @@ package com.atecher.mintools.web.controller;
 
 import com.atecher.mintools.mapper.ToolMapper;
 import com.atecher.mintools.web.util.WebForwardConstants;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
-
+@Slf4j
 @Controller
 public class MintoolsController{
 
@@ -20,7 +21,7 @@ public class MintoolsController{
 	private ToolMapper toolMapper;
 
 	@RequestMapping(value = "/",method = RequestMethod.GET)
-	public String index(@RequestParam(value="s",required = false) String search, Model model) {
+	public String index(Model model) {
 		List<HashMap<String,Object>> tools=toolMapper.findToolAll();
 		model.addAttribute("tools",tools);
 		return WebForwardConstants.INDEX;
