@@ -41,13 +41,13 @@ function onMatch() {
     if (document.getElementById("optionGlobal").checked) {
         var a = "\u5171\u627e\u5230 " + b.length
             + " \u5904\u5339\u914d\uff1a\r\n";
-        for ( var c = 0; c < b.length; ++c) {
+        for (var c = 0; c < b.length; ++c) {
             a = a + b[c] + "\r\n"
         }
         document.getElementById("textMatchResult").value = a
     } else {
         document.getElementById("textMatchResult").value = "\u5339\u914d\u4f4d\u7f6e\uff1a"
-        + d.lastIndex + "\r\n\u5339\u914d\u7ed3\u679c\uff1a" + b[0]
+            + d.lastIndex + "\r\n\u5339\u914d\u7ed3\u679c\uff1a" + b[0]
     }
     return true
 }

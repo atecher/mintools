@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" >
-<div th:fragment="comment" >
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<div th:fragment="comment">
     <div id="SOHUCS"></div>
-    <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+    <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js"></script>
     <script type="text/javascript">
         window.changyan.api.config({
             appid: 'cyrbtS4K4',
@@ -10,14 +10,17 @@
         });
     </script>
     <style>
-        #SOHUCS #SOHU_MAIN .module-cmt-footer{display:none!important;}
+        #SOHUCS #SOHU_MAIN .module-cmt-footer {
+            display: none !important;
+        }
     </style>
 </div>
 <div class="col-xs-4" th:fragment="sidebar">
     <div class="panel panel-default panel-custom">
         <div class="panel-heading">快捷操作</div>
         <div class="panel-body">
-            <button type="button" class="btn btn-link" onclick="AddFavorite(window.location,document.title)">+ 添加收藏</button>
+            <button type="button" class="btn btn-link" onclick="AddFavorite(window.location,document.title)">+ 添加收藏
+            </button>
             <button type="button" class="btn btn-link" onclick="setHome(this,window.location)">+ 设为首页</button>
         </div>
     </div>

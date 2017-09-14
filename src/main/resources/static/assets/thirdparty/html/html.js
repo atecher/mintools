@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     bindCodeMirror();
     bindHtmlFormatAction();
     bindHtmlClearAction();

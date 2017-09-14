@@ -17,7 +17,7 @@ function bindFormatAction() {
     $(document).on("click", "#formatBtn", function (event) {
         var json = editor.getValue();
 
-        json=JSON.stringify(json, null, 4);
+        json = JSON.stringify(json, null, 4);
 
         editor.setValue(json);
     });
@@ -50,7 +50,10 @@ function Process() {
     SetTab();
     window.IsCollapsible = $id("CollapsibleView").checked;
     var json = editor.getValue();
-    if(json==""){editor.setValue("{}");json=editor.getValue();}
+    if (json == "") {
+        editor.setValue("{}");
+        json = editor.getValue();
+    }
     var html = "";
     try {
         var obj = eval("[" + json + "]");
@@ -202,7 +205,7 @@ function CollapseLevel(level) {
     TraverseChildren($id("Canvas"),
         function (element, depth) {
             if (element.className == 'collapsible') {
-                if (depth >level) {
+                if (depth > level) {
                     MakeContentVisible(element, false);
                 } else {
                     MakeContentVisible(element, true);

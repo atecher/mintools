@@ -8,6 +8,7 @@
             output.pop()
         }
     }
+
     function print_newline(ignore_repeated) {
         ignore_repeated = typeof ignore_repeated === 'undefined' ? true : ignore_repeated;
         trim_output();
@@ -21,36 +22,44 @@
             output.push(indent_string)
         }
     }
+
     function print_space() {
         var last_output = output.length ? output[output.length - 1] : ' ';
         if (last_output !== ' ' && last_output !== '\n' && last_output !== indent_string) {
             output.push(' ')
         }
     }
+
     function print_token() {
         output.push(token_text)
     }
+
     function indent() {
         indent_level++
     }
+
     function unindent() {
         if (indent_level) {
             indent_level--
         }
     }
+
     function remove_indent() {
         if (output.length && output[output.length - 1] === indent_string) {
             output.pop()
         }
     }
+
     function set_mode(mode) {
         modes.push(current_mode);
         current_mode = mode
     }
+
     function restore_mode() {
         do_block_just_closed = current_mode === 'DO_BLOCK';
         current_mode = modes.pop()
     }
+
     function in_array(what, arr) {
         for (var i = 0; i < arr.length; i++) {
             if (arr[i] === what) {
@@ -59,6 +68,7 @@
         }
         return false
     }
+
     function get_next_token() {
         var n_newlines = 0;
         var c = '';
@@ -182,6 +192,7 @@
         }
         return [c, 'TK_UNKNOWN']
     }
+
     indent_character = indent_character || ' ';
     indent_size = indent_size || 4;
     indent_string = '';
@@ -216,7 +227,8 @@
             case 'TK_START_EXPR':
                 var_line = false;
                 set_mode('EXPRESSION');
-                if (last_type === 'TK_END_EXPR' || last_type === 'TK_START_EXPR') {} else if (last_type !== 'TK_WORD' && last_type !== 'TK_OPERATOR') {
+                if (last_type === 'TK_END_EXPR' || last_type === 'TK_START_EXPR') {
+                } else if (last_type !== 'TK_WORD' && last_type !== 'TK_OPERATOR') {
                     print_space()
                 } else if (in_array(last_word, line_starters) && last_word !== 'function') {
                     print_space()
@@ -298,7 +310,8 @@
                 } else if (in_array(token_text, line_starters) || prefix === 'NEWLINE') {
                     if (last_text === 'else') {
                         print_space()
-                    } else if ((last_type === 'TK_START_EXPR' || last_text === '=') && token_text === 'function') {} else if (last_type === 'TK_WORD' && (last_text === 'return' || last_text === 'throw')) {
+                    } else if ((last_type === 'TK_START_EXPR' || last_text === '=') && token_text === 'function') {
+                    } else if (last_type === 'TK_WORD' && (last_text === 'return' || last_text === 'throw')) {
                         print_space()
                     } else if (last_type !== 'TK_END_EXPR') {
                         if ((last_type !== 'TK_START_EXPR' || token_text !== 'var') && last_text !== ':') {

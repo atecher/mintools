@@ -22,46 +22,44 @@ import java.util.List;
 @Controller
 public class WebMasterController {
 
-	@Autowired
-	private IWebsiteService websiteService;
+    @Autowired
+    private IWebsiteService websiteService;
 
-	@RequestMapping(value="/whois",method = RequestMethod.GET)
-	public String whois() {
-			return WebForwardConstants.WEBMASTER_WHOIS;
-	}
-	@RequestMapping(value="/whois/search",method = RequestMethod.POST)
-	@ResponseBody
-	public GetWhoisInfoResponse whois(@RequestParam("domainName") String domainName) throws Exception {
-		GetWhoisInfoResponse response= WhoisUtils.getWhoisInfo(domainName);
-		return response;
-	}
+    @RequestMapping(value = "/whois", method = RequestMethod.GET)
+    public String whois() {
+        return WebForwardConstants.WEBMASTER_WHOIS;
+    }
 
-	@RequestMapping(value="/extlink",method = RequestMethod.GET)
-	public String extlink() {
-		return WebForwardConstants.WEBMASTER_EXTLINK;
-	}
+    @RequestMapping(value = "/whois/search", method = RequestMethod.POST)
+    @ResponseBody
+    public GetWhoisInfoResponse whois(@RequestParam("domainName") String domainName) throws Exception {
+        GetWhoisInfoResponse response = WhoisUtils.getWhoisInfo(domainName);
+        return response;
+    }
 
-	@RequestMapping(value="/extlink",method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseResult getData(@RequestParam(value = "domain",defaultValue = "www.mintools.net") String domain, @RequestParam(value="page",defaultValue = "1") Integer page, @RequestParam(value="size",defaultValue = "20") Integer size) throws Exception {
-		Page<String> extLinks= websiteService.queryExtlinkForPage(page,size,new HashMap<String, Object>());
-		List<String> datas=extLinks.getRows();
-		List<String> result= new ArrayList<>();
-		for(String data:datas){
-			result.add(MessageFormat.format(data,domain));
-		}
-		extLinks.setRows(result);
+    @RequestMapping(value = "/extlink", method = RequestMethod.GET)
+    public String extlink() {
+        return WebForwardConstants.WEBMASTER_EXTLINK;
+    }
 
-		PageResult pageResult=new PageResult();
-		pageResult.setRows(result);
-		pageResult.setTotal(extLinks.getTotal());
-		pageResult.setLimit(size);
-		pageResult.setPage(page);
-		return new ResponseResult("success",pageResult);
-	}
+    @RequestMapping(value = "/extlink", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseResult getData(@RequestParam(value = "domain", defaultValue = "www.mintools.net") String domain, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "20") Integer size) throws Exception {
+        Page<String> extLinks = websiteService.queryExtlinkForPage(page, size, new HashMap<String, Object>());
+        List<String> datas = extLinks.getRows();
+        List<String> result = new ArrayList<>();
+        for (String data : datas) {
+            result.add(MessageFormat.format(data, domain));
+        }
+        extLinks.setRows(result);
+
+        PageResult pageResult = new PageResult();
+        pageResult.setRows(result);
+        pageResult.setTotal(extLinks.getTotal());
+        pageResult.setLimit(size);
+        pageResult.setPage(page);
+        return new ResponseResult("success", pageResult);
+    }
 
 
-
-
-	
 }

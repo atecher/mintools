@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     bindCodeMirror();
     bindMD5Encode16Action();
     bindMD5Encode32Action();
@@ -17,19 +17,19 @@ function bindCodeMirror() {
         matchBrackets: true
     });
 }
-function bindMD5Encode16Action(){
-    $(document).on("click", "#btnEncode16",function() {
-        var contentValue=editor.getValue();
+function bindMD5Encode16Action() {
+    $(document).on("click", "#btnEncode16", function () {
+        var contentValue = editor.getValue();
         $.ajax({
-            type:"POST",
-            url:"/md5/encode/16/",
-            data:{
-                content:contentValue
+            type: "POST",
+            url: "/md5/encode/16/",
+            data: {
+                content: contentValue
             },
-            success: function(data){
-                if(data.code=='success'){
+            success: function (data) {
+                if (data.code == 'success') {
                     result.setValue(data.result);
-                }else{
+                } else {
                     result.setValue("");
                 }
 
@@ -38,19 +38,19 @@ function bindMD5Encode16Action(){
     });
 }
 
-function bindMD5Encode32Action(){
-    $(document).on("click", "#btnEncode32",function() {
-        var contentValue=editor.getValue();
+function bindMD5Encode32Action() {
+    $(document).on("click", "#btnEncode32", function () {
+        var contentValue = editor.getValue();
         $.ajax({
-            type:"POST",
-            url:"/md5/encode/32/",
-            data:{
-                content:contentValue
+            type: "POST",
+            url: "/md5/encode/32/",
+            data: {
+                content: contentValue
             },
-            success: function(data){
-                if(data.code=='success'){
+            success: function (data) {
+                if (data.code == 'success') {
                     result.setValue(data.result);
-                }else{
+                } else {
                     result.setValue("");
                 }
 

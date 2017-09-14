@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     bindCodeMirror();
     bindXmlFormatAction();
     bindXmlPackAction();
@@ -17,19 +17,19 @@ function bindCodeMirror() {
         matchBrackets: true
     });
 }
-function bindXmlFormatAction(){
-    $(document).on("click", "#format",function() {
-        var contentValue=editor.getValue();
+function bindXmlFormatAction() {
+    $(document).on("click", "#format", function () {
+        var contentValue = editor.getValue();
         $.ajax({
-            type:"POST",
-            url:"format/",
-            data:{
-                content:contentValue
+            type: "POST",
+            url: "format/",
+            data: {
+                content: contentValue
             },
-            success: function(data){
-                if(data.code=='success'){
+            success: function (data) {
+                if (data.code == 'success') {
                     result.setValue(data.result);
-                }else{
+                } else {
                     result.setValue("");
                 }
 
@@ -38,19 +38,19 @@ function bindXmlFormatAction(){
     });
 }
 
-function bindXmlPackAction(){
-    $(document).on("click", "#pack",function() {
-        var contentValue=editor.getValue();
+function bindXmlPackAction() {
+    $(document).on("click", "#pack", function () {
+        var contentValue = editor.getValue();
         $.ajax({
-            type:"POST",
-            url:"pack/",
-            data:{
-                content:contentValue
+            type: "POST",
+            url: "pack/",
+            data: {
+                content: contentValue
             },
-            success: function(data){
-                if(data.code=='success'){
+            success: function (data) {
+                if (data.code == 'success') {
                     result.setValue(data.result);
-                }else{
+                } else {
                     result.setValue("");
                 }
 

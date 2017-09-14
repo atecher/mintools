@@ -7,7 +7,7 @@ $(function () {
     bindViewAction();
     bindCollapseLevelAction();
     var json = editor.getValue();
-    if(json!=""){
+    if (json != "") {
         Process();
     }
 });
@@ -21,9 +21,9 @@ function bindCodeMirror() {
 
 function bindFormatAction() {
 
-    $(document).on("click", "#formatBtn",function() {
-        var contentValue=editor.getValue();
-        if(contentValue!="") {
+    $(document).on("click", "#formatBtn", function () {
+        var contentValue = editor.getValue();
+        if (contentValue != "") {
             alert("11111111111");
             $.ajax({
                 type: "POST",
@@ -44,18 +44,18 @@ function bindFormatAction() {
 }
 
 function bindCompresstAction() {
-    $(document).on("click", "#compressBtn",function() {
-        var contentValue=editor.getValue();
-        if(contentValue!=""){
+    $(document).on("click", "#compressBtn", function () {
+        var contentValue = editor.getValue();
+        if (contentValue != "") {
             $.ajax({
-                type:"POST",
-                url:"/json/format/",
-                data:{
-                    json:contentValue,
-                    pettyFormat:false
+                type: "POST",
+                url: "/json/format/",
+                data: {
+                    json: contentValue,
+                    pettyFormat: false
                 },
-                success: function(data){
-                    if(data.code=='success'){
+                success: function (data) {
+                    if (data.code == 'success') {
                         editor.setValue(data.result);
                     }
                 }
@@ -93,7 +93,10 @@ function Process() {
     SetTab();
     window.IsCollapsible = $id("CollapsibleView").checked;
     var json = editor.getValue();
-    if(json==""){editor.setValue("{}");json=editor.getValue();}
+    if (json == "") {
+        editor.setValue("{}");
+        json = editor.getValue();
+    }
     var html = "";
     try {
         var obj = eval("[" + json + "]");
@@ -245,7 +248,7 @@ function CollapseLevel(level) {
     TraverseChildren($id("Canvas"),
         function (element, depth) {
             if (element.className == 'collapsible') {
-                if (depth >level) {
+                if (depth > level) {
                     MakeContentVisible(element, false);
                 } else {
                     MakeContentVisible(element, true);

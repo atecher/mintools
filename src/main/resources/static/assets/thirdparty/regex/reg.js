@@ -1,16 +1,17 @@
-jQuery(function($){
+jQuery(function ($) {
     function $(el) {
         if (el.nodeName) return el;
         if (typeof el === "string") return document.getElementById(el);
         return false
     };
-    var trim = function() {
+    var trim = function () {
         var lSpace = /^\s\s*/,
             rSpace = /\s\s*$/;
-        return function(str) {
+        return function (str) {
             return str.replace(lSpace, "").replace(rSpace, "")
         }
-    } ();
+    }();
+
     function replaceHtml(el, html) {
         var oldEl = $(el);
         var newEl = oldEl.cloneNode(false);
@@ -28,7 +29,8 @@ jQuery(function($){
             el = $(id)
         } else {
             el.innerHTML = html
-        };
+        }
+        ;
         return el
     };
     function getElementsByClassName(className, tagName, parentNode) {
@@ -36,7 +38,8 @@ jQuery(function($){
             results = [];
         for (var i = 0; i < els.length; i++) {
             if (hasClass(className, els[i])) results.push(els[i])
-        };
+        }
+        ;
         return results
     };
     function hasClass(className, el) {
@@ -91,7 +94,8 @@ jQuery(function($){
                     d[n] = null
                 }
             }
-        };
+        }
+        ;
         a = d.childNodes;
         if (a) {
             l = a.length;
@@ -101,7 +105,7 @@ jQuery(function($){
         }
     };
     var isWebKit = navigator.userAgent.indexOf("WebKit") > -1,
-        isIE,isIE6 = isIE && !window.XMLHttpRequest;
+        isIE, isIE6 = isIE && !window.XMLHttpRequest;
     var RegexPal = {
         fields: {
             search: new SmartField("search"),
@@ -120,38 +124,41 @@ jQuery(function($){
         }
     };
     extend(RegexPal,
-        function() {
+        function () {
             var f = RegexPal.fields,
                 o = f.options;
             return {
-                highlightMatches: function() {
+                highlightMatches: function () {
                     var re = {
                         matchPair: /`~\{((?:[^}]+|\}(?!~`))*)\}~`((?:[^`]+|`(?!~\{(?:[^}]+|\}(?!~`))*\}~`))*)(?:`~\{((?:[^}]+|\}(?!~`))*)\}~`)?/g,
                         sansTrailingAlternator: /^(?:[^\\|]+|\\[\S\s]?|\|(?=[\S\s]))*/
                     };
-                    return function() {
+                    return function () {
                         var search = String(f.search.textbox.value),
                             input = String(f.input.textbox.value);
                         if (XRegExp.cache('<[bB] class="?err"?>').test(f.search.bg.innerHTML) || (!search.length && !o.invertMatches.checked) || !o.highlightMatches.checked) {
                             f.input.clearBg();
                             return
-                        };
+                        }
+                        ;
                         try {
-                            var searchRegex = new XRegExp(re.sansTrailingAlternator.exec(search)[0], (o.flags.g.checked ? "g": "") + (o.flags.i.checked ? "i": "") + (o.flags.m.checked ? "m": "") + (o.flags.s.checked ? "s": ""))
-                        } catch(err) {
+                            var searchRegex = new XRegExp(re.sansTrailingAlternator.exec(search)[0], (o.flags.g.checked ? "g" : "") + (o.flags.i.checked ? "i" : "") + (o.flags.m.checked ? "m" : "") + (o.flags.s.checked ? "s" : ""))
+                        } catch (err) {
                             f.input.clearBg();
                             return
-                        };
+                        }
+                        ;
                         if (o.invertMatches.checked) {
                             var output = ("`~{" + input.replace(searchRegex, "}~`$&`~{") + "}~`").replace(XRegExp.cache("`~\\{\\}~`|\\}~``~\\{", "g"), "")
                         } else {
                             var output = input.replace(searchRegex, "`~{$&}~`")
-                        };
+                        }
+                        ;
                         output = output.replace(XRegExp.cache("[<&>]", "g"), "_").replace(re.matchPair, "<b>$1</b>$2<i>$3</i>");
                         f.input.setBgHtml(output)
                     }
-                } (),
-                highlightSearchSyntax: function() {
+                }(),
+                highlightSearchSyntax: function () {
                     if (o.highlightSyntax.checked) {
                         f.search.setBgHtml(parseRegex(f.search.textbox.value))
                     } else {
@@ -159,8 +166,8 @@ jQuery(function($){
                     }
                 }
             }
-        } ());
-    var parseRegex = function() {
+        }());
+    var parseRegex = function () {
         var re = {
                 regexToken: /\[\^?]?(?:[^\\\]]+|\\[\S\s]?)*]?|\\(?:0(?:[0-3][0-7]{0,2}|[4-7][0-7]?)?|[1-9][0-9]*|x[0-9A-Fa-f]{2}|u[0-9A-Fa-f]{4}|c[A-Za-z]|[\S\s]?)|\((?:\?[:=!]?)?|(?:[?*+]|\{[0-9]+(?:,[0-9]*)?\})\??|[^.?*+^${[()|\\]+|./g,
                 characterClassParts: /^(<opening>\[\^?)(<contents>]?(?:[^\\\]]+|\\[\S\s]?)*)(<closing>]?)$/.addFlags("k"),
@@ -173,6 +180,7 @@ jQuery(function($){
                 METACLASS: 2,
                 ALTERNATOR: 3
             };
+
         function errorStr(str) {
             return '<b class="err">' + str + '</b>'
         };
@@ -207,7 +215,8 @@ jQuery(function($){
                 }
             } else if (token !== "\\") {
                 return token.charCodeAt(0)
-            };
+            }
+            ;
             return false
         };
         function parseCharacterClass(value) {
@@ -220,7 +229,7 @@ jQuery(function($){
                 },
                 match,
                 m;
-            output += parts.closing ? parts.opening: errorStr(parts.opening);
+            output += parts.closing ? parts.opening : errorStr(parts.opening);
             while (match = parser.exec(parts.contents)) {
                 m = match[0];
                 if (m.charAt(0) === "\\") {
@@ -254,7 +263,8 @@ jQuery(function($){
                                 output += errorStr("-")
                             } else {
                                 output += "<u>-</u>"
-                            };
+                            }
+                            ;
                             lastToken = {
                                 rangeable: false,
                                 type: type.RANGE_HYPHEN
@@ -266,7 +276,8 @@ jQuery(function($){
                                 output += "<u>-</u>";
                                 break
                             }
-                        };
+                        }
+                        ;
                         parser.lastIndex = lastIndex
                     } else {
                         output += "-";
@@ -281,10 +292,11 @@ jQuery(function($){
                         charCode: m.charCodeAt(m.length - 1)
                     }
                 }
-            };
+            }
+            ;
             return output + parts.closing
         };
-        return function(value) {
+        return function (value) {
             var output = "",
                 capturingGroupCount = 0,
                 groupStyleDepth = 0,
@@ -295,6 +307,7 @@ jQuery(function($){
                 },
                 match,
                 m;
+
             function groupStyleStr(str) {
                 return '<b class="g' + groupStyleDepth + '">' + str + '</b>'
             };
@@ -318,7 +331,8 @@ jQuery(function($){
                                 opening: m
                             });
                             output += groupStyleStr(m)
-                        };
+                        }
+                        ;
                         lastToken = {
                             quantifiable: false
                         };
@@ -337,7 +351,8 @@ jQuery(function($){
                             };
                             groupStyleDepth = groupStyleDepth === 1 ? 5 : groupStyleDepth - 1;
                             openGroups.pop()
-                        };
+                        }
+                        ;
                         break;
                     case "\\":
                         if (XRegExp.cache("^[1-9]").test(m.charAt(1))) {
@@ -346,7 +361,8 @@ jQuery(function($){
                             while (num > capturingGroupCount) {
                                 nonBackrefDigits = XRegExp.cache("[0-9]$").exec(num)[0] + nonBackrefDigits;
                                 num = Math.floor(num / 10)
-                            };
+                            }
+                            ;
                             if (num > 0) {
                                 output += "<b>\\" + num + "</b>" + nonBackrefDigits
                             } else {
@@ -360,7 +376,8 @@ jQuery(function($){
                                     quantifiable: false
                                 };
                                 break
-                            };
+                            }
+                            ;
                             output += "<b>" + m + "</b>";
                             if ("bB".indexOf(m.charAt(1)) > -1) {
                                 lastToken = {
@@ -372,7 +389,8 @@ jQuery(function($){
                             output += errorStr(m)
                         } else {
                             output += m.replace(XRegExp.cache("[<&>]"), "_")
-                        };
+                        }
+                        ;
                         lastToken = {
                             quantifiable: true
                         };
@@ -381,14 +399,15 @@ jQuery(function($){
                         if (re.quantifier.test(m)) {
                             if (lastToken.quantifiable) {
                                 var interval = XRegExp.cache("^\\{([0-9]+)(?:,([0-9]*))?").exec(m);
-                                if (interval && ((interval[1] > 65535) || (interval[2] && ((interval[2] > 65535) || ( + interval[1] > +interval[2]))))) {
+                                if (interval && ((interval[1] > 65535) || (interval[2] && ((interval[2] > 65535) || ( +interval[1] > +interval[2]))))) {
                                     output += errorStr(m)
                                 } else {
-                                    output += (lastToken.style ? '<b class="' + lastToken.style + '">': '<b>') + m + '</b>'
+                                    output += (lastToken.style ? '<b class="' + lastToken.style + '">' : '<b>') + m + '</b>'
                                 }
                             } else {
                                 output += errorStr(m)
-                            };
+                            }
+                            ;
                             lastToken = {
                                 quantifiable: false
                             }
@@ -397,7 +416,8 @@ jQuery(function($){
                                 output += errorStr(m)
                             } else {
                                 output += openGroups.length ? groupStyleStr("|") : "<b>|</b>"
-                            };
+                            }
+                            ;
                             lastToken = {
                                 quantifiable: false,
                                 type: type.ALTERNATOR
@@ -419,16 +439,19 @@ jQuery(function($){
                             }
                         }
                 }
-            };
+            }
+            ;
             var numCharsAdded = 0;
             for (var i = 0; i < openGroups.length; i++) {
                 var errorIndex = openGroups[i].index + numCharsAdded;
                 output = (output.slice(0, errorIndex) + errorStr(openGroups[i].opening) + output.slice(errorIndex + openGroups[i].opening.length));
                 numCharsAdded += errorStr("").length
-            };
+            }
+            ;
             return output
         }
-    } ();
+    }();
+
     function SmartField(el) {
         el = $(el);
         var textboxEl = el.getElementsByTagName("textarea")[0],
@@ -436,10 +459,10 @@ jQuery(function($){
         textboxEl.id = el.id + "Text";
         bgEl.id = el.id + "Bg";
         el.insertBefore(bgEl, textboxEl);
-        textboxEl.onkeydown = function(e) {
+        textboxEl.onkeydown = function (e) {
             SmartField.prototype._onKeyDown(e)
         };
-        textboxEl.onkeyup = function(e) {
+        textboxEl.onkeyup = function (e) {
             SmartField.prototype._onKeyUp(e)
         };
         if (isIE) el.style.overflowX = "hidden";
@@ -449,38 +472,40 @@ jQuery(function($){
         this.bg = bgEl
     };
     extend(SmartField.prototype, {
-        setBgHtml: function(html) {
+        setBgHtml: function (html) {
             html = html.replace(XRegExp.cache("^\\n"), "\n\n");
             this.bg = replaceOuterHtml(this.bg, html + "<br>&nbsp;");
             this.setDimensions()
         },
-        clearBg: function() {
+        clearBg: function () {
             this.setBgHtml(this.textbox.value.replace(XRegExp.cache("[<&>]", "g"), "_"))
         },
-        setDimensions: function() {
+        setDimensions: function () {
             this.textbox.style.width = "";
-            var scrollWidth = this.textbox.scrollWidth,offsetWidth = this.textbox.offsetWidth;
+            var scrollWidth = this.textbox.scrollWidth, offsetWidth = this.textbox.offsetWidth;
             this.textbox.style.width = (scrollWidth === offsetWidth ? offsetWidth - 1 : scrollWidth + 8) + "px";
             this.textbox.style.height = Math.max(this.bg.offsetHeight, this.field.offsetHeight - 2) + "px"
         },
-        _onKeyDown: function(e) {
+        _onKeyDown: function (e) {
             e = e || event;
             if (!this._filterKeys(e)) return false;
             var srcEl = e.srcElement || e.target;
             switch (srcEl) {
                 case RegexPal.fields.search.textbox:
-                    setTimeout(function() {
+                    setTimeout(function () {
                             RegexPal.highlightSearchSyntax.call(RegexPal)
                         },
                         0);
                     break
-            };
+            }
+            ;
             if (isWebKit && srcEl.selectionEnd === srcEl.value.length) {
                 srcEl.parentNode.scrollTop = srcEl.scrollHeight
-            };
+            }
+            ;
             this._testKeyHold(e)
         },
-        _onKeyUp: function(e) {
+        _onKeyUp: function (e) {
             e = e || event;
             var srcEl = e.srcElement || e.target;
             this._keydownCount = 0;
@@ -494,7 +519,7 @@ jQuery(function($){
                 }
             }
         },
-        _testKeyHold: function(e) {
+        _testKeyHold: function (e) {
             var srcEl = e.srcElement || e.target;
             this._keydownCount++;
             if (this._keydownCount > 2) {
@@ -504,7 +529,7 @@ jQuery(function($){
                 switch (srcEl) {
                     case RegexPal.fields.search.textbox:
                     case RegexPal.fields.input.textbox:
-                        setTimeout(function() {
+                        setTimeout(function () {
                                 RegexPal.highlightMatches.call(RegexPal)
                             },
                             0);
@@ -512,7 +537,7 @@ jQuery(function($){
                 }
             }
         },
-        _filterKeys: function(e) {
+        _filterKeys: function (e) {
             var srcEl = e.srcElement || e.target,
                 f = RegexPal.fields;
             if (this._deadKeys.indexOf(e.keyCode) > -1) return false;
@@ -522,26 +547,29 @@ jQuery(function($){
                         f.search.textbox.focus()
                     } else {
                         replaceSelection(srcEl, "\t");
-                        if (window.opera) setTimeout(function() {
+                        if (window.opera) setTimeout(function () {
                                 srcEl.focus()
                             },
                             0)
                     }
                 } else {
                     f.input.textbox.focus()
-                };
+                }
+                ;
                 if (e.preventDefault) e.preventDefault();
                 else e.returnValue = false
-            };
+            }
+            ;
             return true
         },
         _matchOnKeyUp: false,
         _keydownCount: 0,
         _deadKeys: [16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 44, 45, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 144, 145]
-    }); (function() {
+    });
+    (function () {
         var f = RegexPal.fields,
             o = f.options;
-        onresize = function(e) {
+        onresize = function (e) {
             var isIE1 = !!window.ActiveXObject;
             var isIE61 = isIE1 && !window.XMLHttpRequest;
             if (isIE61) f.input.field.style.height = Math.max((window.innerHeight || document.documentElement.clientHeight) - 310, 180) + "px";
@@ -554,12 +582,13 @@ jQuery(function($){
         RegexPal.highlightMatches();
         for (var flag in o.flags) {
             o.flags[flag].onclick = RegexPal.highlightMatches
-        };
+        }
+        ;
         o.highlightSyntax.onclick = RegexPal.highlightSearchSyntax;
         o.highlightMatches.onclick = RegexPal.highlightMatches;
         o.invertMatches.onclick = RegexPal.highlightMatches;
         function makeResetter(field) {
-            return function() {
+            return function () {
                 field.clearBg();
                 field.textbox.value = "";
                 field.textbox.onfocus = null
@@ -567,7 +596,8 @@ jQuery(function($){
         };
         if (f.search.textbox.value == "(\\w+\\.){2}\\w+") {
             f.search.textbox.onfocus = makeResetter(f.search)
-        };
+        }
+        ;
         if (f.input.textbox.value === "tool.chinaz.com|888") {
             f.input.textbox.onfocus = makeResetter(f.input)
         }

@@ -9,9 +9,9 @@ public class ResponseResult implements Serializable {
     private String code;
     private Object result;
 
-    public ResponseResult(String code, Object result){
-        this.result=result;
-        this.code=code;
+    public ResponseResult(String code, Object result) {
+        this.result = result;
+        this.code = code;
     }
 
     public Object getResult() {

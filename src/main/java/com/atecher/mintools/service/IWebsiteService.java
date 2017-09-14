@@ -9,5 +9,5 @@ import java.util.HashMap;
  */
 public interface IWebsiteService {
 
-    Page<String> queryExtlinkForPage(int page, int limit, HashMap<String,Object> parameter);
+    Page<String> queryExtlinkForPage(int page, int limit, HashMap<String, Object> parameter);
 }

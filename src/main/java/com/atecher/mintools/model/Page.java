@@ -11,9 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Page<T> implements Serializable {
-	
-	private static final long serialVersionUID = 2438037063942588690L;
-	private int total;
-	private List<T> rows;
+
+    private static final long serialVersionUID = 2438037063942588690L;
+    private int total;
+    private List<T> rows;
 
 }

@@ -5,23 +5,25 @@
     <title>常用文档-开发者的在线工具箱</title>
 </head>
 <body>
-<div layout:fragment="content" class="container" >
+<div layout:fragment="content" class="container">
     <div class="row">
         <div class="col-xs-8">
             <div class="list-group mt-packages">
-                    <a class="mt-package list-group-item" th:each="t,stat : ${docs}" th:href="@{{link}(link=${t.href})}" th:target="${t.target}">
-                        <div class="row" th:id="'tool-'+${t.code}">
-                            <div class="col-xs-2"><img th:src="@{/themes/default/images/tools/{icon}(icon=${t.icon})}" th:alt="${t.title}" /></div>
-                            <div class="col-xs-2" th:text="${t.title}"></div>
-                            <div class="col-xs-8">
-                                <p th:text="${t.description}"></p>
-                                <p th:text="'标签：'+${t.tag}"></p>
-                            </div>
+                <a class="mt-package list-group-item" th:each="t,stat : ${docs}" th:href="@{{link}(link=${t.href})}"
+                   th:target="${t.target}">
+                    <div class="row" th:id="'tool-'+${t.code}">
+                        <div class="col-xs-2"><img th:src="@{/themes/default/images/tools/{icon}(icon=${t.icon})}"
+                                                   th:alt="${t.title}"/></div>
+                        <div class="col-xs-2" th:text="${t.title}"></div>
+                        <div class="col-xs-8">
+                            <p th:text="${t.description}"></p>
+                            <p th:text="'标签：'+${t.tag}"></p>
                         </div>
-                    </a>
+                    </div>
+                </a>
             </div>
         </div>
-        <div class="col-xs-4" th:include="module :: sidebar"> </div>
+        <div class="col-xs-4" th:include="module :: sidebar"></div>
     </div>
 </div>
 </body>

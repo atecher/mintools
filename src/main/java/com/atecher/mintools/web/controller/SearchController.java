@@ -21,13 +21,14 @@ public class SearchController {
 
     @Autowired
     private SearchMapper searchMapper;
-    @RequestMapping(value = "/search",method = RequestMethod.GET)
-    public String js(@RequestParam(value="s",required = false) String search, Model model) {
-        List<HashMap<String, Object>> tools=null;
-        if(!StringUtils.isEmpty(search)){
-            tools=searchMapper.search(search);
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String js(@RequestParam(value = "s", required = false) String search, Model model) {
+        List<HashMap<String, Object>> tools = null;
+        if (!StringUtils.isEmpty(search)) {
+            tools = searchMapper.search(search);
         }
-        model.addAttribute("tools",tools);
+        model.addAttribute("tools", tools);
         return WebForwardConstants.INDEX;
     }
 

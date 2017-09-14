@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.atecher.mintools.mapper.ExtlinkMapper" >
+<mapper namespace="com.atecher.mintools.mapper.ExtlinkMapper">
     <select id="queryExtlinkForPage" parameterType="java.util.HashMap" resultType="string">
-      select extlink from sys_extlink limit #{start},#{limit}
+        select extlink from sys_extlink limit #{start},#{limit}
     </select>
     <select id="queryExtlinkForPageCount" parameterType="java.util.HashMap" resultType="int">
         select count(1) from sys_extlink

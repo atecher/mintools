@@ -49,14 +49,14 @@ var jstool = new Inote.JSTool();
 
             </div>
             <div class="form-group">
-                <button class="btn btn-danger" id="btnJSFormat" >格式化(Format)</button>
-                <button class="btn btn-danger" id="btnPurify" >净化(Purify)</button>
-                <button class="btn btn-danger" id="btnEncrypt" >加密(Encrypt)</button>
-                <button class="btn btn-danger" id="btnDecode" >解密(Decrypt)</button>
+                <button class="btn btn-danger" id="btnJSFormat">格式化(Format)</button>
+                <button class="btn btn-danger" id="btnPurify">净化(Purify)</button>
+                <button class="btn btn-danger" id="btnEncrypt">加密(Encrypt)</button>
+                <button class="btn btn-danger" id="btnDecode">解密(Decrypt)</button>
             </div>
 
-            <div class="form-group"><textarea id="result" class="form-control height-large" ></textarea></div>
-                <div th:include="module :: comment"></div>
+            <div class="form-group"><textarea id="result" class="form-control height-large"></textarea></div>
+            <div th:include="module :: comment"></div>
         </div>
         <div class="col-xs-4" th:include="module :: sidebar"></div>
     </div>

@@ -5,7 +5,7 @@ import com.atecher.mintools.model.Page;
 /**
  * Created by hanhongwei on 2016/8/1.
  */
-public class PageResult extends Page{
+public class PageResult extends Page {
 
     private Integer page;
     private Integer limit;

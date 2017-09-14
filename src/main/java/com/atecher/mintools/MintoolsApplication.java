@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.atecher.mintools.mapper")
 public class MintoolsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MintoolsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MintoolsApplication.class, args);
+    }
 }

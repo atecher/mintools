@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class CommonController {
-	@RequestMapping(value = "/meitu",method = RequestMethod.GET)
-	public String js() {
-			return WebForwardConstants.COMMON_IMITO;
-	}
+    @RequestMapping(value = "/meitu", method = RequestMethod.GET)
+    public String js() {
+        return WebForwardConstants.COMMON_IMITO;
+    }
 
 }

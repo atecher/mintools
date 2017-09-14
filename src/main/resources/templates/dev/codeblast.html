@@ -25,16 +25,25 @@
     <script type="text/javascript" th:src="@{/assets/js/codemirror/mode/htmlmixed/htmlmixed.js}"></script>
     <script type="text/javascript" th:src="@{/assets/thirdparty/codeblast/code-blast.js}"></script>
     <style type="text/css">
-        body{background: #272822;}
-        body *{font-size: 20px;}
-        .CodeMirror{height: 100%;border-width: 0;}
+        body {
+            background: #272822;
+        }
+
+        body * {
+            font-size: 20px;
+        }
+
+        .CodeMirror {
+            height: 100%;
+            border-width: 0;
+        }
     </style>
 </head>
 <body>
 <script>
     window.cm = CodeMirror(document.body, {
         lineNumbers: true,
-        mode:  "htmlmixed",
+        mode: "htmlmixed",
         theme: 'monokai',
         lineWrapping: true,
         autofocus: true,
@@ -43,17 +52,19 @@
         tabSize: 2,
         value: "<article>\n  <h1>Code blast plugin for Codmirror</h1>\n  <div class=\"based-on\">\n    Based on Joel Besada's experiment:\n    https://twitter.com/JoelBesada/status/670343885655293952\n  </div>\n  \n  <div>\n\t  Github: https://github.com/chinchang/code-blast-codemirror/\n  </div>\n  \n</article>",
         autoCloseTags: true,
-        blastCode: { effect: 2 },
+        blastCode: {effect: 2},
     });
     cm.on("change", function (instance, change) {
-        if (window.ev) { return; }
+        if (window.ev) {
+            return;
+        }
         window.ev = 1;
         window._gaq && _gaq.push(['_trackEvent', 'code-blast', 'used']);
     });
 </script>
 <script type="text/javascript">
     var _hmt = _hmt || [];
-    (function() {
+    (function () {
         var hm = document.createElement("script");
         hm.src = "//hm.baidu.com/hm.js?af8abc7e6c116587b3b7bf7e208b891e";
         var s = document.getElementsByTagName("script")[0];

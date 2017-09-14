@@ -201,7 +201,7 @@ public class DeveloperController {
     @RequestMapping(value = "/rest", method = RequestMethod.POST)
     @ResponseBody
     public ResponseResult restClient(String url, String method) {
-        ResponseEntity<String> responseEntity=null;
+        ResponseEntity<String> responseEntity = null;
         RestTemplate rest = new RestTemplate();
         if ("GET".equals(method)) {
             responseEntity = rest.getForEntity(url, String.class);

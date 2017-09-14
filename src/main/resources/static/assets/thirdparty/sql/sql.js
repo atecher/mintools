@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
     bindCodeMirror();
     bindSqlFormatAction();
 });
@@ -16,20 +16,20 @@ function bindCodeMirror() {
         matchBrackets: true
     });
 }
-function bindSqlFormatAction(){
-    $(document).on("click", "#format",function() {
-        var contentValue=editor.getValue();
+function bindSqlFormatAction() {
+    $(document).on("click", "#format", function () {
+        var contentValue = editor.getValue();
         $.ajax({
-            type:"POST",
-            url:"/sql/format/",
-            data:{
-                sql:contentValue,
-                type:$("input[name='type']:checked").val()
+            type: "POST",
+            url: "/sql/format/",
+            data: {
+                sql: contentValue,
+                type: $("input[name='type']:checked").val()
             },
-            success: function(data){
-                if(data.code=='success'){
+            success: function (data) {
+                if (data.code == 'success') {
                     result.setValue(data.result);
-                }else{
+                } else {
                     result.setValue("");
                 }
 

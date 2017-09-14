@@ -15,15 +15,15 @@ import java.util.List;
  * Created by hanhongwei on 2016/7/19.
  */
 @Controller
-public class DocumentController{
+public class DocumentController {
 
     @Autowired
     private DocMapper docMapper;
 
-    @RequestMapping(value = "/doc",method = RequestMethod.GET)
+    @RequestMapping(value = "/doc", method = RequestMethod.GET)
     public String index(Model model) {
-        List<HashMap<String,Object>> docs=docMapper.findDocAll();
-        model.addAttribute("docs",docs);
+        List<HashMap<String, Object>> docs = docMapper.findDocAll();
+        model.addAttribute("docs", docs);
         return WebForwardConstants.DOCUMENT_INDEX;
     }
 

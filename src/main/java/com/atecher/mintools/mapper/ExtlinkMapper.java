@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface ExtlinkMapper {
 
-    List<String> queryExtlinkForPage(HashMap<String,Object> param);
+    List<String> queryExtlinkForPage(HashMap<String, Object> param);
 
-    int queryExtlinkForPageCount(HashMap<String,Object> param);
+    int queryExtlinkForPageCount(HashMap<String, Object> param);
 }

@@ -10,9 +10,9 @@ import java.util.Date;
 
 public class DateConverter implements WebBindingInitializer {
 
-	public void initBinder(WebDataBinder binder, WebRequest request) {
-		 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		 binder.registerCustomEditor(Date.class, new CustomDateEditor(df,false));
-	}
+    public void initBinder(WebDataBinder binder, WebRequest request) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(df, false));
+    }
 
 }

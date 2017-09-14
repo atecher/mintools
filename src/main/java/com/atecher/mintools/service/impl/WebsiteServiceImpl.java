@@ -18,13 +18,13 @@ public class WebsiteServiceImpl implements IWebsiteService {
     @Autowired
     private ExtlinkMapper extlinkMapper;
 
-    public Page<String> queryExtlinkForPage(int page, int limit, HashMap<String,Object> parameter){
-        parameter.put("start", (page-1)*limit);
+    public Page<String> queryExtlinkForPage(int page, int limit, HashMap<String, Object> parameter) {
+        parameter.put("start", (page - 1) * limit);
         parameter.put("limit", limit);
-        int total=extlinkMapper.queryExtlinkForPageCount(parameter);
-        if(total==0){
+        int total = extlinkMapper.queryExtlinkForPageCount(parameter);
+        if (total == 0) {
             return new Page(0, new ArrayList<String>());
-        }else{
+        } else {
             return new Page(total, extlinkMapper.queryExtlinkForPage(parameter));
         }
     }
