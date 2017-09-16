@@ -222,11 +222,6 @@ public class QRCodeUtil {
         return QRCodeUtil.decode(new File(path));
     }
 
-    public static void main(String[] args) throws Exception {
-//			String text = "薯灯可分列式本上楞珂要瓜熟蒂落！000000000000000";
-//			QRCodeUtil.encode(text, "d:/a/md5.png", "d:/a/", true);
-    }
-
 
     public static void visitingCard(String name, String tel, String email, String url, String org, String address, String imgPath, OutputStream output) throws Exception {
         StringBuilder sb = new StringBuilder("MECARD:");
