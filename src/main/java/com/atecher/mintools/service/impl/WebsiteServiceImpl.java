@@ -23,9 +23,9 @@ public class WebsiteServiceImpl implements IWebsiteService {
         parameter.put("limit", limit);
         int total = extlinkMapper.queryExtlinkForPageCount(parameter);
         if (total == 0) {
-            return new Page(0, new ArrayList<String>());
+            return new Page<>(0, new ArrayList<String>());
         } else {
-            return new Page(total, extlinkMapper.queryExtlinkForPage(parameter));
+            return new Page<>(total, extlinkMapper.queryExtlinkForPage(parameter));
         }
     }
 

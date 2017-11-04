@@ -14,7 +14,7 @@ import java.security.MessageDigest;
  * @版本 v1.0
  */
 public class MD5Util {
-    public static String md5(String s) {
+    private static String md5(String s) {
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         try {
             byte[] btInput = s.getBytes(Constants.DEFAULT_CHARSET);
@@ -46,6 +46,7 @@ public class MD5Util {
     public static String md5(String sourceStr, int len) {
         String result = md5(sourceStr);
         if (len == 16) {
+            assert result != null;
             return result.substring(8, 24);
         } else if (len == 32) {
             return result;

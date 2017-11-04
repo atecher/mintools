@@ -33,8 +33,7 @@ public class WebMasterController {
     @RequestMapping(value = "/whois/search", method = RequestMethod.POST)
     @ResponseBody
     public GetWhoisInfoResponse whois(@RequestParam("domainName") String domainName) throws Exception {
-        GetWhoisInfoResponse response = WhoisUtils.getWhoisInfo(domainName);
-        return response;
+        return WhoisUtils.getWhoisInfo(domainName);
     }
 
     @RequestMapping(value = "/extlink", method = RequestMethod.GET)

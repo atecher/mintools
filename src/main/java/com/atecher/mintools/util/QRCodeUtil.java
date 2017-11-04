@@ -207,8 +207,7 @@ public class QRCodeUtil {
         Hashtable<DecodeHintType, Object> hints = new Hashtable<>();
         hints.put(DecodeHintType.CHARACTER_SET, CHARSET);
         result = new MultiFormatReader().decode(bitmap, hints);
-        String resultStr = result.getText();
-        return resultStr;
+        return result.getText();
     }
 
     /**

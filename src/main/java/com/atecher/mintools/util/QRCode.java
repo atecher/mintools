@@ -20,7 +20,7 @@ public class QRCode {
 
     // 图片宽度的一半
     // 二维码写码器
-    private static MultiFormatWriter mutiWriter = new MultiFormatWriter();
+    private static final MultiFormatWriter mutiWriter = new MultiFormatWriter();
 
     /**
      * 描述：TODO
@@ -30,7 +30,7 @@ public class QRCode {
      * @日期 2014-9-28
      * @邮箱 hongwei.han@qq.com
      */
-    public static void encode(QRCodeSetting qrCodeSetting) throws Exception {
+    private static void encode(QRCodeSetting qrCodeSetting) throws Exception {
         try {
             BufferedImage bufferedImage = genBarcode(qrCodeSetting);
             if (qrCodeSetting.getLogoPath() != null)//如果有logo则添加
@@ -95,7 +95,7 @@ public class QRCode {
      * @邮箱 hongwei.han@qq.com
      */
 
-    private static BufferedImage genBarcode(QRCodeSetting qrCodeSetting) throws WriterException, IOException {
+    private static BufferedImage genBarcode(QRCodeSetting qrCodeSetting) throws WriterException {
         Hashtable<EncodeHintType, Object> hint = new Hashtable<>();
         hint.put(EncodeHintType.CHARACTER_SET, "UTF-8");
         hint.put(EncodeHintType.DATA_MATRIX_SHAPE, SymbolShapeHint.FORCE_SQUARE);
@@ -191,7 +191,7 @@ public class QRCode {
         return image;
     }
 
-    public static double getResult(int radius, int c_x, int c_y, int x, int y) {
+    private static double getResult(int radius, int c_x, int c_y, int x, int y) {
         double len = Math.sqrt(Math.pow(x - c_x, 2) + Math.pow(y - c_y, 2));
         if (len > radius) {
             len = radius;

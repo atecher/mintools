@@ -46,8 +46,7 @@ public class DeveloperController {
     @ResponseBody
     public String htmlFormat(@RequestParam("content") String content) {
         Document doc = Jsoup.parse(content);
-        String html = doc.html();
-        return html;
+        return doc.html();
     }
 
     @RequestMapping(value = "/html/compress", method = RequestMethod.POST)
@@ -60,8 +59,7 @@ public class DeveloperController {
     @ResponseBody
     public String htmlClear(@RequestParam("content") String content) throws Exception {
         Document doc = Jsoup.parseBodyFragment(content);
-        String html = doc.text();
-        return html;
+        return doc.text();
     }
 
     @RequestMapping(value = "/base64", method = RequestMethod.GET)

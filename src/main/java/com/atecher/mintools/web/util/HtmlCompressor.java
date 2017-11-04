@@ -13,34 +13,34 @@ import java.util.regex.Pattern;
  * @date 2010-5-13
  *******************************************/
 public class HtmlCompressor {
-    private static String tempPreBlock = "%%%HTMLCOMPRESS~PRE&&&";
-    private static String tempTextAreaBlock = "%%%HTMLCOMPRESS~TEXTAREA&&&";
-    private static String tempScriptBlock = "%%%HTMLCOMPRESS~SCRIPT&&&";
-    private static String tempStyleBlock = "%%%HTMLCOMPRESS~STYLE&&&";
-    private static String tempJspBlock = "%%%HTMLCOMPRESS~JSP&&&";
+    private static final String tempPreBlock = "%%%HTMLCOMPRESS~PRE&&&";
+    private static final String tempTextAreaBlock = "%%%HTMLCOMPRESS~TEXTAREA&&&";
+    private static final String tempScriptBlock = "%%%HTMLCOMPRESS~SCRIPT&&&";
+    private static final String tempStyleBlock = "%%%HTMLCOMPRESS~STYLE&&&";
+    private static final String tempJspBlock = "%%%HTMLCOMPRESS~JSP&&&";
 
-    private static Pattern commentPattern = Pattern.compile("<!--\\s*[^\\[].*?-->", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static Pattern itsPattern = Pattern.compile(">\\s+?<", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static Pattern prePattern = Pattern.compile("<pre[^>]*?>.*?</pre>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static Pattern taPattern = Pattern.compile("<textarea[^>]*?>.*?</textarea>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static Pattern jspPattern = Pattern.compile("<%([^-@][\\w\\W]*?)%>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern commentPattern = Pattern.compile("<!--\\s*[^\\[].*?-->", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern itsPattern = Pattern.compile(">\\s+?<", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern prePattern = Pattern.compile("<pre[^>]*?>.*?</pre>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern taPattern = Pattern.compile("<textarea[^>]*?>.*?</textarea>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern jspPattern = Pattern.compile("<%([^-@][\\w\\W]*?)%>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
     // <script></script>
-    private static Pattern scriptPattern = Pattern.compile("(?:<script\\s*>|<script type=['\"]text/javascript['\"]\\s*>)(.*?)</script>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static Pattern stylePattern = Pattern.compile("<style[^>()]*?>(.+)</style>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern scriptPattern = Pattern.compile("(?:<script\\s*>|<script type=['\"]text/javascript['\"]\\s*>)(.*?)</script>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern stylePattern = Pattern.compile("<style[^>()]*?>(.+)</style>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 
     // 单行注释，
-    private static Pattern signleCommentPattern = Pattern.compile("//.*");
+    private static final Pattern signleCommentPattern = Pattern.compile("//.*");
     // 字符串匹配
-    private static Pattern stringPattern = Pattern.compile("(\"[^\"\\n]*?\"|'[^'\\n]*?')");
+    private static final Pattern stringPattern = Pattern.compile("(\"[^\"\\n]*?\"|'[^'\\n]*?')");
     // trim去空格和换行符
-    private static Pattern trimPattern = Pattern.compile("\\n\\s*", Pattern.MULTILINE);
-    private static Pattern trimPattern2 = Pattern.compile("\\s*\\r", Pattern.MULTILINE);
+    private static final Pattern trimPattern = Pattern.compile("\\n\\s*", Pattern.MULTILINE);
+    private static final Pattern trimPattern2 = Pattern.compile("\\s*\\r", Pattern.MULTILINE);
     // 多行注释
-    private static Pattern multiCommentPattern = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern multiCommentPattern = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 
-    private static String tempSingleCommentBlock = "%%%HTMLCOMPRESS~SINGLECOMMENT&&&";  // //占位符
-    private static String tempMulitCommentBlock1 = "%%%HTMLCOMPRESS~MULITCOMMENT1&&&";  // /*占位符
-    private static String tempMulitCommentBlock2 = "%%%HTMLCOMPRESS~MULITCOMMENT2&&&";  // */占位符
+    private static final String tempSingleCommentBlock = "%%%HTMLCOMPRESS~SINGLECOMMENT&&&";  // //占位符
+    private static final String tempMulitCommentBlock1 = "%%%HTMLCOMPRESS~MULITCOMMENT1&&&";  // /*占位符
+    private static final String tempMulitCommentBlock2 = "%%%HTMLCOMPRESS~MULITCOMMENT2&&&";  // */占位符
 
 
     public static String compress(String html) throws Exception {
@@ -138,7 +138,7 @@ public class HtmlCompressor {
         return result;
     }
 
-    private static String processPreBlocks(String html, List<String> blocks) throws Exception {
+    private static String processPreBlocks(String html, List<String> blocks) {
         String result = html;
 
         //put preserved blocks back
@@ -149,7 +149,7 @@ public class HtmlCompressor {
         return result;
     }
 
-    private static String processTextareaBlocks(String html, List<String> blocks) throws Exception {
+    private static String processTextareaBlocks(String html, List<String> blocks) {
         String result = html;
 
         //put preserved blocks back
@@ -160,7 +160,7 @@ public class HtmlCompressor {
         return result;
     }
 
-    private static String processScriptBlocks(String html, List<String> blocks) throws Exception {
+    private static String processScriptBlocks(String html, List<String> blocks) {
         String result = html;
 
 //		if(compressJavaScript) {
@@ -177,7 +177,7 @@ public class HtmlCompressor {
         return result;
     }
 
-    private static String processStyleBlocks(String html, List<String> blocks) throws Exception {
+    private static String processStyleBlocks(String html, List<String> blocks) {
         String result = html;
 
 //		if(compressCss) {
