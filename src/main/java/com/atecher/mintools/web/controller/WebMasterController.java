@@ -43,7 +43,7 @@ public class WebMasterController {
 
     @RequestMapping(value = "/extlink", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseResult getData(@RequestParam(value = "domain", defaultValue = "www.mintools.net") String domain, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "20") Integer size) throws Exception {
+    public ResponseResult<PageResult> getData(@RequestParam(value = "domain", defaultValue = "www.mintools.net") String domain, @RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "size", defaultValue = "20") Integer size) throws Exception {
         Page<String> extLinks = websiteService.queryExtlinkForPage(page, size, new HashMap<String, Object>());
         List<String> datas = extLinks.getRows();
         List<String> result = new ArrayList<>();
@@ -57,7 +57,7 @@ public class WebMasterController {
         pageResult.setTotal(extLinks.getTotal());
         pageResult.setLimit(size);
         pageResult.setPage(page);
-        return new ResponseResult("success", pageResult);
+        return new ResponseResult<>("success", pageResult);
     }
 
 
