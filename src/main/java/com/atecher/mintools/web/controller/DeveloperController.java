@@ -122,7 +122,7 @@ public class DeveloperController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Object obj = mapper.readValue(json, Object.class);
-            return new ResponseResult("success", pettyFormat ? mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj) : json);
+            return new ResponseResult("success", pettyFormat ? mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj) :  mapper.writeValueAsString(obj));
         } catch (Exception e) {
             return new ResponseResult("error", e.getMessage());
         }

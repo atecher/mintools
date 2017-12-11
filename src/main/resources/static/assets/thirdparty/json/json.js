@@ -24,7 +24,6 @@ function bindFormatAction() {
     $(document).on("click", "#formatBtn", function () {
         var contentValue = editor.getValue();
         if (contentValue != "") {
-            alert("11111111111");
             $.ajax({
                 type: "POST",
                 url: "/json/format/",
