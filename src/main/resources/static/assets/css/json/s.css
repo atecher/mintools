@@ -34,6 +34,20 @@ div.Canvas {
     color: #007777;
 }
 
+.jsontype {
+    background: #4e9a06;color:#fff;font-size: 0.8em;padding: 1px;border-radius: 2px;font-weight: bold;margin-right: 3px;
+}
+
+.array{
+    background-color:#a40000 !important;
+}
+
+.object{
+    background-color:#0c9abe !important;
+}
+
+
+
 .Number {
     color: #AA00AA;
 }

@@ -6,6 +6,8 @@ import com.atecher.mintools.web.util.Constants;
 import com.atecher.mintools.web.util.HtmlCompressor;
 import com.atecher.mintools.web.util.ResponseResult;
 import com.atecher.mintools.web.util.WebForwardConstants;
+import com.fasterxml.jackson.core.JsonLocation;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.binary.Base64;
 import org.dom4j.DocumentException;
@@ -123,7 +125,14 @@ public class DeveloperController {
             ObjectMapper mapper = new ObjectMapper();
             Object obj = mapper.readValue(json, Object.class);
             return new ResponseResult("success", pettyFormat ? mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj) :  mapper.writeValueAsString(obj));
-        } catch (Exception e) {
+        } catch (JsonParseException e) {
+            JsonLocation location = e.getLocation();
+            int column = location.getColumnNr();
+            int line=location.getLineNr();
+            String message=e.getOriginalMessage();
+            String respMessage="不合法的JSON：<br/>位置：第"+line+"行，第"+column+"列。<br/>原因："+message;
+            return new ResponseResult("error", respMessage);
+        }catch (Exception e) {
             return new ResponseResult("error", e.getMessage());
         }
     }

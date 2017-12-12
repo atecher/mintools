@@ -1,4 +1,9 @@
 $(function () {
+    $("input[type=radio]").iCheck({
+        checkboxClass: 'icheckbox_square-red',
+        radioClass: 'iradio_square-red',
+        increaseArea: '20%'
+    });
     bindCodeMirror();
     bindSqlFormatAction();
 });
@@ -18,6 +23,7 @@ function bindCodeMirror() {
 }
 function bindSqlFormatAction() {
     $(document).on("click", "#format", function () {
+
         var contentValue = editor.getValue();
         $.ajax({
             type: "POST",

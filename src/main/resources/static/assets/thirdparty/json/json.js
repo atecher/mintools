@@ -6,10 +6,17 @@ $(function () {
     bindCompresstAction();
     bindViewAction();
     bindCollapseLevelAction();
+    bindOperationClicked();
     var json = editor.getValue();
     if (json != "") {
         Process();
     }
+
+    $('input[type=checkbox]').iCheck({
+        checkboxClass: 'icheckbox_square-red',
+        radioClass: 'iradio_square-red',
+        increaseArea: '20%'
+    });
 });
 function bindCodeMirror() {
     editor = CodeMirror.fromTextArea(document.getElementById("content"), {
@@ -34,6 +41,8 @@ function bindFormatAction() {
                 success: function (data) {
                     if (data.code == 'success') {
                         editor.setValue(data.result);
+                    }else if(data.code== 'error'){
+                        layer.alert(data.result);
                     }
                 }
             });
@@ -56,6 +65,8 @@ function bindCompresstAction() {
                 success: function (data) {
                     if (data.code == 'success') {
                         editor.setValue(data.result);
+                    }else if(data.code== 'error'){
+                        layer.alert(data.result);
                     }
                 }
             });
@@ -82,6 +93,7 @@ window.SINGLE_TAB = "  ";
 window.ImgCollapsed = "../themes/default/images/icons/collapsed.gif";
 window.ImgExpanded = "../themes/default/images/icons/expanded.gif";
 window.QuoteKeys = true;
+window.jsonType = false;
 function $id(id) {
     return document.getElementById(id);
 }
@@ -102,7 +114,7 @@ function Process() {
         html = ProcessObject(obj[0], 0, false, false, false);
         $id("Canvas").innerHTML = "<PRE class='CodeContainer'>" + html + "</PRE>";
     } catch (e) {
-        alert("JSON数据格式不正确:\n" + e.message);
+        layer.alert("JSON数据格式不正确:\n" + e.message);
         $id("Canvas").innerHTML = "";
     }
 }
@@ -112,13 +124,14 @@ function ProcessObject(obj, indent, addComma, isArray, isPropertyContent) {
     var html = "";
     var comma = (addComma) ? "<span class='Comma'>,</span> " : "";
     var type = typeof obj;
+    console.log(type);
     var clpsHtml = "";
     if (IsArray(obj)) {
         if (obj.length == 0) {
-            html += GetRow(indent, "<span class='ArrayBrace'>[ ]</span>" + comma, isPropertyContent);
+            html += GetRow(indent, (window.jsonType ? "<span class='jsontype array'> array </span>":"")+"<span class='ArrayBrace'>[ ]</span>" + comma, isPropertyContent);
         } else {
             clpsHtml = window.IsCollapsible ? "<span><img src=\"" + window.ImgExpanded + "\" onClick=\"ExpImgClicked(this)\" /></span><span class='collapsible'>" : "";
-            html += GetRow(indent, "<span class='ArrayBrace'>[</span>" + clpsHtml, isPropertyContent);
+            html += GetRow(indent, (window.jsonType ? "<span class='jsontype array'> array </span>":"")+"<span class='ArrayBrace'>[</span>" + clpsHtml, isPropertyContent);
             for (var i = 0; i < obj.length; i++) {
                 html += ProcessObject(obj[i], indent + 1, i < (obj.length - 1), true, false);
             }
@@ -127,19 +140,19 @@ function ProcessObject(obj, indent, addComma, isArray, isPropertyContent) {
         }
     } else if (type == 'object') {
         if (obj == null) {
-            html += FormatLiteral("null", "", comma, indent, isArray, "Null");
+            html += FormatLiteral("null", "", comma, indent, isArray, "Null",type);
         } else if (obj.constructor == window._dateObj.constructor) {
-            html += FormatLiteral("new Date(" + obj.getTime() + ") /*" + obj.toLocaleString() + "*/", "", comma, indent, isArray, "Date");
+            html += FormatLiteral("new Date(" + obj.getTime() + ") /*" + obj.toLocaleString() + "*/", "", comma, indent, isArray, "Date",type);
         } else if (obj.constructor == window._regexpObj.constructor) {
-            html += FormatLiteral("new RegExp(" + obj + ")", "", comma, indent, isArray, "RegExp");
+            html += FormatLiteral("new RegExp(" + obj + ")", "", comma, indent, isArray, "RegExp",type);
         } else {
             var numProps = 0;
             for (var prop in obj) numProps++;
             if (numProps == 0) {
-                html += GetRow(indent, "<span class='ObjectBrace'>{ }</span>" + comma, isPropertyContent);
+                html += GetRow(indent, (window.jsonType ? "<span class='jsontype object'> object </span>":"")+"<span class='ObjectBrace'>{ }</span>" + comma, isPropertyContent);
             } else {
                 clpsHtml = window.IsCollapsible ? "<span><img src=\"" + window.ImgExpanded + "\" onClick=\"ExpImgClicked(this)\" /></span><span class='collapsible'>" : "";
-                html += GetRow(indent, "<span class='ObjectBrace'>{</span>" + clpsHtml, isPropertyContent);
+                html += GetRow(indent, (window.jsonType ? "<span class='jsontype object'> object </span>":"")+"<span class='ObjectBrace'>{</span>" + clpsHtml, isPropertyContent);
                 var j = 0;
                 for (var prop in obj) {
                     var quote = window.QuoteKeys ? "\"" : "";
@@ -150,26 +163,28 @@ function ProcessObject(obj, indent, addComma, isArray, isPropertyContent) {
             }
         }
     } else if (type == 'number') {
-        html += FormatLiteral(obj, "", comma, indent, isArray, "Number");
+        html += FormatLiteral(obj, "", comma, indent, isArray, "Number",type);
     } else if (type == 'boolean') {
-        html += FormatLiteral(obj, "", comma, indent, isArray, "Boolean");
+        html += FormatLiteral(obj, "", comma, indent, isArray, "Boolean",type);
     } else if (type == 'function') {
         if (obj.constructor == window._regexpObj.constructor) {
-            html += FormatLiteral("new RegExp(" + obj + ")", "", comma, indent, isArray, "RegExp");
+            html += FormatLiteral("new RegExp(" + obj + ")", "", comma, indent, isArray, "RegExp",type);
         } else {
             obj = FormatFunction(indent, obj);
-            html += FormatLiteral(obj, "", comma, indent, isArray, "Function");
+            html += FormatLiteral(obj, "", comma, indent, isArray, "Function",type);
         }
     } else if (type == 'undefined') {
-        html += FormatLiteral("undefined", "", comma, indent, isArray, "Null");
+        html += FormatLiteral("undefined", "", comma, indent, isArray, "Null","other");
     } else {
-        html += FormatLiteral(obj.toString().split("\\").join("\\\\").split('"').join('\\"'), "\"", comma, indent, isArray, "String");
+
+        html +=FormatLiteral(obj.toString().split("\\").join("\\\\").split('"').join('\\"'), "\"", comma, indent, isArray, "String",type);
     }
     return html;
 }
-function FormatLiteral(literal, quote, comma, indent, isArray, style) {
+function FormatLiteral(literal, quote, comma, indent, isArray, style,type) {
     if (typeof literal == 'string') literal = literal.split("<").join("&lt;").split(">").join("&gt;");
-    var str = "<span class='" + style + "'>" + quote + literal + quote + comma + "</span>";
+
+    var str = "<span class='" + style + "'>"+(window.jsonType ? "<span class='jsontype'> "+type+" </span>":"")+ quote + literal + quote + comma + "</span>";
     if (isArray) str = GetRow(indent, str);
     return str;
 }
@@ -189,14 +204,32 @@ function GetRow(indent, data, isPropertyContent) {
     if (data != null && data.length > 0 && data.charAt(data.length - 1) != "\n") data = data + "\n";
     return tabs + data;
 }
-function CollapsibleViewClicked() {
-    $id("collapseLevel").style.visibility = $id("CollapsibleView").checked ? "visible" : "hidden";
-    Process();
+
+function bindOperationClicked(){
+    $('#CollapsibleView').on('ifChanged', function(){
+        $id("collapseLevel").style.visibility = $("#CollapsibleView").is(':checked') ? "visible" : "hidden";
+        Process();
+    });
+
+    $('#QuoteKeys').on('ifChanged', function(){
+        window.QuoteKeys = $("#QuoteKeys").is(':checked');
+        Process();
+    });
+
+    $('#jsonType').on('ifChanged', function(){
+        window.jsonType = $("#jsonType").is(':checked');
+        Process();
+    });
+
+    $('#TabSize').on('change', function(){
+        Process();
+    });
+
+
+
 }
-function QuoteKeysClicked() {
-    window.QuoteKeys = $id("QuoteKeys").checked;
-    Process();
-}
+
+
 function CollapseAllClicked() {
     EnsureIsPopulated();
     TraverseChildren($id("Canvas"),
@@ -256,9 +289,7 @@ function CollapseLevel(level) {
         },
         0);
 }
-function TabSizeChanged() {
-    Process();
-}
+
 function SetTab() {
     var select = $id("TabSize");
     window.TAB = MultiplyString(parseInt(select.options[select.selectedIndex].value), window.SINGLE_TAB);

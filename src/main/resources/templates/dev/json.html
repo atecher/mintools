@@ -3,6 +3,8 @@
 <head>
     <link rel="stylesheet" th:href="@{/assets/css/json/s.css}" type="text/css"/>
     <link rel="stylesheet" th:href="@{/assets/js/codemirror/lib/codemirror.css}" type="text/css"/>
+    <script src="https://cdn.bootcss.com/iCheck/1.0.2/icheck.min.js"></script>
+    <link href="https://cdn.bootcss.com/iCheck/1.0.2/skins/square/_all.css" rel="stylesheet">
     <title>JSON在线格式化查看工具-MinTools</title>
     <style type="">
         .CodeMirror {
@@ -11,11 +13,9 @@
             line-height: 1.7;
             font-weight: 500;
         }
-
         .mix {
             padding: 0;
         }
-
         div.Canvas {
             border-left-width: 0;
         }
@@ -28,27 +28,26 @@
 
     <div class="mt-head"><h1>JSON在线格式化查看工具</h1></div>
     <div class="row" style="padding: 10px;">
-        <div class="col-xs-6 mix">
+        <div class="col-xs-5 mix">
             <button id="formatBtn" class="btn btn-success">格式化</button>
             <button id="compressBtn" class="btn btn-warning">压缩</button>
         </div>
-        <div class="col-xs-6 mix">
+        <div class="col-xs-7 mix">
             <button id="viewBtn" class="btn btn-danger">查看视图</button>
             <span id="TabSizeHolder">缩进量
-                          <select id="TabSize" onchange="TabSizeChanged()">
-                              <option value="1">1</option>
-                              <option value="2" selected="selected">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                          </select>
-                    </span>
+                <select id="TabSize" >
+                  <option value="1">1</option>
+                  <option value="2" selected="selected">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+            </span>
 
-            <label for="QuoteKeys"> <input type="checkbox" id="QuoteKeys" onclick="QuoteKeysClicked()"
-                                           checked="checked"/> 引号</label>&nbsp;
-            <label for="CollapsibleView"> <input type="checkbox" id="CollapsibleView" onclick="CollapsibleViewClicked()"
-                                                 checked="checked"/> 显示控制 </label>
+            <label for="QuoteKeys"><input type="checkbox" id="QuoteKeys" checked="checked"/> 引号</label>&nbsp;
+            <label for="jsonType"><input type="checkbox" id="jsonType" /> 类型</label>&nbsp;
+            <label for="CollapsibleView"> <input type="checkbox" id="CollapsibleView"  checked="checked"/> 显示控制 </label>
             <div class="btn-group" role="group" aria-label="..." id="collapseLevel">
                 <button type="button" class="btn btn-danger" level="2">2级</button>
                 <button type="button" class="btn btn-danger" level="3">3级</button>
@@ -62,10 +61,10 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-6 mix">
+        <div class="col-xs-5 mix">
             <div class="form-group"><textarea id="content" th:text="${requestJson}"></textarea></div>
         </div>
-        <div class="col-xs-6 mix">
+        <div class="col-xs-7 mix">
             <div class="form-group">
                 <div id="Canvas" class="Canvas"></div>
             </div>
