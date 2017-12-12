@@ -1,9 +1,19 @@
+
+mybatis:
+    # config-locations: classpath:mybatis/mybatis-config.xml
+    mapper-locations: classpath:mapper/*.xml
+    type-aliases-package: com.atecher.mintools.model
+    type-handlers-package: com.atecher.mintools.mapper
+
+
 spring:
+  profiles:
+    active: prod
     datasource:
         name: mintools
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
-        url:  jdbc:mysql://182.254.212.213:3306/mintools?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+        url:  jdbc:mysql://182.254.212.213:3306/mintools?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
         username: atecher
         password: hhw840129
         filters: stat,wall
@@ -27,8 +37,21 @@ spring:
        content-type: text/html
        mode: HTML5
 
-mybatis:
-    # config-locations: classpath:mybatis/mybatis-config.xml
-    mapper-locations: classpath:mapper/*.xml
-    type-aliases-package: com.atecher.mintools.model
-    type-handlers-package: com.atecher.mintools.mapper
+
+---
+
+#开发环境
+spring:
+    profiles: dev
+    datasource:
+      url: jdbc:mysql://182.254.212.213:3306/mintools?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+
+---
+
+#生产环境
+spring:
+    profiles: prod
+    datasource:
+      url: jdbc:mysql://127.0.0.1:3306/mintools?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+
+

@@ -107,7 +107,7 @@ public class Main {
 		Args result = new Args();
 		List<String> error = new ArrayList<String>();
 		org.apache.commons.cli.Options opts = makeOptions();
-		CommandLineParser clp = new PosixParser();
+		CommandLineParser clp = new DefaultParser();
 		
 		try {
 			CommandLine cl = clp.parse(opts, args, true);
