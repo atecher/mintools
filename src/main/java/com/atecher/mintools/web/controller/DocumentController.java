@@ -1,8 +1,10 @@
 package com.atecher.mintools.web.controller;
 
 import com.atecher.mintools.mapper.DocMapper;
+import com.atecher.mintools.service.IDocumentService;
 import com.atecher.mintools.web.util.WebForwardConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +20,11 @@ import java.util.List;
 public class DocumentController {
 
     @Autowired
-    private DocMapper docMapper;
-
+    private IDocumentService documentService;
+    @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName")
     @RequestMapping(value = "/doc", method = RequestMethod.GET)
     public String index(Model model) {
-        List<HashMap<String, Object>> docs = docMapper.findDocAll();
+        List<HashMap<String, Object>> docs = documentService.findDocAll();
         model.addAttribute("docs", docs);
         return WebForwardConstants.DOCUMENT_INDEX;
     }

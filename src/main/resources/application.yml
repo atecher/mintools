@@ -9,6 +9,11 @@ mybatis:
 spring:
   profiles:
     active: dev
+  #本地缓存策略
+  cache:
+    type: CAFFEINE #缓存类型
+    cache-names: caffeineMintoolsCache #缓存名称
+    caffeine.spec: maximumSize=500,expireAfterWrite=10m #缓存最大数量500条, 缓存失效时间 6个小时
   datasource:
       name: mintools
       type: com.alibaba.druid.pool.DruidDataSource
