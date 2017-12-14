@@ -21,7 +21,6 @@ public class DocumentController {
 
     @Autowired
     private IDocumentService documentService;
-    @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName")
     @RequestMapping(value = "/doc", method = RequestMethod.GET)
     public String index(Model model) {
         List<HashMap<String, Object>> docs = documentService.findDocAll();
