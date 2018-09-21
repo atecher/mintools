@@ -8,39 +8,57 @@ import java.util.regex.Pattern;
 
 /*******************************************
  * 压缩jsp,html中的代码，去掉所有空白符、换行符
- * @author bearrui(ak-47)
+ * @author bearrui(ak - 47)
  * @version 0.1
  * @date 2010-5-13
  *******************************************/
 public class HtmlCompressor {
-    private static final String tempPreBlock = "%%%HTMLCOMPRESS~PRE&&&";
-    private static final String tempTextAreaBlock = "%%%HTMLCOMPRESS~TEXTAREA&&&";
-    private static final String tempScriptBlock = "%%%HTMLCOMPRESS~SCRIPT&&&";
-    private static final String tempStyleBlock = "%%%HTMLCOMPRESS~STYLE&&&";
-    private static final String tempJspBlock = "%%%HTMLCOMPRESS~JSP&&&";
+    private static final String TEMP_PRE_BLOCK = "%%%HTMLCOMPRESS~PRE&&&";
+    private static final String TEMP_TEXT_AREA_BLOCK = "%%%HTMLCOMPRESS~TEXTAREA&&&";
+    private static final String TEMP_SCRIPT_BLOCK = "%%%HTMLCOMPRESS~SCRIPT&&&";
+    private static final String TEMP_STYLE_BLOCK = "%%%HTMLCOMPRESS~STYLE&&&";
+    private static final String TEMP_JSP_BLOCK = "%%%HTMLCOMPRESS~JSP&&&";
 
-    private static final Pattern commentPattern = Pattern.compile("<!--\\s*[^\\[].*?-->", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static final Pattern itsPattern = Pattern.compile(">\\s+?<", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static final Pattern prePattern = Pattern.compile("<pre[^>]*?>.*?</pre>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static final Pattern taPattern = Pattern.compile("<textarea[^>]*?>.*?</textarea>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static final Pattern jspPattern = Pattern.compile("<%([^-@][\\w\\W]*?)%>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    // <script></script>
-    private static final Pattern scriptPattern = Pattern.compile("(?:<script\\s*>|<script type=['\"]text/javascript['\"]\\s*>)(.*?)</script>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static final Pattern stylePattern = Pattern.compile("<style[^>()]*?>(.+)</style>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern COMMENT_PATTERN = Pattern.compile("<!--\\s*[^\\[].*?-->", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern ITS_PATTERN = Pattern.compile(">\\s+?<", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern PRE_PATTERN = Pattern.compile("<pre[^>]*?>.*?</pre>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern TA_PATTERN = Pattern.compile("<textarea[^>]*?>.*?</textarea>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern JSP_PATTERN = Pattern.compile("<%([^-@][\\w\\W]*?)%>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    /**
+     * <script></script>
+     */
+    private static final Pattern SCRIPT_PATTERN = Pattern.compile("(?:<script\\s*>|<script type=['\"]text/javascript['\"]\\s*>)(.*?)</script>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    private static final Pattern STYLE_PATTERN = Pattern.compile("<style[^>()]*?>(.+)</style>", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 
-    // 单行注释，
-    private static final Pattern signleCommentPattern = Pattern.compile("//.*");
-    // 字符串匹配
-    private static final Pattern stringPattern = Pattern.compile("(\"[^\"\\n]*?\"|'[^'\\n]*?')");
-    // trim去空格和换行符
-    private static final Pattern trimPattern = Pattern.compile("\\n\\s*", Pattern.MULTILINE);
-    private static final Pattern trimPattern2 = Pattern.compile("\\s*\\r", Pattern.MULTILINE);
-    // 多行注释
-    private static final Pattern multiCommentPattern = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-
-    private static final String tempSingleCommentBlock = "%%%HTMLCOMPRESS~SINGLECOMMENT&&&";  // //占位符
-    private static final String tempMulitCommentBlock1 = "%%%HTMLCOMPRESS~MULITCOMMENT1&&&";  // /*占位符
-    private static final String tempMulitCommentBlock2 = "%%%HTMLCOMPRESS~MULITCOMMENT2&&&";  // */占位符
+    /**
+     * 单行注释，
+     */
+    private static final Pattern SIGNLE_COMMENT_PATTERN = Pattern.compile("//.*");
+    /**
+     * 字符串匹配
+     */
+    private static final Pattern STRING_PATTERN = Pattern.compile("(\"[^\"\\n]*?\"|'[^'\\n]*?')");
+    /**
+     * trim去空格和换行符
+     */
+    private static final Pattern TRIM_PATTERN = Pattern.compile("\\n\\s*", Pattern.MULTILINE);
+    private static final Pattern TRIM_PATTERN2 = Pattern.compile("\\s*\\r", Pattern.MULTILINE);
+    /**
+     * 多行注释
+     */
+    private static final Pattern MULTI_COMMENT_PATTERN = Pattern.compile("/\\*.*?\\*/", Pattern.DOTALL | Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+    /**
+     * //占位符
+     */
+    private static final String TEMP_SINGLE_COMMENT_BLOCK = "%%%HTMLCOMPRESS~SINGLECOMMENT&&&";
+    /**
+     * /*占位符
+     */
+    private static final String TEMP_MULIT_COMMENTBLOCK1 = "%%%HTMLCOMPRESS~MULITCOMMENT1&&&";
+    /**
+     * *\/占位符
+     */
+    private static final String TEMP_MULIT_COMMENTBLOCK2 = "%%%HTMLCOMPRESS~MULITCOMMENT2&&&";
 
 
     public static String compress(String html) throws Exception {
@@ -57,39 +75,39 @@ public class HtmlCompressor {
         String result = html;
 
         //preserve inline java code
-        Matcher jspMatcher = jspPattern.matcher(result);
+        Matcher jspMatcher = JSP_PATTERN.matcher(result);
         while (jspMatcher.find()) {
             jspBlocks.add(jspMatcher.group(0));
         }
-        result = jspMatcher.replaceAll(tempJspBlock);
+        result = jspMatcher.replaceAll(TEMP_JSP_BLOCK);
 
         //preserve PRE tags
-        Matcher preMatcher = prePattern.matcher(result);
+        Matcher preMatcher = PRE_PATTERN.matcher(result);
         while (preMatcher.find()) {
             preBlocks.add(preMatcher.group(0));
         }
-        result = preMatcher.replaceAll(tempPreBlock);
+        result = preMatcher.replaceAll(TEMP_PRE_BLOCK);
 
         //preserve TEXTAREA tags
-        Matcher taMatcher = taPattern.matcher(result);
+        Matcher taMatcher = TA_PATTERN.matcher(result);
         while (taMatcher.find()) {
             taBlocks.add(taMatcher.group(0));
         }
-        result = taMatcher.replaceAll(tempTextAreaBlock);
+        result = taMatcher.replaceAll(TEMP_TEXT_AREA_BLOCK);
 
         //preserve SCRIPT tags
-        Matcher scriptMatcher = scriptPattern.matcher(result);
+        Matcher scriptMatcher = SCRIPT_PATTERN.matcher(result);
         while (scriptMatcher.find()) {
             scriptBlocks.add(scriptMatcher.group(0));
         }
-        result = scriptMatcher.replaceAll(tempScriptBlock);
+        result = scriptMatcher.replaceAll(TEMP_SCRIPT_BLOCK);
 
         // don't process inline css
-        Matcher styleMatcher = stylePattern.matcher(result);
+        Matcher styleMatcher = STYLE_PATTERN.matcher(result);
         while (styleMatcher.find()) {
             styleBlocks.add(styleMatcher.group(0));
         }
-        result = styleMatcher.replaceAll(tempStyleBlock);
+        result = styleMatcher.replaceAll(TEMP_STYLE_BLOCK);
 
         //process pure html
         result = processHtml(result);
@@ -109,12 +127,12 @@ public class HtmlCompressor {
 
         //remove comments
 //		if(removeComments) {
-        result = commentPattern.matcher(result).replaceAll("");
+        result = COMMENT_PATTERN.matcher(result).replaceAll("");
 //		}
 
         //remove inter-tag spaces
 //		if(removeIntertagSpaces) {
-        result = itsPattern.matcher(result).replaceAll("><");
+        result = ITS_PATTERN.matcher(result).replaceAll("><");
 //		}
 
         //remove multi whitespace characters
@@ -131,8 +149,8 @@ public class HtmlCompressor {
             blocks.set(i, compressJsp(blocks.get(i)));
         }
         //put preserved blocks back
-        while (result.contains(tempJspBlock)) {
-            result = result.replaceFirst(tempJspBlock, Matcher.quoteReplacement(blocks.remove(0)));
+        while (result.contains(TEMP_JSP_BLOCK)) {
+            result = result.replaceFirst(TEMP_JSP_BLOCK, Matcher.quoteReplacement(blocks.remove(0)));
         }
 
         return result;
@@ -142,8 +160,8 @@ public class HtmlCompressor {
         String result = html;
 
         //put preserved blocks back
-        while (result.contains(tempPreBlock)) {
-            result = result.replaceFirst(tempPreBlock, Matcher.quoteReplacement(blocks.remove(0)));
+        while (result.contains(TEMP_PRE_BLOCK)) {
+            result = result.replaceFirst(TEMP_PRE_BLOCK, Matcher.quoteReplacement(blocks.remove(0)));
         }
 
         return result;
@@ -153,8 +171,8 @@ public class HtmlCompressor {
         String result = html;
 
         //put preserved blocks back
-        while (result.contains(tempTextAreaBlock)) {
-            result = result.replaceFirst(tempTextAreaBlock, Matcher.quoteReplacement(blocks.remove(0)));
+        while (result.contains(TEMP_TEXT_AREA_BLOCK)) {
+            result = result.replaceFirst(TEMP_TEXT_AREA_BLOCK, Matcher.quoteReplacement(blocks.remove(0)));
         }
 
         return result;
@@ -170,8 +188,8 @@ public class HtmlCompressor {
 //		}
 
         //put preserved blocks back
-        while (result.contains(tempScriptBlock)) {
-            result = result.replaceFirst(tempScriptBlock, Matcher.quoteReplacement(blocks.remove(0)));
+        while (result.contains(TEMP_SCRIPT_BLOCK)) {
+            result = result.replaceFirst(TEMP_SCRIPT_BLOCK, Matcher.quoteReplacement(blocks.remove(0)));
         }
 
         return result;
@@ -187,8 +205,8 @@ public class HtmlCompressor {
 //		}
 
         //put preserved blocks back
-        while (result.contains(tempStyleBlock)) {
-            result = result.replaceFirst(tempStyleBlock, Matcher.quoteReplacement(blocks.remove(0)));
+        while (result.contains(TEMP_STYLE_BLOCK)) {
+            result = result.replaceFirst(TEMP_STYLE_BLOCK, Matcher.quoteReplacement(blocks.remove(0)));
         }
 
         return result;
@@ -196,10 +214,10 @@ public class HtmlCompressor {
 
     private static String compressJsp(String source) {
         //check if block is not empty
-        Matcher jspMatcher = jspPattern.matcher(source);
+        Matcher jspMatcher = JSP_PATTERN.matcher(source);
         if (jspMatcher.find()) {
             String result = compressJspJs(jspMatcher.group(1));
-            return (new StringBuilder(source.substring(0, jspMatcher.start(1))).append(result).append(source.substring(jspMatcher.end(1)))).toString();
+            return source.substring(0, jspMatcher.start(1)) + result + source.substring(jspMatcher.end(1));
         } else {
             return source;
         }
@@ -207,10 +225,10 @@ public class HtmlCompressor {
 
     private static String compressJavaScript(String source) {
         //check if block is not empty
-        Matcher scriptMatcher = scriptPattern.matcher(source);
+        Matcher scriptMatcher = SCRIPT_PATTERN.matcher(source);
         if (scriptMatcher.find()) {
             String result = compressJspJs(scriptMatcher.group(1));
-            return (new StringBuilder(source.substring(0, scriptMatcher.start(1))).append(result).append(source.substring(scriptMatcher.end(1)))).toString();
+            return source.substring(0, scriptMatcher.start(1)) + result + source.substring(scriptMatcher.end(1));
         } else {
             return source;
         }
@@ -218,13 +236,13 @@ public class HtmlCompressor {
 
     private static String compressCssStyles(String source) {
         //check if block is not empty
-        Matcher styleMatcher = stylePattern.matcher(source);
+        Matcher styleMatcher = STYLE_PATTERN.matcher(source);
         if (styleMatcher.find()) {
             // 去掉注释，换行
-            String result = multiCommentPattern.matcher(styleMatcher.group(1)).replaceAll("");
-            result = trimPattern.matcher(result).replaceAll("");
-            result = trimPattern2.matcher(result).replaceAll("");
-            return (new StringBuilder(source.substring(0, styleMatcher.start(1))).append(result).append(source.substring(styleMatcher.end(1)))).toString();
+            String result = MULTI_COMMENT_PATTERN.matcher(styleMatcher.group(1)).replaceAll("");
+            result = TRIM_PATTERN.matcher(result).replaceAll("");
+            result = TRIM_PATTERN2.matcher(result).replaceAll("");
+            return source.substring(0, styleMatcher.start(1)) + result + source.substring(styleMatcher.end(1));
         } else {
             return source;
         }
@@ -233,32 +251,25 @@ public class HtmlCompressor {
     private static String compressJspJs(String source) {
         String result = source;
         // 因注释符合有可能出现在字符串中，所以要先把字符串中的特殊符好去掉
-        Matcher stringMatcher = stringPattern.matcher(result);
+        Matcher stringMatcher = STRING_PATTERN.matcher(result);
         while (stringMatcher.find()) {
             String tmpStr = stringMatcher.group(0);
 
             if (tmpStr.contains("//") || tmpStr.contains("/*") || tmpStr.contains("*/")) {
-                String blockStr = tmpStr.replaceAll("//", tempSingleCommentBlock).replaceAll("/\\*", tempMulitCommentBlock1)
-                        .replaceAll("\\*/", tempMulitCommentBlock2);
+                String blockStr = tmpStr.replaceAll("//", TEMP_SINGLE_COMMENT_BLOCK).replaceAll("/\\*", TEMP_MULIT_COMMENTBLOCK1)
+                        .replaceAll("\\*/", TEMP_MULIT_COMMENTBLOCK2);
                 result = result.replace(tmpStr, blockStr);
             }
         }
         // 去掉注释
-        result = signleCommentPattern.matcher(result).replaceAll("");
-        result = multiCommentPattern.matcher(result).replaceAll("");
-        result = trimPattern2.matcher(result).replaceAll("");
-        result = trimPattern.matcher(result).replaceAll(" ");
+        result = SIGNLE_COMMENT_PATTERN.matcher(result).replaceAll("");
+        result = MULTI_COMMENT_PATTERN.matcher(result).replaceAll("");
+        result = TRIM_PATTERN2.matcher(result).replaceAll("");
+        result = TRIM_PATTERN.matcher(result).replaceAll(" ");
         // 恢复替换掉的字符串
-        result = result.replaceAll(tempSingleCommentBlock, "//").replaceAll(tempMulitCommentBlock1, "/*").replaceAll(tempMulitCommentBlock2, "*/");
+        result = result.replaceAll(TEMP_SINGLE_COMMENT_BLOCK, "//").replaceAll(TEMP_MULIT_COMMENTBLOCK1, "/*").replaceAll(TEMP_MULIT_COMMENTBLOCK2, "*/");
 
         return result;
     }
 
-    public static void main(String[] args) throws Exception {
-//	  String html=FileUtils.readFileToString(new File("C:\\Users\\mark\\Pictures\\c.html"));
-//	  Document doc=Jsoup.parse(html);
-//	  HtmlCleaner cleaner = new  HtmlCleaner();
-//	  TagNode node=cleaner.clean(html);
-        System.out.println();
-    }
 }

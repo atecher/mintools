@@ -22,6 +22,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class Main {
             //noinspection IOResourceOpenedButNotSafelyClosed
             fos = new FileOutputStream(myArgs.output);
 			//noinspection IOResourceOpenedButNotSafelyClosed
-			osw = new OutputStreamWriter(fos, "UTF-8");
+			osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
 			//noinspection IOResourceOpenedButNotSafelyClosed
 			bw = new BufferedWriter(osw);
 			remark = remark.withWriter(bw);
@@ -105,7 +106,7 @@ public class Main {
 	
 	private Args processArgs(String[] args) {
 		Args result = new Args();
-		List<String> error = new ArrayList<String>();
+		List<String> error = new ArrayList<>();
 		org.apache.commons.cli.Options opts = makeOptions();
 		CommandLineParser clp = new DefaultParser();
 		
@@ -176,22 +177,27 @@ public class Main {
 	private void checkType(CommandLine cl, Args result, List<String> error) {
 		if(cl.hasOption('t')) {
 			String type = cl.getOptionValue('t');
-			if("markdown".equalsIgnoreCase(type)) {
-				result.options = Options.markdown();
-			} else if("markdown".equalsIgnoreCase(type)) {
-				result.options = Options.markdown();
-			} else if("multimarkdown".equalsIgnoreCase(type)) {
-				result.options = Options.multiMarkdown();
-			} else if("markdownextra".equalsIgnoreCase(type)) {
-				result.options = Options.markdownExtra();
-			} else if("pegdown".equalsIgnoreCase(type)) {
-				result.options = Options.pegdownBase();
-			} else if("pegdownall".equalsIgnoreCase(type)) {
-				result.options = Options.pegdownAllExtensions();
-			} else if("github".equalsIgnoreCase(type)) {
-				result.options = Options.github();
-			} else {
-				error.add("Invalid type specified");
+			switch (type){
+				case "markdown":
+					result.options = Options.markdown();
+					break;
+				case "multimarkdown":
+					result.options = Options.multiMarkdown();
+					break;
+				case "markdownextra":
+					result.options = Options.markdownExtra();
+					break;
+				case "pegdown":
+					result.options = Options.pegdownBase();
+					break;
+				case "pegdownall":
+					result.options = Options.pegdownAllExtensions();
+					break;
+				case "github":
+					result.options = Options.github();
+				default:
+					error.add("Invalid type specified");
+
 			}
 		} else {
 			result.options = Options.markdown();

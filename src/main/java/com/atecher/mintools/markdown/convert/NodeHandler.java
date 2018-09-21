@@ -34,7 +34,7 @@ public interface NodeHandler {
 	 * @param node Node to handle
 	 * @param converter Parent converter for this object.
 	 */
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter);
+	void handleNode(NodeHandler parent, Element node, DocumentConverter converter);
 
 	/**
 	 * Handle a child text node.
@@ -42,13 +42,13 @@ public interface NodeHandler {
 	 * @param node Node to handle
 	 * @param converter Parent converter for this object.
 	 */
-	public void handleTextNode(TextNode node, DocumentConverter converter);
+	void handleTextNode(TextNode node, DocumentConverter converter);
 
 	/**
 	 * Handle an ignored HTMLElement.
 	 * @param node Node to handle
 	 * @param converter Parent converter for this object.
 	 */
-	public void handleIgnoredHTMLElement(Element node, DocumentConverter converter);
+	void handleIgnoredHTMLElement(Element node, DocumentConverter converter);
 
 }

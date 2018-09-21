@@ -19,8 +19,10 @@ import java.util.Hashtable;
 public class QRCode {
 
     // 图片宽度的一半
-    // 二维码写码器
-    private static final MultiFormatWriter mutiWriter = new MultiFormatWriter();
+    /**
+     * 二维码写码器
+     */
+    private static final MultiFormatWriter MUTI_WRITER = new MultiFormatWriter();
 
     /**
      * 描述：TODO
@@ -33,8 +35,10 @@ public class QRCode {
     private static void encode(QRCodeSetting qrCodeSetting) throws Exception {
         try {
             BufferedImage bufferedImage = genBarcode(qrCodeSetting);
-            if (qrCodeSetting.getLogoPath() != null)//如果有logo则添加
+            //如果有logo则添加
+            if (qrCodeSetting.getLogoPath() != null) {
                 insertImage(bufferedImage, qrCodeSetting, true);
+            }
             ImageIO.write(bufferedImage, "jpg", new File(qrCodeSetting.getOutputPath()));
         } catch (IOException | WriterException e) {
             e.printStackTrace();
@@ -58,7 +62,10 @@ public class QRCode {
         Image src = ImageIO.read(new File(qrCodeSetting.getLogoPath()));
         int width = src.getWidth(null);
         int height = src.getHeight(null);
-        if (needCompress) { // 压缩LOGO
+        /**
+         * 压缩LOGO
+         */
+        if (needCompress) {
             if (width > qrCodeSetting.getLogoWidth()) {
                 width = qrCodeSetting.getLogoWidth();
             }
@@ -68,7 +75,10 @@ public class QRCode {
             Image image = src.getScaledInstance(width, height, Image.SCALE_SMOOTH);
             BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
             Graphics g = tag.getGraphics();
-            g.drawImage(image, 0, 0, null); // 绘制缩小后的图
+            /**
+             * 绘制缩小后的图
+             */
+            g.drawImage(image, 0, 0, null);
             g.dispose();
             src = image;
         }
@@ -101,7 +111,7 @@ public class QRCode {
         hint.put(EncodeHintType.DATA_MATRIX_SHAPE, SymbolShapeHint.FORCE_SQUARE);
         hint.put(EncodeHintType.ERROR_CORRECTION, qrCodeSetting.getCorrectionLevel());
         // 生成二维码
-        BitMatrix matrix = mutiWriter.encode(qrCodeSetting.getContent(), BarcodeFormat.QR_CODE, qrCodeSetting.getQrWidth(), qrCodeSetting.getQrHeight(), hint);
+        BitMatrix matrix = MUTI_WRITER.encode(qrCodeSetting.getContent(), BarcodeFormat.QR_CODE, qrCodeSetting.getQrWidth(), qrCodeSetting.getQrHeight(), hint);
         Color color = new Color(Integer.parseInt(qrCodeSetting.getColor(), 16));
         Color fadingColor = new Color(Integer.parseInt(qrCodeSetting.getFadingColor(), 16));
         int backgroundColorRGB = new Color(Integer.parseInt(qrCodeSetting.getBackgroundColor(), 16)).getRGB();
@@ -203,7 +213,6 @@ public class QRCode {
         QRCodeSetting codeSetting = new QRCodeSetting();
         codeSetting.setCorrectionLevel(ErrorCorrectionLevel.H);
         String contents = "中文测试.baidu.com/";
-//			contents = new String(contents.getBytes("GBK"), "ISO-8859-1");
         codeSetting.setContent(contents);
         codeSetting.setFrameWidth(0);
         codeSetting.setLogoPath("D:\\a\\md5.png");
@@ -212,7 +221,6 @@ public class QRCode {
         codeSetting.setFadingColor("72d0eb");
         codeSetting.setFadeType(3);
         QRCode.encode(codeSetting);
-//			System.out.println(Integer.parseInt("ffffff", 16));
     }
 
 }

@@ -18,7 +18,7 @@ package com.atecher.mintools.markdown.convert;
 
 import com.atecher.mintools.markdown.remark.Options;
 import com.atecher.mintools.markdown.util.StringUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
@@ -79,7 +79,7 @@ public class TextCleaner {
 	 */
 	@SuppressWarnings({"OverlyLongMethod"})
 	private void setupReplacements(Options options) {
-		this.replacements = new HashMap<String, String>();
+		this.replacements = new HashMap<>();
 
 		// build replacement regex
 		StringBuilder entities = new StringBuilder(replacements.size()*5);
@@ -138,7 +138,7 @@ public class TextCleaner {
 		replacements.put(original, replacement);
 		if(original.charAt(0) == '&') {
 			// add entity
-			regex.append(original.substring(1, original.length() - 1));
+			regex.append(original, 1, original.length() - 1);
 			regex.append('|');
 		} else {
 			// add single character
@@ -151,7 +151,7 @@ public class TextCleaner {
 	 * @param options Options that will affect what is escaped.
 	 */
 	private void setupEscapes(Options options) {
-		escapes = new ArrayList<Escape>();
+		escapes = new ArrayList<>();
 
 		// confusingly, this replaces single backslashes with double backslashes.
 		// Man, I miss Groovy's slashy strings in these moments...
@@ -268,7 +268,7 @@ public class TextCleaner {
 	// recursively processes the element to replace <br>'s with \n
 	private void fixLineBreaks(Element el) {
 		for(final Element e : el.children()) {
-			if(e.tagName().equals("br")) {
+			if("br".equals(e.tagName())) {
 				e.before("\n");
 				e.remove();
 			} else {
@@ -291,12 +291,8 @@ public class TextCleaner {
 			String repString;
 			// if we have a hard match, do a simple replacement.
 			String replacementKey = m.group().toLowerCase(Locale.ENGLISH);
-			if(replacements.containsKey(replacementKey)) {
-				repString = replacements.get(replacementKey);
-			} else {
-				// special case for escaped HTML entities.
-				repString = "\\\\&$1";
-			}
+			// special case for escaped HTML entities.
+			repString = replacements.getOrDefault(replacementKey, "\\\\&$1");
 			m.appendReplacement(output, repString);
 		}
 		m.appendTail(output);
@@ -410,9 +406,9 @@ public class TextCleaner {
 
 	private boolean isBlock(Node n) {
 		boolean block = false;
-		if(n != null && n instanceof Element) {
+		if(n instanceof Element) {
 			Element el = (Element)n;
-			block = el.isBlock() || el.tagName().equals("br");
+			block = el.isBlock() || "br".equals(el.tagName());
 		}
 		return block;
 	}

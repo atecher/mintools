@@ -35,7 +35,7 @@ public class MarkdownTable {
 	 * Simple enum to manage the alignment of a column.
 	 */
 	public enum Alignment {
-		LEFT(-1), CENTER(0), RIGHT(1);
+		@SuppressWarnings("AlibabaEnumConstantsMustHaveComment") LEFT(-1), CENTER(0), RIGHT(1);
 
 		private final int dir;
 
@@ -72,8 +72,8 @@ public class MarkdownTable {
 	 * Creates a new, empty MarkdownTable
 	 */
 	public MarkdownTable() {
-		this.header = new LinkedList<List<MarkdownTableCell>>();
-		this.body = new LinkedList<List<MarkdownTableCell>>();
+		this.header = new LinkedList<>();
+		this.body = new LinkedList<>();
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class MarkdownTable {
 	 * @return A list that can have columns added to it.
 	 */
 	public List<MarkdownTableCell> addHeaderRow() {
-		List<MarkdownTableCell> newRow = new LinkedList<MarkdownTableCell>();
+		List<MarkdownTableCell> newRow = new LinkedList<>();
 		this.header.add(newRow);
 		return newRow;
 	}
@@ -93,7 +93,7 @@ public class MarkdownTable {
 	 * @return A list that can have columns added to it.
 	 */
 	public List<MarkdownTableCell> addBodyRow() {
-		List<MarkdownTableCell> newRow = new LinkedList<MarkdownTableCell>();
+		List<MarkdownTableCell> newRow = new LinkedList<>();
 		this.body.add(newRow);
 		return newRow;
 	}

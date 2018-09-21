@@ -71,7 +71,7 @@ public class Options implements Cloneable {
 		private final boolean renderedAsCode;
 		private final boolean colspanEnabled;
 
-		private Tables(boolean removed, boolean leftAsHtml, boolean convertedToText, boolean renderedAsCode, boolean colspanEnabled) {
+		Tables(boolean removed, boolean leftAsHtml, boolean convertedToText, boolean renderedAsCode, boolean colspanEnabled) {
 			this.removed = removed;
 			this.leftAsHtml = leftAsHtml;
 			this.convertedToText = convertedToText;
@@ -142,7 +142,7 @@ public class Options implements Cloneable {
 		private final boolean enabled;
 		private final char separatorCharacter;
 
-		private FencedCodeBlocks(boolean enabled, char separatorCharacter) {
+		FencedCodeBlocks(boolean enabled, char separatorCharacter) {
 			this.enabled = enabled;
 			this.separatorCharacter = separatorCharacter;
 		}
@@ -461,7 +461,7 @@ public class Options implements Cloneable {
 	 * Please note that this does not override default handling (for example, {@code <em>} tags).
 	 */
 	@SuppressWarnings({"WeakerAccess"})
-	public Set<IgnoredHtmlElement> ignoredHtmlElements = new HashSet<IgnoredHtmlElement>();
+	public Set<IgnoredHtmlElement> ignoredHtmlElements = new HashSet<>();
 
 	/**
 	 * This is a very specific fix for a very specific bug.  As of version 1.0.2, pegdown has a serious bug that
@@ -504,7 +504,7 @@ public class Options implements Cloneable {
 	 */
 	public Set<IgnoredHtmlElement> getIgnoredHtmlElements() {
 		if(ignoredHtmlElements == null) {
-			ignoredHtmlElements = new HashSet<IgnoredHtmlElement>();
+			ignoredHtmlElements = new HashSet<>();
 		}
 		return ignoredHtmlElements;
 	}

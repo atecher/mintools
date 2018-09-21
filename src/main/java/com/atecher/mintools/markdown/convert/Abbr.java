@@ -31,6 +31,7 @@ public class Abbr extends AbstractNodeHandler {
 	 * @param node	  Node to handle
 	 * @param converter Parent converter for this object.
 	 */
+	@Override
 	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		String abbr = converter.cleaner.clean(node);
 		if(abbr.length() > 0) {

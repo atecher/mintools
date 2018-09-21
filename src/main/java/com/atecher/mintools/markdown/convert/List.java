@@ -25,11 +25,12 @@ import org.jsoup.nodes.Element;
  */
 public class List extends AbstractNodeHandler {
 
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
+	@Override
+    public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		// the first node doesn't get a linebreak
 		boolean first = true;
 		// if this is an ol, it's numbered.
-		boolean numericList = node.tagName().equals("ol");
+		boolean numericList = "ol".equals(node.tagName());
 		// keep track of where we are in the list.
 		int listCounter = 1;
 

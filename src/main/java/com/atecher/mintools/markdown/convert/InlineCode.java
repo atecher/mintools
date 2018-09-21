@@ -31,7 +31,8 @@ public class InlineCode extends AbstractNodeHandler {
 	 * @param node	  Node to handle
 	 * @param converter Parent converter for this object.
 	 */
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
+	@Override
+    public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		converter.output.write(converter.cleaner.cleanInlineCode(node));
 	}
 

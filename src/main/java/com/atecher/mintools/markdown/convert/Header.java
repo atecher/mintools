@@ -34,7 +34,8 @@ public class Header extends AbstractNodeHandler {
 	 * @param node	  Node to handle
 	 * @param converter Parent converter for this object.
 	 */
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
+	@Override
+    public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		int depth = Integer.parseInt(node.tagName().substring(1, 2));
 		BlockWriter out = converter.output;
 		out.startBlock();

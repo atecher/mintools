@@ -6,14 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Random;
 
 public class CookieUtil {
-    private static final String allChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String ALLCHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public static String createCookieCode(int length) {
         return generateString(length);
     }
 
     public static Cookie getCookie(HttpServletRequest request, String name) {
-        Cookie cookies[] = request.getCookies();
+        Cookie[] cookies = request.getCookies();
         if (cookies == null || name == null || name.length() == 0) {
             return null;
         }
@@ -59,7 +59,7 @@ public class CookieUtil {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
-            sb.append(allChar.charAt(random.nextInt(allChar.length())));
+            sb.append(ALLCHAR.charAt(random.nextInt(ALLCHAR.length())));
         }
         return sb.toString();
     }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,16 +17,17 @@ import java.util.HashMap;
 @Service
 public class WebsiteServiceImpl implements IWebsiteService {
 
-    @Autowired
+    @Resource
     private ExtlinkMapper extlinkMapper;
 
+    @Override
     @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName + #page + #limit +#parameter")
     public Page<String> queryExtlinkForPage(int page, int limit, HashMap<String, Object> parameter) {
         parameter.put("start", (page - 1) * limit);
         parameter.put("limit", limit);
         int total = extlinkMapper.queryExtlinkForPageCount(parameter);
         if (total == 0) {
-            return new Page<>(0, new ArrayList<String>());
+            return new Page<>(0, new ArrayList<>());
         } else {
             return new Page<>(total, extlinkMapper.queryExtlinkForPage(parameter));
         }

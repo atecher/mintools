@@ -38,7 +38,9 @@ import java.util.regex.Pattern;
  */
 public class DocumentConverter {
 
-	// These properties do not change for the life of this converter
+	/**
+	 * These properties do not change for the life of this converter
+	 */
 	final Options options;
 	final TextCleaner cleaner;
 	private final Set<String> ignoredHtmlTags;
@@ -46,12 +48,24 @@ public class DocumentConverter {
 	final Map<String,NodeHandler> inlineNodes;
 
 	// These properties change for each conversion
-	private Map<String,String> linkUrls; // for looking up links via URL
+	/**
+	 * for looking up links via URL
+	 */
+	private Map<String,String> linkUrls;
 	private int genericLinkUrlCounter;
 	private int genericImageUrlCounter;
-	private Map<String,String> linkIds; // an inverse of linkUrls, for looking up links via ID
-	private Map<String,String> abbreviations; // a cache of abbreviations mapped by abbreviated form
-	BlockWriter output; // the output writer, which may change during recursion
+	/**
+	 * an inverse of linkUrls, for looking up links via ID
+	 */
+	private Map<String,String> linkIds;
+	/**
+	 * a cache of abbreviations mapped by abbreviated form
+	 */
+	private Map<String,String> abbreviations;
+	/**
+	 * the output writer, which may change during recursion
+	 */
+	BlockWriter output;
 
 	private Map<String,NodeHandler> lastNodeset;
 
@@ -72,9 +86,9 @@ public class DocumentConverter {
 		// configure final properties
 		this.options = options;
 		cleaner = new TextCleaner(options);
-		ignoredHtmlTags = new HashSet<String>();
-		blockNodes = new HashMap<String, NodeHandler>();
-		inlineNodes = new HashMap<String, NodeHandler>();
+		ignoredHtmlTags = new HashSet<>();
+		blockNodes = new HashMap<>();
+		inlineNodes = new HashMap<>();
 
 		// configure ignored tags
 		for(final IgnoredHtmlElement ihe : options.getIgnoredHtmlElements()) {
@@ -251,13 +265,13 @@ public class DocumentConverter {
 	private void convertImpl(Document doc) {
 		
 		// linked, because we want the resulting list of links in order they were added
-		linkIds = new LinkedHashMap<String, String>();
+		linkIds = new LinkedHashMap<>();
 		// To keep track of already added URLs
-		linkUrls = new HashMap<String, String>();
+		linkUrls = new HashMap<>();
 		genericImageUrlCounter = 0;
 		genericLinkUrlCounter = 0;
 		// linked, to keep abbreviations in the order they were added
-		abbreviations = new LinkedHashMap<String, String>();
+		abbreviations = new LinkedHashMap<>();
 
 		lastNodeset = blockNodes;
 

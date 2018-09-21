@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Service
 public class ToolServiceImpl implements IToolService {
-    @Autowired
+    @Resource
     private ToolMapper toolMapper;
     @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName")
     @Override

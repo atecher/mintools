@@ -26,7 +26,8 @@ import org.jsoup.nodes.Element;
  */
 public class Definitions extends AbstractNodeHandler {
 
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
+	@Override
+    public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		// the first child node doesn't get a linebreak
 		boolean first = true;
 		boolean lastNodeWasDD = false;
@@ -50,7 +51,7 @@ public class Definitions extends AbstractNodeHandler {
 		parentWriter.startBlock();
 		for(final Element child : node.children()) {
 
-			if(child.tagName().equals("dt")) {
+			if("dt".equals(child.tagName())) {
 				// print term
 				if(first) {
 					// the first node is a term, so we already started a block.
@@ -64,7 +65,7 @@ public class Definitions extends AbstractNodeHandler {
 				parentWriter.println();
 				lastNodeWasDD = false;
 
-			} else if(child.tagName().equals("dd")) {
+			} else if("dd".equals(child.tagName())) {
 				// print definition
 				if(first) {
 					// the first node is a def, so we'll need a new block next time.

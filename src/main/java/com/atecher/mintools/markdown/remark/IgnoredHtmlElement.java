@@ -36,7 +36,7 @@ public class IgnoredHtmlElement {
 	 */
 	public IgnoredHtmlElement(String tagName) {
 		this.tagName = tagName;
-		this.attributes = new HashSet<String>();
+		this.attributes = new HashSet<>();
 	}
 
 	/**

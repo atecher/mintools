@@ -33,28 +33,29 @@ public class Table extends AbstractNodeHandler {
 	private static final Pattern STYLE_ALIGNMENT_PATTERN =
 				Pattern.compile("text-align:\\s*([a-z]+)", Pattern.CASE_INSENSITIVE);
 
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
+	@Override
+    public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		MarkdownTable table = new MarkdownTable();
 
 		// loop over every direct child of the table node.
 		for(final Element child : node.children()) {
 
-			if(child.tagName().equals("thead")) {
+			if("thead".equals(child.tagName())) {
 				// handle explicitly declared header sections
 				for(final Element headerRow : child.children()) {
 					processRow(table.addHeaderRow(), headerRow, converter);
 				}
 
-			} else if(child.tagName().equals("tbody") || child.tagName().equals("tfoot")) {
+			} else if("tbody".equals(child.tagName()) || "tfoot".equals(child.tagName())) {
 				// handle body or foot sections - note: there's no special handling for tfoot
 				for(final Element bodyRow : child.children()) {
 					processRow(table.addBodyRow(), bodyRow, converter);
 				}
 
-			} else if(child.tagName().equals("tr")) {
+			} else if("tr".equals(child.tagName())) {
 				// Hrm, a row was added outside a valid table body or header...
 				if(!child.children().isEmpty()) {
-					if(child.children().get(0).tagName().equals("th")) {
+					if("th".equals(child.children().get(0).tagName())) {
 						// handle manual TH cells
 						processRow(table.addHeaderRow(), child, converter);
 
@@ -93,9 +94,9 @@ public class Table extends AbstractNodeHandler {
 			}
 		}
 		if(alignmentString != null) {
-			if(alignmentString.equals("center")) {
+			if("center".equals(alignmentString)) {
 				alignment = MarkdownTable.Alignment.CENTER;
-			} else if(alignmentString.equals("right")) {
+			} else if("right".equals(alignmentString)) {
 				alignment = MarkdownTable.Alignment.RIGHT;
 			}
 		}

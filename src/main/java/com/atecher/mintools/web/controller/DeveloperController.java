@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 @Controller
 public class DeveloperController {
@@ -80,7 +81,7 @@ public class DeveloperController {
     @RequestMapping(value = "/base64/decode", method = RequestMethod.POST)
     @ResponseBody
     public ResponseResult base64Decode(@RequestParam("content") String content) throws Exception {
-        return new ResponseResult("success", new String(Base64.decodeBase64(content.getBytes("UTF-8")), "UTF-8"));
+        return new ResponseResult("success", new String(Base64.decodeBase64(content.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8));
     }
 
     @RequestMapping(value = "/md5", method = RequestMethod.GET)
@@ -90,7 +91,7 @@ public class DeveloperController {
 
     @RequestMapping(value = "/md5/encode/{type}", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseResult md5Encode(@RequestParam("content") String content, @PathVariable("type") Integer type) throws UnsupportedEncodingException {
+    public ResponseResult md5Encode(@RequestParam("content") String content, @PathVariable("type") Integer type) {
         return new ResponseResult("success", MD5Util.md5(content, type));
     }
 
@@ -101,7 +102,7 @@ public class DeveloperController {
 
     @RequestMapping(value = "/sql/format", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseResult sqlFormat(@RequestParam("sql") String sql, @RequestParam("type") String type) throws UnsupportedEncodingException {
+    public ResponseResult sqlFormat(@RequestParam("sql") String sql, @RequestParam("type") String type) {
         if ("mysql".equalsIgnoreCase(type)) {
             sql = SQLUtils.formatMySql(sql);
         } else if ("oracle".equalsIgnoreCase(type)) {
@@ -146,7 +147,6 @@ public class DeveloperController {
     @ResponseBody
     public ResponseResult format(@RequestParam("content") String content) throws DocumentException, IOException {
         SAXReader reader = new SAXReader();
-        // System.out.println(reader);
         // 注释：创建一个串的字符输入流
         StringReader in = new StringReader(content);
         org.dom4j.Document doc = reader.read(in);

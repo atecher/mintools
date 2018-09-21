@@ -37,15 +37,18 @@ public class NodeRemover implements NodeHandler {
 		return instance;
 	}
 
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
+	@Override
+    public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		// do nothing, node is removed.
 	}
 
-	public void handleTextNode(TextNode node, DocumentConverter converter) {
+	@Override
+    public void handleTextNode(TextNode node, DocumentConverter converter) {
 		// do nothing, node is removed.
 	}
 
-	public void handleIgnoredHTMLElement(Element node, DocumentConverter converter) {
+	@Override
+    public void handleIgnoredHTMLElement(Element node, DocumentConverter converter) {
 		// do nothing, node is removed.
 	}
 }

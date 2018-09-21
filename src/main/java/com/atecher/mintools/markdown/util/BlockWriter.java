@@ -103,7 +103,7 @@ public final class BlockWriter extends PrintWriter {
     }
 
     @Override
-	public void write(char cbuf[], int off, int len) {
+	public void write(char[] cbuf, int off, int len) {
 		if(len == 0) {
 			return;
 		}
@@ -116,7 +116,7 @@ public final class BlockWriter extends PrintWriter {
     }
 
 	// writes a character buffer while prepending lines
-	private void writePrepended(char cbuf[], int off, int len) {
+	private void writePrepended(char[] cbuf, int off, int len) {
 		prependingLock.lock();
 		try {
 			// keep track of what needs to be added
@@ -375,7 +375,8 @@ public final class BlockWriter extends PrintWriter {
 	 *
 	 * @return The contents of the buffer, or a generic Object method.
 	 */
-	public String toString() {
+	@Override
+    public String toString() {
 		if(this.buffer != null) {
 			this.flush();
 			return buffer.toString();

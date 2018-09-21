@@ -56,7 +56,8 @@ public class InlineStyle extends AbstractNodeHandler {
 	 * @param node	  Node to handle
 	 * @param converter Parent converter for this object.
 	 */
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
+	@Override
+    public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		if(checkInnerBlock(node)) {
 			// not valid to have an inline node around block nodes, so we have to
 			// simply ignore them.
@@ -87,8 +88,7 @@ public class InlineStyle extends AbstractNodeHandler {
 	public void handleTextNode(TextNode node, DocumentConverter converter) {
 		// Override to provide special handling for ignoring
 		// leading or trailing all-space nodes.
-		if((node.previousSibling() != null && node.nextSibling() != null) ||
-				   node.text().trim().length() != 0) {
+		if((node.previousSibling() != null && node.nextSibling() != null) || node.text().trim().length() != 0) {
 			super.handleTextNode(node, converter);
 		}
 	}
@@ -183,7 +183,7 @@ public class InlineStyle extends AbstractNodeHandler {
 		if(!iwe.isEmphasisPreserved() || iwe.isAdditionalSpacingNeeded()) {
 			// peek behind for inline styling
 			Node n = node.previousSibling();
-			if(n != null && n instanceof TextNode) {
+			if(n instanceof TextNode) {
 				TextNode tn = (TextNode)n;
 				String text = tn.text();
 				if(INWORD_CHARACTER.matcher(text.substring(text.length()-1)).matches()) {
@@ -193,7 +193,7 @@ public class InlineStyle extends AbstractNodeHandler {
 			}
 			// peek ahead for inline styling
 			n = node.nextSibling();
-			if(n != null && n instanceof TextNode) {
+			if(n instanceof TextNode) {
 				TextNode tn = (TextNode)n;
 				if(INWORD_CHARACTER.matcher(tn.text().substring(0,1)).matches()) {
 					result.emphasisPreserved = iwe.isEmphasisPreserved();
@@ -211,9 +211,9 @@ public class InlineStyle extends AbstractNodeHandler {
 	 */
 	private void checkTag(Element node, Rules rules) {
 		String tn = node.tagName();
-		if(tn.equals("i") || tn.equals("em")) {
+		if("i".equals(tn) || "em".equals(tn)) {
 			rules.italics = (italicDepth == 0);
-		} else if(tn.equals("b") || tn.equals("strong")) {
+		} else if("b".equals(tn) || "strong".equals(tn)) {
 			rules.bold = (boldDepth == 0);
 		} else {
 			// check inline-style
