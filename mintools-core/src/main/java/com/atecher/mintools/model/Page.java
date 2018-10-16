@@ -6,7 +6,11 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
-
+/**
+ * @description:
+ * @author: atecher
+ * @date: 2018/10/16 下午4:23
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

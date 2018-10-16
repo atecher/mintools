@@ -3,10 +3,9 @@ package com.atecher.mintools.web.util;
 import java.util.List;
 
 /**
- * desc:
- *
- * @author hanhongwei
- * 2016/8/3.
+ * @description:
+ * @author: atecher
+ * @date: 2018/10/16 下午4:23
  */
 public class RestResponse {
     private List<RestHeaderParam> headers;

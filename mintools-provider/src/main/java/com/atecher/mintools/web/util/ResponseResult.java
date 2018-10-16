@@ -3,7 +3,9 @@ package com.atecher.mintools.web.util;
 import java.io.Serializable;
 
 /**
- * Created by hanhongwei on 2016/6/22.
+ * @description:
+ * @author: atecher
+ * @date: 2018/10/16 下午4:23
  */
 public class ResponseResult<T> implements Serializable {
     private String code;

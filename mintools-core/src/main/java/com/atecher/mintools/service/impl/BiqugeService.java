@@ -1,5 +1,6 @@
 package com.atecher.mintools.service.impl;
 
+import com.atecher.mintools.support.ExecutorHandler;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,7 +17,7 @@ import java.util.concurrent.Future;
 
 /**
  * @description:
- * @author: hanhongwei
+ * @author: atecher
  * @date: 2018/9/25 上午11:49
  */
 public class BiqugeService {
@@ -24,7 +25,7 @@ public class BiqugeService {
         Document doc = getDocument(url);
         Elements als = Objects.requireNonNull(doc).getElementById("list").getElementsByTag("a");
 
-        ExecutorService pool = Executors.newFixedThreadPool(50);
+        ExecutorService pool = ExecutorHandler.newFixedThreadPool(50);
         List list = new ArrayList();
         for (int i = 0; i < als.size(); i++) {
             String detailUrl = als.get(i).attr("abs:href");

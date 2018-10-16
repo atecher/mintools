@@ -5,7 +5,6 @@ import java.security.MessageDigest;
 
 /**
  * 描述：MD5工具类
- *
  * @作者 mark.han
  * @邮箱 hongwei.han@qq.com
  * @日期 2014-7-29

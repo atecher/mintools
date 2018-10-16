@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by hanhongwei on 2017/8/14.
+ * @description:
+ * @author: atecher
+ * @date: 2018/10/16 下午4:23
  */
 public interface ToolMapper {
 

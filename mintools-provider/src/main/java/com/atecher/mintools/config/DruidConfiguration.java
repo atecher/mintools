@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by mark on 2017/6/16.
+ * @description:
+ * @author: atecher
+ * @date: 2018/10/16 下午4:23
  */
 @Slf4j
 @Configuration

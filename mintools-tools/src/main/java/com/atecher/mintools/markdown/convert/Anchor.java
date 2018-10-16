@@ -30,6 +30,9 @@ public class Anchor extends AbstractNodeHandler {
     private static final Pattern INLINE_LINK_ESCAPE = Pattern.compile("([\\(\\)])");
     private static final String INLINE_LINK_REPLACEMENT = "\\\\$1";
 
+
+    private static final String LINK_HREF="href";
+
     /**
      * Creates a link reference, and renders the correct output.
      * <p>
@@ -42,9 +45,9 @@ public class Anchor extends AbstractNodeHandler {
     @SuppressWarnings("AlibabaUndefineMagicConstant")
     @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-        if (node.hasAttr("href") && node.attr("href").trim().length() > 0) {
+        if (node.hasAttr(LINK_HREF) && node.attr(LINK_HREF).trim().length() > 0) {
             // Must be a real link.
-            String url = converter.cleaner.cleanUrl(node.attr("href"));
+            String url = converter.cleaner.cleanUrl(node.attr(LINK_HREF));
             String label = converter.getInlineContent(this, node);
 
             if (label.length() > 0) {

@@ -27,7 +27,11 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-
+/**
+ * @description:
+ * @author: atecher
+ * @date: 2018/10/16 下午4:23
+ */
 @Controller
 public class DeveloperController {
     @RequestMapping(value = "/js", method = RequestMethod.GET)

@@ -2,7 +2,6 @@ package com.atecher.mintools.web.util;
 
 /**
  * 描述：页面跳转静态常量类
- *
  * @author mark.han
  * @version v1.0
  * @since JDK6

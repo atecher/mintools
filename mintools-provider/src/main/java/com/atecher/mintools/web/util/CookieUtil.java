@@ -4,7 +4,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Random;
-
+/**
+ * @description:
+ * @author: atecher
+ * @date: 2018/10/16 下午4:23
+ */
 public class CookieUtil {
     private static final String ALLCHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

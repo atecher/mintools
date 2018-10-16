@@ -3,7 +3,9 @@ package com.atecher.mintools.web.util.extlink;
 import com.atecher.mintools.model.Page;
 
 /**
- * Created by hanhongwei on 2016/8/1.
+ * @description:
+ * @author: atecher
+ * @date: 2018/10/16 下午4:23
  */
 public class PageResult extends Page {
 
