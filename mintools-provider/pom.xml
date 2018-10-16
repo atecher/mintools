@@ -58,4 +58,26 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>${project.finalName}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration><!-- 指定该Main Class为全局的唯一入口 -->
+                    <mainClass>com.atecher.mintools.MintoolsApplication</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
+                <dependencies>
+                    <!-- spring热部署-->
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>springloaded</artifactId>
+                        <version>1.2.6.RELEASE</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

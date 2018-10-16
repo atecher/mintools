@@ -66,7 +66,9 @@ public class Options implements Cloneable {
 		 */
 		MULTI_MARKDOWN(false,false,true,false,true);
 
-		// Private fields
+		/**
+		 * Private fields
+		 */
 		private final boolean removed;
 		private final boolean leftAsHtml;
 		private final boolean convertedToText;
@@ -140,7 +142,6 @@ public class Options implements Cloneable {
 		 */
 		ENABLED_BACKTICK(true, '`');
 
-		// private fields
 		private final boolean enabled;
 		private final char separatorCharacter;
 

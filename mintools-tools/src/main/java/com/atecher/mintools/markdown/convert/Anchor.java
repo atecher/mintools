@@ -38,6 +38,7 @@ public class Anchor extends AbstractNodeHandler {
 	 * @param node	  Node to handle
 	 * @param converter Parent converter for this object.
 	 */
+	@SuppressWarnings("AlibabaUndefineMagicConstant")
 	@Override
 	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
 		if(node.hasAttr("href") && node.attr("href").trim().length() > 0) {

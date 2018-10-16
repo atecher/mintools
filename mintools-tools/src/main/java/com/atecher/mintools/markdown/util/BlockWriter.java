@@ -69,7 +69,9 @@ public final class BlockWriter extends PrintWriter {
 		return BlockWriter.create(new StringWriter(initialSize));
 	}
 
-	// handles the actual setting up of the buffer
+	/**
+	 * handles the actual setting up of the buffer
+ 	 */
 	private static BlockWriter create(StringWriter buffer) {
 		@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 		BlockWriter bw = new BlockWriter(buffer);
@@ -115,7 +117,12 @@ public final class BlockWriter extends PrintWriter {
 		}
     }
 
-	// writes a character buffer while prepending lines
+	/**
+	 * writes a character buffer while prepending lines
+	 * @param cbuf
+	 * @param off
+	 * @param len
+	 */
 	private void writePrepended(char[] cbuf, int off, int len) {
 		prependingLock.lock();
 		try {
@@ -153,7 +160,12 @@ public final class BlockWriter extends PrintWriter {
 		}
     }
 
-	// writes a string while prepending lines
+	/**
+	 * writes a string while prepending lines
+	 * @param s
+	 * @param off
+	 * @param len
+	 */
 	private void writePrepended(String s, int off, int len) {
 		prependingLock.lock();
 		try {

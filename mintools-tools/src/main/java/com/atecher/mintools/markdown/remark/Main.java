@@ -197,7 +197,7 @@ public class Main {
 					result.options = com.atecher.mintools.markdown.remark.option.Options.github();
 				default:
 					error.add("Invalid type specified");
-
+					break;
 			}
 		} else {
 			result.options = com.atecher.mintools.markdown.remark.option.Options.markdown();

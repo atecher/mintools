@@ -247,8 +247,13 @@ public class DocumentConverter {
 		return bw.toString();
 	}
 
-	// Utility method to quickly walk the DOM tree and estimate the size of the
-	// buffer necessary to hold the result.
+	/**
+	 *  Utility method to quickly walk the DOM tree and estimate the size of the
+	 *  buffer necessary to hold the result.
+	 * @param el
+	 * @param depth
+	 * @return
+	 */
 	private static int calculateLength(Element el, int depth) {
 		int result = 0;
 		for(final Node n : el.childNodes()) {
@@ -261,7 +266,10 @@ public class DocumentConverter {
 		return result;
 	}
 
-	// implementation of the com.atecher.mintools.markdown.convert method.  Basically handles setting up the
+	/**
+	 * implementation of the com.atecher.mintools.markdown.convert method.  Basically handles setting up the
+	 * @param doc
+	 */
 	private void convertImpl(Document doc) {
 		
 		// linked, because we want the resulting list of links in order they were added

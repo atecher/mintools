@@ -2,7 +2,6 @@ package com.atecher.mintools.service.impl;
 
 import com.atecher.mintools.mapper.ToolMapper;
 import com.atecher.mintools.service.IToolService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 

@@ -19,7 +19,7 @@ import java.util.concurrent.*;
 public class BiqugeService {
     public static void read(String url, String base) {
         Document doc = getDocument(url);
-        Elements als = doc.getElementById("list").getElementsByTag("a");
+        Elements als = Objects.requireNonNull(doc).getElementById("list").getElementsByTag("a");
 
         ExecutorService pool = Executors.newFixedThreadPool(50);
         List list = new ArrayList();
@@ -41,7 +41,7 @@ public class BiqugeService {
 
     public static void write(String base) throws IOException {
         File dir = new File(base + "/in/");
-        List<File> files = Arrays.asList(dir.listFiles());
+        List<File> files = Arrays.asList(Objects.requireNonNull(dir.listFiles()));
 
         files.sort((o1, o2) -> {
             if (o1.isDirectory() && o2.isFile()) {
@@ -50,8 +50,7 @@ public class BiqugeService {
             if (o1.isFile() && o2.isDirectory()) {
                 return 1;
             }
-            int i = Integer.valueOf(o1.getName().replace(".txt", "")) >= Integer.valueOf(o2.getName().replace(".txt", "")) ? 1 : -1;
-            return i;
+            return Integer.valueOf(o1.getName().replace(".txt", "")) >= Integer.valueOf(o2.getName().replace(".txt", "")) ? 1 : -1;
         });
 
         File out = new File(base + "/out/out.txt");
@@ -60,14 +59,6 @@ public class BiqugeService {
             FileUtils.writeStringToFile(out, FileUtils.readFileToString(f,Charset.defaultCharset()) + "\n\n", Charset.defaultCharset(), true);
         }
     }
-
-    public static void main(String[] args) throws IOException {
-        String listUrl = "http://www.biquge.tw/72_72931/";
-        String baseDir = "d:/novel";
-//        read(listUrl,baseDir);
-        write(baseDir);
-    }
-
 
     static class MyCallable implements Callable {
         private int taskNum;
@@ -82,6 +73,7 @@ public class BiqugeService {
             this.base = base;
         }
 
+        @Override
         public Object call() throws Exception {
             System.out.println(">>>" + taskNum + "任务启动");
             Date dateTmp1 = new Date();
@@ -100,7 +92,7 @@ public class BiqugeService {
 
     public static String getContent(String url) {
         Document doc = getDocument(url);
-        String content = doc.getElementById("content").html();
+        String content = Objects.requireNonNull(doc).getElementById("content").html();
         String text = Jsoup.parse(content.replaceAll("(?i)<br[^>]*>", "br2nl").replaceAll("\n", "br2nl")).text();
         text = text.replace("86_86873", "");
         text = text.replace("br2nlbr2nl", "br2nl");
