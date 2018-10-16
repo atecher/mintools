@@ -20,20 +20,21 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles inline fixed-width code (code, tt) tags.
+ *
  * @author Phil DeJarnett
  */
 public class InlineCode extends AbstractNodeHandler {
 
-	/**
-	 * Renders inline-styled code.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
+    /**
+     * Renders inline-styled code.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		converter.output.write(converter.cleaner.cleanInlineCode(node));
-	}
+        converter.output.write(converter.cleaner.cleanInlineCode(node));
+    }
 
 }

@@ -7,6 +7,7 @@ $(function () {
 
 var editor;
 var result;
+
 function bindCodeMirror() {
     editor = CodeMirror.fromTextArea(document.getElementById("content"), {
         lineNumbers: true,
@@ -17,6 +18,7 @@ function bindCodeMirror() {
         matchBrackets: true
     });
 }
+
 function bindHtmlFormatAction() {
     $(document).on("click", "#btnHtmlFormat", function () {
         var value = editor.getValue();
@@ -32,6 +34,7 @@ function bindHtmlFormatAction() {
         });
     });
 }
+
 function bindHtmlClearAction() {
     $(document).on("click", "#btnHtmlClear", function () {
         var value = editor.getValue();
@@ -47,6 +50,7 @@ function bindHtmlClearAction() {
         });
     });
 }
+
 function bindHtmlCompressAction() {
     $(document).on("click", "#btnHtmlYS", function () {
         var value = editor.getValue();

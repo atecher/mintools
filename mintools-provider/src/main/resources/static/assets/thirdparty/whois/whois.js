@@ -5,6 +5,7 @@
 $(function () {
     bindWhoisSearch();
 });
+
 function bindWhoisSearch() {
     $(document).on("click", "#searchBtn", function (event) {
         var contentValue = $("#whois_search").val();

@@ -22,70 +22,71 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles dl, dt, and dd elements
+ *
  * @author Phil DeJarnett
  */
 public class Definitions extends AbstractNodeHandler {
 
-	@Override
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		// the first child node doesn't get a linebreak
-		boolean first = true;
-		boolean lastNodeWasDD = false;
+        // the first child node doesn't get a linebreak
+        boolean first = true;
+        boolean lastNodeWasDD = false;
 
-		// we need to store this, because we're going to replace it for each dd below (for padding).
-		BlockWriter parentWriter = converter.output;
+        // we need to store this, because we're going to replace it for each dd below (for padding).
+        BlockWriter parentWriter = converter.output;
 
-		/* Note on block handling:
-		 * We need a gap between each dd and the following dt, like so:
-		 *     term
-		 *     : definition
-		 *
-		 *     term
-		 *     : definition
-		 *
-		 * To do this, we wrap the whole thing in a start/end block. Then,
-		 * every time we come across a dt, we end a block and start a new one.
-		 * The only exception to this rule is if the first node we come to is
-		 * a dt - then we don't do anything.
-		 */
-		parentWriter.startBlock();
-		for(final Element child : node.children()) {
+        /* Note on block handling:
+         * We need a gap between each dd and the following dt, like so:
+         *     term
+         *     : definition
+         *
+         *     term
+         *     : definition
+         *
+         * To do this, we wrap the whole thing in a start/end block. Then,
+         * every time we come across a dt, we end a block and start a new one.
+         * The only exception to this rule is if the first node we come to is
+         * a dt - then we don't do anything.
+         */
+        parentWriter.startBlock();
+        for (final Element child : node.children()) {
 
-			if("dt".equals(child.tagName())) {
-				// print term
-				if(first) {
-					// the first node is a term, so we already started a block.
-					first = false;
-				} else {
-					// add block separation between defs and next term.
-					parentWriter.endBlock();
-					parentWriter.startBlock();
-				}
-				converter.walkNodes(this, child, converter.inlineNodes);
-				parentWriter.println();
-				lastNodeWasDD = false;
+            if ("dt".equals(child.tagName())) {
+                // print term
+                if (first) {
+                    // the first node is a term, so we already started a block.
+                    first = false;
+                } else {
+                    // add block separation between defs and next term.
+                    parentWriter.endBlock();
+                    parentWriter.startBlock();
+                }
+                converter.walkNodes(this, child, converter.inlineNodes);
+                parentWriter.println();
+                lastNodeWasDD = false;
 
-			} else if("dd".equals(child.tagName())) {
-				// print definition
-				if(first) {
-					// the first node is a def, so we'll need a new block next time.
-					first = false;
-				}
-				if(lastNodeWasDD) {
-					parentWriter.println();
-				}
-				parentWriter.print(":   ");
-				// Is this necessary?  We only allow inline, and inline is always one line, so padding is redundant.
-				// Of course, we may want to offer wrapped blocks later, when hardwraps are turned off.
-				converter.output = new BlockWriter(parentWriter).setPrependNewlineString("    ", true);
-				converter.walkNodes(this, child, converter.blockNodes);
-				converter.output = parentWriter;
-				
-				lastNodeWasDD = true;
+            } else if ("dd".equals(child.tagName())) {
+                // print definition
+                if (first) {
+                    // the first node is a def, so we'll need a new block next time.
+                    first = false;
+                }
+                if (lastNodeWasDD) {
+                    parentWriter.println();
+                }
+                parentWriter.print(":   ");
+                // Is this necessary?  We only allow inline, and inline is always one line, so padding is redundant.
+                // Of course, we may want to offer wrapped blocks later, when hardwraps are turned off.
+                converter.output = new BlockWriter(parentWriter).setPrependNewlineString("    ", true);
+                converter.walkNodes(this, child, converter.blockNodes);
+                converter.output = parentWriter;
 
-			} // else, ignore, bad node
-		}
-		// cleanup
-		parentWriter.endBlock();
-	}
+                lastNodeWasDD = true;
+
+            } // else, ignore, bad node
+        }
+        // cleanup
+        parentWriter.endBlock();
+    }
 }

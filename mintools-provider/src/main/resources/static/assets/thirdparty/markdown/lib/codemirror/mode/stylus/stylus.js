@@ -353,7 +353,7 @@
                 var previousChar = stream.string.charAt(stream.pos - 2);
 
                 var endingString = ((nextChar !== "\\" && peekChar === quote) ||
-                (nextChar === quote && previousChar !== "\\"));
+                    (nextChar === quote && previousChar !== "\\"));
 
                 if (endingString) {
                     if (nextChar !== quote && greedy) {

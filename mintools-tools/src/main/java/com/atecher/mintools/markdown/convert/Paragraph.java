@@ -20,21 +20,22 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles paragraph (p) tags.
+ *
  * @author Phil DeJarnett
  */
 public class Paragraph extends AbstractNodeHandler {
 
-	/**
-	 * Creates a standard text block, then walks down over inline nodes.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
+    /**
+     * Creates a standard text block, then walks down over inline nodes.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		converter.output.startBlock();
-		converter.walkNodes(this, node, converter.inlineNodes);
-		converter.output.endBlock();
-	}
+        converter.output.startBlock();
+        converter.walkNodes(this, node, converter.inlineNodes);
+        converter.output.endBlock();
+    }
 }

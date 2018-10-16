@@ -24,31 +24,31 @@ import org.jsoup.nodes.TextNode;
  */
 public class NodeRemover implements NodeHandler {
 
-	private static NodeRemover instance;
+    private static NodeRemover instance;
 
-	private NodeRemover() {
-		// singleton
-	}
+    private NodeRemover() {
+        // singleton
+    }
 
-	public static NodeRemover getInstance() {
-		if(instance == null) {
-			instance = new NodeRemover();
-		}
-		return instance;
-	}
+    public static NodeRemover getInstance() {
+        if (instance == null) {
+            instance = new NodeRemover();
+        }
+        return instance;
+    }
 
-	@Override
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		// do nothing, node is removed.
-	}
+        // do nothing, node is removed.
+    }
 
-	@Override
+    @Override
     public void handleTextNode(TextNode node, DocumentConverter converter) {
-		// do nothing, node is removed.
-	}
+        // do nothing, node is removed.
+    }
 
-	@Override
+    @Override
     public void handleIgnoredHTMLElement(Element node, DocumentConverter converter) {
-		// do nothing, node is removed.
-	}
+        // do nothing, node is removed.
+    }
 }

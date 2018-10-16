@@ -21,86 +21,95 @@ import java.util.Set;
 
 /**
  * Provides a standard class to note which HTML elements should be left in the final output.
+ *
  * @author Phil DeJarnett
  */
 public class IgnoredHtmlElement {
 
-	private String tagName;
+    private String tagName;
 
-	private Set<String> attributes;
+    private Set<String> attributes;
 
-	/**
-	 * Create a new IgnoredHtmlElement.  The tagname may also be referred to as the NodeName.
-	 *
-	 * @param tagName The tag name, such as {@code DIV}, case-insensitive.
-	 */
-	public IgnoredHtmlElement(String tagName) {
-		this.tagName = tagName;
-		this.attributes = new HashSet<>();
-	}
+    /**
+     * Create a new IgnoredHtmlElement.  The tagname may also be referred to as the NodeName.
+     *
+     * @param tagName The tag name, such as {@code DIV}, case-insensitive.
+     */
+    public IgnoredHtmlElement(String tagName) {
+        this.tagName = tagName;
+        this.attributes = new HashSet<>();
+    }
 
-	/**
-	 * Utility method to quickly create a new element.
-	 *
-	 * @param tagName The elements tag name.
-	 * @param attributes Zero or more attributes that should be enabled on this tag.
-	 * @return The newly created element.
-	 */
-	public static IgnoredHtmlElement create(String tagName, String... attributes) {
-		IgnoredHtmlElement el = new IgnoredHtmlElement(tagName);
-		for(final String attr : attributes) {
-			el.addAttribute(attr);
-		}
-		return el;
-	}
+    /**
+     * Utility method to quickly create a new element.
+     *
+     * @param tagName    The elements tag name.
+     * @param attributes Zero or more attributes that should be enabled on this tag.
+     * @return The newly created element.
+     */
+    public static IgnoredHtmlElement create(String tagName, String... attributes) {
+        IgnoredHtmlElement el = new IgnoredHtmlElement(tagName);
+        for (final String attr : attributes) {
+            el.addAttribute(attr);
+        }
+        return el;
+    }
 
-	/**
-	 * Returns the tagname for this object.
-	 * @return The name of this element.
-	 */
-	public String getTagName() {
-		return tagName;
-	}
+    /**
+     * Returns the tagname for this object.
+     *
+     * @return The name of this element.
+     */
+    public String getTagName() {
+        return tagName;
+    }
 
-	/**
-	 * Gets all the attributes that should be left on this tag.
-	 * @return A set of attributes that are left on the tag.
-	 */
-	public Set<String> getAttributes() {
-		return attributes;
-	}
+    /**
+     * Gets all the attributes that should be left on this tag.
+     *
+     * @return A set of attributes that are left on the tag.
+     */
+    public Set<String> getAttributes() {
+        return attributes;
+    }
 
-	/**
-	 * Adds a single to the list of allowed attributes.
-	 * @param attributeName The name of the attribute to allow.
-	 * @return true if the attribute was not already set.
-	 */
-	public boolean addAttribute(String attributeName) {
-		return this.attributes.add(attributeName);
-	}
+    /**
+     * Adds a single to the list of allowed attributes.
+     *
+     * @param attributeName The name of the attribute to allow.
+     * @return true if the attribute was not already set.
+     */
+    public boolean addAttribute(String attributeName) {
+        return this.attributes.add(attributeName);
+    }
 
-	/**
-	 * Adds one or more attributes to the list of allowed attributes.
-	 * @param attributes The attribute names that are to be allowed.
-	 */
-	public void addAttributes(String... attributes) {
-		for(final String attr : attributes) {
-			this.addAttribute(attr);
-		}
-	}
+    /**
+     * Adds one or more attributes to the list of allowed attributes.
+     *
+     * @param attributes The attribute names that are to be allowed.
+     */
+    public void addAttributes(String... attributes) {
+        for (final String attr : attributes) {
+            this.addAttribute(attr);
+        }
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) { return true; }
-		if(o == null || getClass() != o.getClass()) { return false; }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
-		IgnoredHtmlElement that = (IgnoredHtmlElement) o;
+        IgnoredHtmlElement that = (IgnoredHtmlElement) o;
 
-		return tagName.equals(that.tagName);
-	}
+        return tagName.equals(that.tagName);
+    }
 
-	@Override
-	public int hashCode() {
-		return tagName.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return tagName.hashCode();
+    }
 }

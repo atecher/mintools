@@ -22,31 +22,31 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles header nodes (h1 through h6)
- * 
+ *
  * @author Phil DeJarnett
  */
 public class Header extends AbstractNodeHandler {
 
-	/**
-	 * Renders a header node (h1..h6).  If enabled, also handles the headerID attribute.
-	 *
-	 * @param parent	The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
+    /**
+     * Renders a header node (h1..h6).  If enabled, also handles the headerID attribute.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		int depth = Integer.parseInt(node.tagName().substring(1, 2));
-		BlockWriter out = converter.output;
-		out.startBlock();
-		StringUtils.multiply(out, '#', depth);
-		out.print(' ');
-		out.print(converter.getInlineContent(this, node).replace("\n", " "));
-		out.print(' ');
-		StringUtils.multiply(out, '#', depth);
-		if(converter.options.headerIds && node.hasAttr("id")) {
-			out.printf("    {#%s}", node.attr("id"));
-		}
-		out.endBlock();
-	}
+        int depth = Integer.parseInt(node.tagName().substring(1, 2));
+        BlockWriter out = converter.output;
+        out.startBlock();
+        StringUtils.multiply(out, '#', depth);
+        out.print(' ');
+        out.print(converter.getInlineContent(this, node).replace("\n", " "));
+        out.print(' ');
+        StringUtils.multiply(out, '#', depth);
+        if (converter.options.headerIds && node.hasAttr("id")) {
+            out.printf("    {#%s}", node.attr("id"));
+        }
+        out.endBlock();
+    }
 }

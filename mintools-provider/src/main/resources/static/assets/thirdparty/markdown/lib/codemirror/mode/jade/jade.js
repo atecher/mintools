@@ -306,7 +306,7 @@
                 } else if (stream.sol() || stream.eol()) {
                     state.isEach = false;
                 } else if (stream.next()) {
-                    while (!stream.match(/^ in\b/, false) && stream.next());
+                    while (!stream.match(/^ in\b/, false) && stream.next()) ;
                     return 'variable';
                 }
             }

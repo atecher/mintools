@@ -9,6 +9,7 @@ function cssbeautify(style, opt) {
     if (typeof options.openbrace === 'string') {
         openbracesuffix = (options.openbrace === 'end-of-line');
     }
+
     function isWhitespace(c) {
         return (c === ' ') || (c === '\n') || (c === '\t') || (c === '\r') || (c === '\f');
     }

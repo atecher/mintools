@@ -18,16 +18,19 @@ function bindCodeMirror() {
         matchBrackets: true
     });
 }
+
 function bindCSSFormatAction() {
     $(document).on("click", "#btnCSSFormat", function () {
         CSS('format');
     });
 }
+
 function bindCSSCompressAction() {
     $(document).on("click", "#btnCSSYS", function () {
         CSS('pack');
     });
 }
+
 function bindCSSClearAction() {
     $(document).on("click", "#btnCSSClear", function () {
         CSS('format');
@@ -64,6 +67,7 @@ var lCSSCoder = {
         return (s == null) ? "" : s[1];
     }
 };
+
 function CSS(s) {
     var r = editor.getValue();
     r = lCSSCoder[s](r);

@@ -21,6 +21,7 @@ function bindCodeMirror() {
         matchBrackets: true
     });
 }
+
 function bindSqlFormatAction() {
     $(document).on("click", "#format", function () {
 

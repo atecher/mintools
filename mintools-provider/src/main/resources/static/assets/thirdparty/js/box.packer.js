@@ -161,8 +161,8 @@ var Packer = Base.extend({
     ENCODE62: "function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))}",
 
     UNPACK: "eval(function(p,a,c,k,e,r){e=%5;if(!''.replace(/^/,String)){while(c--)r[%6]=k[c]" +
-    "||%6;k=[function(e){return r[e]}];e=function(){return'\\\\w+'};c=1};while(c--)if(k[c])p=p." +
-    "replace(new RegExp('\\\\b'+e(c)+'\\\\b','g'),k[c]);return p}('%1',%2,%3,'%4'.split('|'),0,{}))",
+        "||%6;k=[function(e){return r[e]}];e=function(){return'\\\\w+'};c=1};while(c--)if(k[c])p=p." +
+        "replace(new RegExp('\\\\b'+e(c)+'\\\\b','g'),k[c]);return p}('%1',%2,%3,'%4'.split('|'),0,{}))",
 
     init: function () {
         this.data = reduce(this.data, function (data, replacement, expression) {
@@ -212,6 +212,7 @@ var Packer = Base.extend({
 String.prototype.has = function (c) {
     return this.indexOf(c) > -1;
 };
+
 function jsmin(comment, input, level) {
     if (input === undefined) {
         input = comment;
@@ -251,6 +252,7 @@ function jsmin(comment, input, level) {
 
     get.i = 0;
     get.l = input.length;
+
     function peek() {
         theLookahead = get();
         return theLookahead;

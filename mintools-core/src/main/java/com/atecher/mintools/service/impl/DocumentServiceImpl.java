@@ -18,6 +18,7 @@ import java.util.List;
 public class DocumentServiceImpl implements IDocumentService {
     @Resource
     private DocMapper docMapper;
+
     @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName")
     @Override
     public List<HashMap<String, Object>> findDocAll() {

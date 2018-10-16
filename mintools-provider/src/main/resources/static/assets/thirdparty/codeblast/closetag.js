@@ -21,7 +21,7 @@
     function autoCloseTag(cm, ch) {
         var pos = cm.getCursor(), tok = cm.getTokenAt(pos);
         var inner = CodeMirror.innerMode(cm.getMode(), tok.state), state = inner.state;
-        if (inner.mode.name != "xml")return CodeMirror.Pass;
+        if (inner.mode.name != "xml") return CodeMirror.Pass;
         var opt = cm.getOption("autoCloseTags"), html = inner.mode.configuration == "html";
         var dontCloseTags = (typeof opt == "object" && opt.dontCloseTags) || (html && htmlDontClose);
         var indentTags = (typeof opt == "object" && opt.indentTags) || (html && htmlIndent);
@@ -48,9 +48,9 @@
     }
 
     function indexOf(collection, elt) {
-        if (collection.indexOf)return collection.indexOf(elt);
+        if (collection.indexOf) return collection.indexOf(elt);
         for (var i = 0, e = collection.length; i < e; ++i)
-            if (collection[i] == elt)return i;
+            if (collection[i] == elt) return i;
         return -1;
     }
 })();

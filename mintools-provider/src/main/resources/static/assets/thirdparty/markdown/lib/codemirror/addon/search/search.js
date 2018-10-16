@@ -18,6 +18,7 @@
         mod(CodeMirror);
 })(function (CodeMirror) {
     "use strict";
+
     function searchOverlay(query, caseInsensitive) {
         if (typeof query == "string")
             query = new RegExp(query.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"), caseInsensitive ? "gi" : "g");

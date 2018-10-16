@@ -20,22 +20,23 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles blockquote tags
+ *
  * @author Phil DeJarnett
  */
 public class BlockQuote extends AbstractNodeHandler {
 
-	/**
-	 * Processes a quoted section.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
+    /**
+     * Processes a quoted section.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		// handle block quotes
-		converter.output.startBlock();
-		prependAndRecurse("> ", node, converter, converter.blockNodes);
-		converter.output.endBlock();
-	}
+        // handle block quotes
+        converter.output.startBlock();
+        prependAndRecurse("> ", node, converter, converter.blockNodes);
+        converter.output.endBlock();
+    }
 }

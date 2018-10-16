@@ -20,32 +20,33 @@ import org.jsoup.nodes.Element;
 
 /**
  * Default handler for unknown top-level nodes.
+ *
  * @author Phil DeJarnett
  */
 public class DefaultNodeHandler extends AbstractNodeHandler {
 
-	private static DefaultNodeHandler instance;
+    private static DefaultNodeHandler instance;
 
-	public static DefaultNodeHandler getInstance() {
-		if(instance == null) {
-			instance = new DefaultNodeHandler();
-		}
-		return instance;
-	}
+    public static DefaultNodeHandler getInstance() {
+        if (instance == null) {
+            instance = new DefaultNodeHandler();
+        }
+        return instance;
+    }
 
-	protected DefaultNodeHandler() {
-		// exists for Singleton pattern
-	}
+    protected DefaultNodeHandler() {
+        // exists for Singleton pattern
+    }
 
-	/**
-	 * For the default state element, the nodes are simply ignored, recursing as necessary.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
+    /**
+     * For the default state element, the nodes are simply ignored, recursing as necessary.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		converter.walkNodes(this, node, converter.blockNodes);
-	}
+        converter.walkNodes(this, node, converter.blockNodes);
+    }
 }

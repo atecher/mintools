@@ -1,7 +1,6 @@
 package com.atecher.mintools.util;
 
 
-
 import java.security.MessageDigest;
 
 /**

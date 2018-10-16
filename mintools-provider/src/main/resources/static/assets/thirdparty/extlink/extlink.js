@@ -11,6 +11,7 @@ var page = 1;
 var domain;
 var wait = 0;
 var intervalId;
+
 function bindExtLinkSearch() {
     var $result = $("#extLinkResult tbody");
     $result.empty();
@@ -26,6 +27,7 @@ function bindExtLinkSearch() {
         intervalId = setInterval(getLinks, 1000);
     });
 }
+
 function getLinks() {
     if (wait == 0) {
         page = page + 1;

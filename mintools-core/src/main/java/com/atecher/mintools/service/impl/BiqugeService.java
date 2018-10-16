@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * @description:
@@ -56,7 +59,7 @@ public class BiqugeService {
         File out = new File(base + "/out/out.txt");
         for (File f : files) {
             System.out.println(f.getName());
-            FileUtils.writeStringToFile(out, FileUtils.readFileToString(f,Charset.defaultCharset()) + "\n\n", Charset.defaultCharset(), true);
+            FileUtils.writeStringToFile(out, FileUtils.readFileToString(f, Charset.defaultCharset()) + "\n\n", Charset.defaultCharset(), true);
         }
     }
 

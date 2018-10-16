@@ -6,6 +6,7 @@ $(function () {
     bindViewAction();
     bindCollapseLevelAction();
 });
+
 function bindCodeMirror() {
     editor = CodeMirror.fromTextArea(document.getElementById("content"), {
         lineNumbers: true,
@@ -40,12 +41,15 @@ window.SINGLE_TAB = "  ";
 window.ImgCollapsed = "../themes/default/images/icons/collapsed.gif";
 window.ImgExpanded = "../themes/default/images/icons/expanded.gif";
 window.QuoteKeys = true;
+
 function $id(id) {
     return document.getElementById(id);
 }
+
 function IsArray(obj) {
     return obj && typeof obj === 'object' && typeof obj.length === 'number' && !(obj.propertyIsEnumerable('length'));
 }
+
 function Process() {
     SetTab();
     window.IsCollapsible = $id("CollapsibleView").checked;
@@ -64,8 +68,10 @@ function Process() {
         $id("Canvas").innerHTML = "";
     }
 }
+
 window._dateObj = new Date();
 window._regexpObj = new RegExp();
+
 function ProcessObject(obj, indent, addComma, isArray, isPropertyContent) {
     var html = "";
     var comma = (addComma) ? "<span class='Comma'>,</span> " : "";
@@ -125,12 +131,14 @@ function ProcessObject(obj, indent, addComma, isArray, isPropertyContent) {
     }
     return html;
 }
+
 function FormatLiteral(literal, quote, comma, indent, isArray, style) {
     if (typeof literal == 'string') literal = literal.split("<").join("&lt;").split(">").join("&gt;");
     var str = "<span class='" + style + "'>" + quote + literal + quote + comma + "</span>";
     if (isArray) str = GetRow(indent, str);
     return str;
 }
+
 function FormatFunction(indent, obj) {
     var tabs = "";
     for (var i = 0; i < indent; i++) tabs += window.TAB;
@@ -141,20 +149,24 @@ function FormatFunction(indent, obj) {
     }
     return str;
 }
+
 function GetRow(indent, data, isPropertyContent) {
     var tabs = "";
     for (var i = 0; i < indent && !isPropertyContent; i++) tabs += window.TAB;
     if (data != null && data.length > 0 && data.charAt(data.length - 1) != "\n") data = data + "\n";
     return tabs + data;
 }
+
 function CollapsibleViewClicked() {
     $id("collapseLevel").style.visibility = $id("CollapsibleView").checked ? "visible" : "hidden";
     Process();
 }
+
 function QuoteKeysClicked() {
     window.QuoteKeys = $id("QuoteKeys").checked;
     Process();
 }
+
 function CollapseAllClicked() {
     EnsureIsPopulated();
     TraverseChildren($id("Canvas"),
@@ -165,6 +177,7 @@ function CollapseAllClicked() {
         },
         0);
 }
+
 function ExpandAllClicked() {
     EnsureIsPopulated();
     TraverseChildren($id("Canvas"),
@@ -175,6 +188,7 @@ function ExpandAllClicked() {
         },
         0);
 }
+
 function MakeContentVisible(element, visible) {
     var img = element.previousSibling.firstChild;
     if (!!img.tagName && img.tagName.toLowerCase() == "img") {
@@ -182,12 +196,14 @@ function MakeContentVisible(element, visible) {
         element.previousSibling.firstChild.src = visible ? window.ImgExpanded : window.ImgCollapsed;
     }
 }
+
 function TraverseChildren(element, func, depth) {
     for (var i = 0; i < element.childNodes.length; i++) {
         TraverseChildren(element.childNodes[i], func, depth + 1);
     }
     func(element, depth);
 }
+
 function ExpImgClicked(img) {
     var container = img.parentNode.nextSibling;
     if (!container) return;
@@ -200,6 +216,7 @@ function ExpImgClicked(img) {
     container.style.display = disp;
     img.src = src;
 }
+
 function CollapseLevel(level) {
     EnsureIsPopulated();
     TraverseChildren($id("Canvas"),
@@ -214,16 +231,20 @@ function CollapseLevel(level) {
         },
         0);
 }
+
 function TabSizeChanged() {
     Process();
 }
+
 function SetTab() {
     var select = $id("TabSize");
     window.TAB = MultiplyString(parseInt(select.options[select.selectedIndex].value), window.SINGLE_TAB);
 }
+
 function EnsureIsPopulated() {
     if (!$id("Canvas").innerHTML && !!editor.getValue()) Process();
 }
+
 function MultiplyString(num, str) {
     var sb = [];
     for (var i = 0; i < num; i++) {
@@ -231,6 +252,7 @@ function MultiplyString(num, str) {
     }
     return sb.join("");
 }
+
 function SelectAllClicked() {
     if (!!document.selection && !!document.selection.empty) {
         document.selection.empty();
@@ -240,12 +262,13 @@ function SelectAllClicked() {
             window.getSelection().removeAllRanges();
         }
     }
-    var range = ( !!document.body && !!document.body.createTextRange) ? document.body.createTextRange() : document.createRange();
+    var range = (!!document.body && !!document.body.createTextRange) ? document.body.createTextRange() : document.createRange();
     if (!!range.selectNode) range.selectNode($id("Canvas"));
     else if (range.moveToElementText) range.moveToElementText($id("Canvas"));
     if (!!range.select) range.select($id("Canvas"));
     else window.getSelection().addRange(range);
 }
+
 function LinkToJson() {
     var val = editor.getValue();
     val = escape(val.split('/n').join(' ').split('/r').join(' '));

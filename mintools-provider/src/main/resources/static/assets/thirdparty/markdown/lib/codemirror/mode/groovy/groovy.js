@@ -96,6 +96,7 @@
                 if (stream.eat(quote)) tripleQuoted = true;
                 else return "string";
             }
+
             function t(stream, state) {
                 var escaped = false, next, end = !tripleQuoted;
                 while ((next = stream.next()) != null) {

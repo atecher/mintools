@@ -126,7 +126,7 @@
                 else if (curPunc == "[") pushContext(state, "]", stream.column());
                 else if (curPunc == "{") pushContext(state, "}", stream.column());
                 else if (/[\]\}\)]/.test(curPunc)) {
-                    while (state.context && state.context.type == "pattern")popContext(state);
+                    while (state.context && state.context.type == "pattern") popContext(state);
                     if (state.context && curPunc == state.context.type) popContext(state);
                 }
                 else if (curPunc == "." && state.context && state.context.type == "pattern") popContext(state);
@@ -144,7 +144,7 @@
                 var firstChar = textAfter && textAfter.charAt(0);
                 var context = state.context;
                 if (/[\]\}]/.test(firstChar))
-                    while (context && context.type == "pattern")context = context.prev;
+                    while (context && context.type == "pattern") context = context.prev;
                 var closing = context && firstChar == context.type;
                 if (!context)
                     return 0;

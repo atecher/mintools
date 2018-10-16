@@ -98,6 +98,7 @@ $('.menu-dropdown').dropdownHover();
 $('a.menu-dropdown').one('click', function () {
     location.href = $(this).attr('href');
 });
+
 function AddFavorite(title) {
     var url = window.location.href;
     try {

@@ -2,6 +2,7 @@ function setVisible(a, c) {
     var b = document.getElementById(a);
     b.style.visibility = c ? "visible" : "hidden"
 }
+
 function isValidFields() {
     var a = document.getElementById("textSour");
     if (null == a.value || a.value.length < 1) {
@@ -17,6 +18,7 @@ function isValidFields() {
     }
     return true
 }
+
 function buildRegex() {
     var a = "";
     if (document.getElementById("optionGlobal").checked) {
@@ -27,6 +29,7 @@ function buildRegex() {
     }
     return new RegExp(document.getElementById("textPattern").value, a)
 }
+
 function onMatch() {
     if (!isValidFields()) {
         return false
@@ -51,6 +54,7 @@ function onMatch() {
     }
     return true
 }
+
 function onReplace() {
     var b = document.getElementById("textSour").value;
     var a = buildRegex();

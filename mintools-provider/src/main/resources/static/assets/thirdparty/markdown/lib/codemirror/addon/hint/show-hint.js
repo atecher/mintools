@@ -99,8 +99,8 @@
             var startPos = this.cm.getCursor(), startLen = this.cm.getLine(startPos.line).length;
 
             var requestAnimationFrame = window.requestAnimationFrame || function (fn) {
-                    return setTimeout(fn, 1000 / 60);
-                };
+                return setTimeout(fn, 1000 / 60);
+            };
             var cancelAnimationFrame = window.cancelAnimationFrame || clearTimeout;
 
             function done() {

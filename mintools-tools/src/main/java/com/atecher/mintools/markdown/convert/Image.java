@@ -21,45 +21,46 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles img tags.
+ *
  * @author Phil DeJarnett
  */
 public class Image extends AbstractNodeHandler {
 
-	/**
-	 * Creates a link reference to an image, and renders the correct output.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
+    /**
+     * Creates a link reference to an image, and renders the correct output.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		String url = converter.cleaner.cleanUrl(node.attr("src"));
-		String alt = node.attr("alt");
-		if(alt == null || alt.trim().length() == 0) {
-			alt = node.attr("title");
-			if(alt == null) {
-				alt = "";
-			}
-		}
-		alt = converter.cleaner.clean(alt.trim());
-		if(converter.options.inlineLinks) {
-			if(alt.length() == 0) {
-				alt = "Image";
-			}
-			converter.output.printf("![%s](%s)", alt, url);
-		} else {
-			String linkId = converter.addLink(url, alt, true);
-			// give a usable description based on filename whenever possible
-			if(alt.length() == 0) {
-				alt = linkId;
-			}
-			BlockWriter out = converter.output;
-			if(alt.equals(linkId)) {
-				out.printf("![%s][]", linkId);
-			} else {
-				out.printf("![%s][%s]", alt, linkId);
-			}
-		}
-	}
+        String url = converter.cleaner.cleanUrl(node.attr("src"));
+        String alt = node.attr("alt");
+        if (alt == null || alt.trim().length() == 0) {
+            alt = node.attr("title");
+            if (alt == null) {
+                alt = "";
+            }
+        }
+        alt = converter.cleaner.clean(alt.trim());
+        if (converter.options.inlineLinks) {
+            if (alt.length() == 0) {
+                alt = "Image";
+            }
+            converter.output.printf("![%s](%s)", alt, url);
+        } else {
+            String linkId = converter.addLink(url, alt, true);
+            // give a usable description based on filename whenever possible
+            if (alt.length() == 0) {
+                alt = linkId;
+            }
+            BlockWriter out = converter.output;
+            if (alt.equals(linkId)) {
+                out.printf("![%s][]", linkId);
+            } else {
+                out.printf("![%s][%s]", alt, linkId);
+            }
+        }
+    }
 }

@@ -226,8 +226,8 @@
                 if (patterns.hasOwnProperty(name)) {
                     var pattern = patterns[name];
                     if ((pattern instanceof Array && pattern.some(function (p) {
-                            return stream.match(p);
-                        })) || stream.match(pattern))
+                        return stream.match(p);
+                    })) || stream.match(pattern))
                         return ret(name, patternStyles[name], stream.current());
                 }
             }

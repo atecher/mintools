@@ -19,6 +19,7 @@ public class DocumentController {
 
     @Autowired
     private IDocumentService documentService;
+
     @RequestMapping(value = "/doc", method = RequestMethod.GET)
     public String index(Model model) {
         List<HashMap<String, Object>> docs = documentService.findDocAll();

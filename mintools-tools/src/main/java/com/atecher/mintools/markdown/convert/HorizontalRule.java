@@ -26,10 +26,10 @@ import org.jsoup.nodes.Element;
  */
 public class HorizontalRule extends AbstractNodeHandler {
 
-	@Override
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		converter.output.startBlock();
-		StringUtils.multiply(converter.output, '-', 20);
-		converter.output.endBlock();
-	}
+        converter.output.startBlock();
+        StringUtils.multiply(converter.output, '-', 20);
+        converter.output.endBlock();
+    }
 }

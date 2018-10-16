@@ -21,34 +21,36 @@ import org.jsoup.nodes.TextNode;
 
 /**
  * Interface for classes that handle processing HTML Elements.
+ *
  * @author Phil DeJarnett
  */
 public interface NodeHandler {
 
-	/**
-	 * Handles an HTML Element node.  This is where most of the work is done.
-	 *
-	 * Which NodeHandler is used is based on the tagName of the element.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	void handleNode(NodeHandler parent, Element node, DocumentConverter converter);
+    /**
+     * Handles an HTML Element node.  This is where most of the work is done.
+     * <p>
+     * Which NodeHandler is used is based on the tagName of the element.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    void handleNode(NodeHandler parent, Element node, DocumentConverter converter);
 
-	/**
-	 * Handle a child text node.
-	 *
-	 * @param node Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	void handleTextNode(TextNode node, DocumentConverter converter);
+    /**
+     * Handle a child text node.
+     *
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    void handleTextNode(TextNode node, DocumentConverter converter);
 
-	/**
-	 * Handle an ignored HTMLElement.
-	 * @param node Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	void handleIgnoredHTMLElement(Element node, DocumentConverter converter);
+    /**
+     * Handle an ignored HTMLElement.
+     *
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    void handleIgnoredHTMLElement(Element node, DocumentConverter converter);
 
 }

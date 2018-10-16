@@ -19,11 +19,13 @@ import java.util.List;
 public class ToolServiceImpl implements IToolService {
     @Resource
     private ToolMapper toolMapper;
+
     @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName")
     @Override
     public List<HashMap<String, Object>> findToolAll() {
         return toolMapper.findToolAll();
     }
+
     @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName + #param")
     @Override
     public List<HashMap<String, Object>> findToolsByCategory(String param) {

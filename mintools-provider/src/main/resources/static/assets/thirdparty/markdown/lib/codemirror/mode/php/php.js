@@ -71,7 +71,7 @@
         // Normal string
         while (!stream.eol() &&
         (escaped || (!stream.match("{$", false) &&
-        !stream.match(/^(\$[a-zA-Z_][a-zA-Z0-9_]*|\$\{)/, false)))) {
+            !stream.match(/^(\$[a-zA-Z_][a-zA-Z0-9_]*|\$\{)/, false)))) {
             if (!escaped && stream.match(closing)) {
                 state.tokenize = null;
                 state.tokStack.pop();

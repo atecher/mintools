@@ -38,440 +38,446 @@ import java.util.regex.Pattern;
  */
 public class DocumentConverter {
 
-	/**
-	 * These properties do not change for the life of this converter
-	 */
-	final Options options;
-	final TextCleaner cleaner;
-	private final Set<String> ignoredHtmlTags;
-	final Map<String,NodeHandler> blockNodes;
-	final Map<String,NodeHandler> inlineNodes;
+    /**
+     * These properties do not change for the life of this converter
+     */
+    final Options options;
+    final TextCleaner cleaner;
+    private final Set<String> ignoredHtmlTags;
+    final Map<String, NodeHandler> blockNodes;
+    final Map<String, NodeHandler> inlineNodes;
 
-	// These properties change for each conversion
-	/**
-	 * for looking up links via URL
-	 */
-	private Map<String,String> linkUrls;
-	private int genericLinkUrlCounter;
-	private int genericImageUrlCounter;
-	/**
-	 * an inverse of linkUrls, for looking up links via ID
-	 */
-	private Map<String,String> linkIds;
-	/**
-	 * a cache of abbreviations mapped by abbreviated form
-	 */
-	private Map<String,String> abbreviations;
-	/**
-	 * the output writer, which may change during recursion
-	 */
-	BlockWriter output;
+    // These properties change for each conversion
+    /**
+     * for looking up links via URL
+     */
+    private Map<String, String> linkUrls;
+    private int genericLinkUrlCounter;
+    private int genericImageUrlCounter;
+    /**
+     * an inverse of linkUrls, for looking up links via ID
+     */
+    private Map<String, String> linkIds;
+    /**
+     * a cache of abbreviations mapped by abbreviated form
+     */
+    private Map<String, String> abbreviations;
+    /**
+     * the output writer, which may change during recursion
+     */
+    BlockWriter output;
 
-	private Map<String,NodeHandler> lastNodeset;
+    private Map<String, NodeHandler> lastNodeset;
 
-	private static final Pattern COMMA = Pattern.compile(",");
-	private static final Pattern LINK_MULTIPLE_SPACES = Pattern.compile(" {2,}", Pattern.DOTALL);
-	private static final Pattern LINK_SAFE_CHARS = Pattern.compile("[^-\\w \\.]+", Pattern.DOTALL);
-	private static final String LINK_REPLACEMENT = "_";
-	private static final Pattern LINK_EDGE_REPLACE = Pattern.compile(String.format("(^%1$s++)|(%1$s++$)", LINK_REPLACEMENT));
-	private static final Pattern LINK_MULTIPLE_REPLACE = Pattern.compile(String.format("%1$s{2,}", LINK_REPLACEMENT));
-	private static final Pattern LINK_FILENAME = Pattern.compile("/([^/]++)$");
-
-
-	/**
-	 * Creates a DocumentConverted with the given options.
-	 * @param options Options for this converter.
-	 */
-	public DocumentConverter(Options options) {
-		// configure final properties
-		this.options = options;
-		cleaner = new TextCleaner(options);
-		ignoredHtmlTags = new HashSet<>();
-		blockNodes = new HashMap<>();
-		inlineNodes = new HashMap<>();
-
-		// configure ignored tags
-		for(final IgnoredHtmlElement ihe : options.getIgnoredHtmlElements()) {
-			ignoredHtmlTags.add(ihe.getTagName());
-		}
-		
-		configureNodes();
-	}
-
-	private void configureNodes() {
-		addInlineNode(new InlineStyle(),	"i,em,b,strong,font,span");
-		addInlineNode(new InlineCode(),		"code,tt");
-		addInlineNode(new Image(),			"img");
-		addInlineNode(new Anchor(),			"a");
-		addInlineNode(new Break(),			"br");
-		addBlockNode (new Header(),			"h1,h2,h3,h4,h5,h6");
-		addBlockNode (new Paragraph(),		"p");
-		addBlockNode (new Codeblock(),		"pre");
-		addBlockNode (new BlockQuote(),		"blockquote");
-		addBlockNode (new HorizontalRule(),	"hr");
-		addBlockNode (new List(),			"ol,ul");
-
-		if(options.abbreviations) {
-			addInlineNode(new Abbr(),		"abbr,acronym");
-		}
-
-		if(options.definitionLists) {
-			addBlockNode(new Definitions(),	"dl");
-		}
+    private static final Pattern COMMA = Pattern.compile(",");
+    private static final Pattern LINK_MULTIPLE_SPACES = Pattern.compile(" {2,}", Pattern.DOTALL);
+    private static final Pattern LINK_SAFE_CHARS = Pattern.compile("[^-\\w \\.]+", Pattern.DOTALL);
+    private static final String LINK_REPLACEMENT = "_";
+    private static final Pattern LINK_EDGE_REPLACE = Pattern.compile(String.format("(^%1$s++)|(%1$s++$)", LINK_REPLACEMENT));
+    private static final Pattern LINK_MULTIPLE_REPLACE = Pattern.compile(String.format("%1$s{2,}", LINK_REPLACEMENT));
+    private static final Pattern LINK_FILENAME = Pattern.compile("/([^/]++)$");
 
 
-		// TABLES
-		if(options.getTables().isConvertedToText()) {
-			// if we are going to process it, add the handler
-			addBlockNode(new Table(),		"table");
+    /**
+     * Creates a DocumentConverted with the given options.
+     *
+     * @param options Options for this converter.
+     */
+    public DocumentConverter(Options options) {
+        // configure final properties
+        this.options = options;
+        cleaner = new TextCleaner(options);
+        ignoredHtmlTags = new HashSet<>();
+        blockNodes = new HashMap<>();
+        inlineNodes = new HashMap<>();
 
-		} else if(options.getTables().isRemoved()) {
-			addBlockNode(NodeRemover.getInstance(), "table");
+        // configure ignored tags
+        for (final IgnoredHtmlElement ihe : options.getIgnoredHtmlElements()) {
+            ignoredHtmlTags.add(ihe.getTagName());
+        }
 
-		} // else, it's being added directly
-	}
+        configureNodes();
+    }
 
-	@SuppressWarnings({"UnusedDeclaration"})
-	public Options getOptions() {
-		return options;
-	}
+    private void configureNodes() {
+        addInlineNode(new InlineStyle(), "i,em,b,strong,font,span");
+        addInlineNode(new InlineCode(), "code,tt");
+        addInlineNode(new Image(), "img");
+        addInlineNode(new Anchor(), "a");
+        addInlineNode(new Break(), "br");
+        addBlockNode(new Header(), "h1,h2,h3,h4,h5,h6");
+        addBlockNode(new Paragraph(), "p");
+        addBlockNode(new Codeblock(), "pre");
+        addBlockNode(new BlockQuote(), "blockquote");
+        addBlockNode(new HorizontalRule(), "hr");
+        addBlockNode(new List(), "ol,ul");
 
-	@SuppressWarnings({"UnusedDeclaration"})
-	public TextCleaner getCleaner() {
-		return cleaner;
-	}
+        if (options.abbreviations) {
+            addInlineNode(new Abbr(), "abbr,acronym");
+        }
 
-	@SuppressWarnings({"UnusedDeclaration"})
-	public Map<String, NodeHandler> getBlockNodes() {
-		return Collections.unmodifiableMap(blockNodes);
-	}
-
-	@SuppressWarnings({"UnusedDeclaration"})
-	public Map<String, NodeHandler> getInlineNodes() {
-		return Collections.unmodifiableMap(inlineNodes);
-	}
-
-	@SuppressWarnings({"UnusedDeclaration"})
-	public BlockWriter getOutput() {
-		return output;
-	}
-
-	@SuppressWarnings({"UnusedDeclaration"})
-	public void setOutput(BlockWriter output) {
-		this.output = output;
-	}
-
-	/**
-	 * Customize the processing for a node.  This node is added to the
-	 * inline list and the block list.  The inline list is used for nodes
-	 * that do not contain linebreaks, such as {@code <em>} or {@code <strong>}.
-	 *
-	 * The tagnames is a comma-delimited list of tagnames for
-	 * which this handler should be applied.
-	 *
-	 * @param handler The handler for the nodes
-	 * @param tagnames One or more tagnames
-	 */
-	@SuppressWarnings({"WeakerAccess"})
-	public void addInlineNode(NodeHandler handler, String tagnames) {
-		for(final String key : COMMA.split(tagnames)) {
-			if(key.length() > 0) {
-				inlineNodes.put(key, handler);
-				blockNodes.put(key, handler);
-			}
-		}
-	}
+        if (options.definitionLists) {
+            addBlockNode(new Definitions(), "dl");
+        }
 
 
-	/**
-	 * Customize the processing for a node.  This node is added to the
-	 * block list only.  The node handler should properly use the
-	 * {@link BlockWriter#startBlock()} and
-	 * {@link BlockWriter#endBlock()} methods as
-	 * appropriate.
-	 *
-	 * The tagnames is a comma-delimited list of tagnames for
-	 * which this handler should be applied.
-	 *
-	 * @param handler The handler for the nodes
-	 * @param tagnames One or more tagnames
-	 */
-	@SuppressWarnings({"WeakerAccess"})
-	public void addBlockNode(NodeHandler handler, String tagnames) {
-		for(final String key : COMMA.split(tagnames)) {
-			if(key.length() > 0) {
-				blockNodes.put(key, handler);
-			}
-		}
-	}
+        // TABLES
+        if (options.getTables().isConvertedToText()) {
+            // if we are going to process it, add the handler
+            addBlockNode(new Table(), "table");
 
-	/**
-	 * Convert a document to the given writer.
-	 *
-	 * <p><strong>Note: It is up to the calling class to handle closing the writer!</strong></p>
-	 *
-	 * @param doc Document to com.atecher.mintools.markdown.convert
-	 * @param out Writer to receive the final output
-	 */
-	public void convert(Document doc, Writer out) {
-		this.output = new BlockWriter(out, true);
-		this.convertImpl(doc);
-	}
+        } else if (options.getTables().isRemoved()) {
+            addBlockNode(NodeRemover.getInstance(), "table");
 
-	/**
-	 * Convert a document to the given output stream.
-	 *
-	 * <p><strong>Note: It is up to the calling class to handle closing the stream!</strong></p>
-	 *
-	 * @param doc Document to com.atecher.mintools.markdown.convert
-	 * @param out OutputStream to receive the final output
-	 */
-	public void convert(Document doc, OutputStream out) {
-		this.output = new BlockWriter(out, true);
-		this.convertImpl(doc);
-	}
+        } // else, it's being added directly
+    }
 
-	/**
-	 * Convert a document and return a string.
-	 * When wanting a final string, this method should always be used.
-	 * It will attempt to calculate the size of the buffer necessary to hold the entire output.
-	 *
-	 * @param doc Document to com.atecher.mintools.markdown.convert
-	 * @return The Markdown-formatted string.
-	 */
-	public String convert(Document doc) {
-		// estimate the size necessary to handle the final output
-		BlockWriter bw = BlockWriter.create(DocumentConverter.calculateLength(doc, 0));
-		this.output = bw;
-		this.convertImpl(doc);
-		return bw.toString();
-	}
+    @SuppressWarnings({"UnusedDeclaration"})
+    public Options getOptions() {
+        return options;
+    }
 
-	/**
-	 *  Utility method to quickly walk the DOM tree and estimate the size of the
-	 *  buffer necessary to hold the result.
-	 * @param el
-	 * @param depth
-	 * @return
-	 */
-	private static int calculateLength(Element el, int depth) {
-		int result = 0;
-		for(final Node n : el.childNodes()) {
-			if(n instanceof Element) {
-				result += (4 * depth) + calculateLength((Element)n, depth+1);
-			} else if(n instanceof TextNode) {
-				result += ((TextNode)n).text().length();
-			}
-		}
-		return result;
-	}
+    @SuppressWarnings({"UnusedDeclaration"})
+    public TextCleaner getCleaner() {
+        return cleaner;
+    }
 
-	/**
-	 * implementation of the com.atecher.mintools.markdown.convert method.  Basically handles setting up the
-	 * @param doc
-	 */
-	private void convertImpl(Document doc) {
-		
-		// linked, because we want the resulting list of links in order they were added
-		linkIds = new LinkedHashMap<>();
-		// To keep track of already added URLs
-		linkUrls = new HashMap<>();
-		genericImageUrlCounter = 0;
-		genericLinkUrlCounter = 0;
-		// linked, to keep abbreviations in the order they were added
-		abbreviations = new LinkedHashMap<>();
+    @SuppressWarnings({"UnusedDeclaration"})
+    public Map<String, NodeHandler> getBlockNodes() {
+        return Collections.unmodifiableMap(blockNodes);
+    }
 
-		lastNodeset = blockNodes;
+    @SuppressWarnings({"UnusedDeclaration"})
+    public Map<String, NodeHandler> getInlineNodes() {
+        return Collections.unmodifiableMap(inlineNodes);
+    }
 
-		// walk the DOM
-		walkNodes(DefaultNodeHandler.getInstance(), doc.body(), blockNodes);
+    @SuppressWarnings({"UnusedDeclaration"})
+    public BlockWriter getOutput() {
+        return output;
+    }
 
-		if(!linkIds.isEmpty()) {
-			// Add links
-			output.startBlock();
-			for(final Map.Entry<String,String> link : linkIds.entrySet()) {
-				output.printf("\n[%s]: %s", link.getKey(), link.getValue());
-			}
-			output.endBlock();
-		}
-		if(!abbreviations.isEmpty()) {
-			// Add abbreviations
-			output.startBlock();
-			for(final Map.Entry<String,String> abbr : abbreviations.entrySet()) {
-				output.printf("\n*[%s]: %s", abbr.getKey(), cleaner.clean(abbr.getValue()));
-			}
-			output.endBlock();
-		}
+    @SuppressWarnings({"UnusedDeclaration"})
+    public void setOutput(BlockWriter output) {
+        this.output = output;
+    }
 
-		// free up unused properties
-		linkIds = null;
-		linkUrls = null;
-		abbreviations = null;
-		output = null;
-	}
+    /**
+     * Customize the processing for a node.  This node is added to the
+     * inline list and the block list.  The inline list is used for nodes
+     * that do not contain linebreaks, such as {@code <em>} or {@code <strong>}.
+     * <p>
+     * The tagnames is a comma-delimited list of tagnames for
+     * which this handler should be applied.
+     *
+     * @param handler  The handler for the nodes
+     * @param tagnames One or more tagnames
+     */
+    @SuppressWarnings({"WeakerAccess"})
+    public void addInlineNode(NodeHandler handler, String tagnames) {
+        for (final String key : COMMA.split(tagnames)) {
+            if (key.length() > 0) {
+                inlineNodes.put(key, handler);
+                blockNodes.put(key, handler);
+            }
+        }
+    }
 
-	/**
-	 * Loops over the children of an HTML Element, handling TextNode and child Elements.
-	 *
-	 * @param currentNode The default node handler for TextNodes and IgnoredHTMLElements.
-	 * @param el The parent HTML Element whose children are being looked at.
-	 */
-	public void walkNodes(NodeHandler currentNode, Element el) {
-		walkNodes(currentNode, el, lastNodeset);
-	}
 
-	/**
-	 * Loops over the children of an HTML Element, handling TextNode and child Elements.
-	 *
-	 * @param currentNodeHandler The default node handler for TextNodes and IgnoredHTMLElements.
-	 * @param el The parent HTML Element whose children are being looked at.
-	 * @param nodeList The list of valid nodes at this level.  Should be one of <b>blockNodes</b> or <b>inlineNodes</b>
-	 */
-	public void walkNodes(NodeHandler currentNodeHandler, Element el, Map<String, NodeHandler> nodeList) {
-		Map<String, NodeHandler> backupLastNodeset = lastNodeset;
-		lastNodeset = nodeList;
-		for(final Node n : el.childNodes()) {
-			if(n instanceof TextNode) {
-				// It's just text!
-				currentNodeHandler.handleTextNode((TextNode) n, this);
+    /**
+     * Customize the processing for a node.  This node is added to the
+     * block list only.  The node handler should properly use the
+     * {@link BlockWriter#startBlock()} and
+     * {@link BlockWriter#endBlock()} methods as
+     * appropriate.
+     * <p>
+     * The tagnames is a comma-delimited list of tagnames for
+     * which this handler should be applied.
+     *
+     * @param handler  The handler for the nodes
+     * @param tagnames One or more tagnames
+     */
+    @SuppressWarnings({"WeakerAccess"})
+    public void addBlockNode(NodeHandler handler, String tagnames) {
+        for (final String key : COMMA.split(tagnames)) {
+            if (key.length() > 0) {
+                blockNodes.put(key, handler);
+            }
+        }
+    }
 
-			} else if(n instanceof Element) {
-				// figure out who can handle this
-				Element node = (Element)n;
-				String tagName = node.tagName();
+    /**
+     * Convert a document to the given writer.
+     *
+     * <p><strong>Note: It is up to the calling class to handle closing the writer!</strong></p>
+     *
+     * @param doc Document to com.atecher.mintools.markdown.convert
+     * @param out Writer to receive the final output
+     */
+    public void convert(Document doc, Writer out) {
+        this.output = new BlockWriter(out, true);
+        this.convertImpl(doc);
+    }
 
-				if(nodeList.containsKey(tagName)) {
-					// OK, we know how to handle this node
-					nodeList.get(tagName).handleNode(currentNodeHandler, node, this);
+    /**
+     * Convert a document to the given output stream.
+     *
+     * <p><strong>Note: It is up to the calling class to handle closing the stream!</strong></p>
+     *
+     * @param doc Document to com.atecher.mintools.markdown.convert
+     * @param out OutputStream to receive the final output
+     */
+    public void convert(Document doc, OutputStream out) {
+        this.output = new BlockWriter(out, true);
+        this.convertImpl(doc);
+    }
 
-				} else if(ignoredHtmlTags.contains(tagName)) {
-					// User wants to leave this tag in the output.  Naughty user.
-					currentNodeHandler.handleIgnoredHTMLElement(node, this);
+    /**
+     * Convert a document and return a string.
+     * When wanting a final string, this method should always be used.
+     * It will attempt to calculate the size of the buffer necessary to hold the entire output.
+     *
+     * @param doc Document to com.atecher.mintools.markdown.convert
+     * @return The Markdown-formatted string.
+     */
+    public String convert(Document doc) {
+        // estimate the size necessary to handle the final output
+        BlockWriter bw = BlockWriter.create(DocumentConverter.calculateLength(doc, 0));
+        this.output = bw;
+        this.convertImpl(doc);
+        return bw.toString();
+    }
 
-				} else {
-					// No-can-do, just remove the node, and keep on walkin'
-					// The only thing we'll do is add block status in if the unknown node
-					// usually renders as a block.
-					// Due to BlockWriter's intelligent tracking, we shouldn't get a whole bunch
-					// of empty lines for empty nodes.
-					if(node.isBlock()) {
-						output.startBlock();
-					}
-					walkNodes(currentNodeHandler, node, nodeList);
-					if(node.isBlock()) {
-						output.endBlock();
-					}					
-				}
-			} // else: not a node we care about (e.g.: comment nodes)
-		}
-		lastNodeset = backupLastNodeset;
-	}
+    /**
+     * Utility method to quickly walk the DOM tree and estimate the size of the
+     * buffer necessary to hold the result.
+     *
+     * @param el
+     * @param depth
+     * @return
+     */
+    private static int calculateLength(Element el, int depth) {
+        int result = 0;
+        for (final Node n : el.childNodes()) {
+            if (n instanceof Element) {
+                result += (4 * depth) + calculateLength((Element) n, depth + 1);
+            } else if (n instanceof TextNode) {
+                result += ((TextNode) n).text().length();
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * Recursively processes child nodes and returns the potential output string.
-	 * @param currentNode The default node handler for TextNodes and IgnoredHTMLElements.
-	 * @param el The parent HTML Element whose children are being looked at.
-	 * @return The potential output string.
-	 */
-	public String getInlineContent(NodeHandler currentNode, Element el) {
-		return this.getInlineContent(currentNode, el, false);
-	}
+    /**
+     * implementation of the com.atecher.mintools.markdown.convert method.  Basically handles setting up the
+     *
+     * @param doc
+     */
+    private void convertImpl(Document doc) {
 
-	/**
-	 * Recursively processes child nodes and returns the potential output string.
-	 * @param currentNode The default node handler for TextNodes and IgnoredHTMLElements.
-	 * @param el The parent HTML Element whose children are being looked at.
-	 * @param undoLeadingEscapes If true, leading escapes are removed
-	 * @return The potential output string.
-	 */
-	public String getInlineContent(NodeHandler currentNode, Element el, boolean undoLeadingEscapes) {
-		BlockWriter oldOutput = output;
-		output = BlockWriter.create(1000);
-		walkNodes(currentNode, el, inlineNodes);
-		String ret = output.toString();
-		output = oldOutput;
-		if(undoLeadingEscapes) {
-			ret = cleaner.unescapeLeadingCharacters(ret);
-		}
-		return ret;
-	}
+        // linked, because we want the resulting list of links in order they were added
+        linkIds = new LinkedHashMap<>();
+        // To keep track of already added URLs
+        linkUrls = new HashMap<>();
+        genericImageUrlCounter = 0;
+        genericLinkUrlCounter = 0;
+        // linked, to keep abbreviations in the order they were added
+        abbreviations = new LinkedHashMap<>();
 
-	/**
-	 * Adds a link to the link set, and returns the actual ID for the link.
-	 *
-	 * @param url URL for link
-	 * @param recommendedName A recommended name for non-simple link IDs. This might be modified.
-	 * @param image If true, use "img-" instead of "link-" for simple link IDs.
-	 * @return The actual link ID for this URL.
-	 */
-	public String addLink(String url, String recommendedName, boolean image) {
-		String linkId;
-		if(linkUrls.containsKey(url)) {
-			linkId = linkUrls.get(url);
-		} else {
-			if(options.simpleLinkIds) {
-				linkId = (image ? "image-" : "") + String.valueOf(linkUrls.size()+1);
-			} else {
-				recommendedName = cleanLinkId(url, recommendedName, image);
-				if(linkIds.containsKey(recommendedName)) {
-					int incr = 1;
-					while(linkIds.containsKey(String.format("%s %d", recommendedName, incr))) {
-						incr++;
-					}
-					recommendedName = String.format("%s %d", recommendedName, incr);
-				}
-				linkId = recommendedName;
-			}
-			linkUrls.put(url, linkId);
-			linkIds.put(linkId, url);
-		}
-		return linkId;
-	}
+        lastNodeset = blockNodes;
 
-	/**
-	 * Adds an abbreviation to the abbreviation set.
-	 * @param abbr The abbreviation to be used
-	 * @param definition The definition for the abbreviation, should NOT be pre-escaped.
-	 */
-	void addAbbreviation(String abbr, String definition) {
-		if(!abbreviations.containsKey(abbr)) {
-			abbreviations.put(abbr, definition);
-		}
-	}
+        // walk the DOM
+        walkNodes(DefaultNodeHandler.getInstance(), doc.body(), blockNodes);
 
-	String cleanLinkId(String url, String linkId, boolean image) {
-		// no newlines
-		String ret = linkId.replace('\n', ' ');
-		// multiple spaces should be a single space
-		ret = LINK_MULTIPLE_SPACES.matcher(ret).replaceAll(" ");
-		// remove all characters except letters, numbers, spaces, and some basic punctuation
-		ret = LINK_SAFE_CHARS.matcher(ret).replaceAll(LINK_REPLACEMENT);
-		// replace multiple underscores with a single underscore
-		ret = LINK_MULTIPLE_REPLACE.matcher(ret).replaceAll(LINK_REPLACEMENT);
-		// replace underscores on the left or right with nothing
-		ret = LINK_EDGE_REPLACE.matcher(ret).replaceAll("");
-		// trim any leading or trailing spaces
-		ret = ret.trim();
-		if(ret.length() == 0 || ret.equals(LINK_REPLACEMENT)) {
-			// if we have nothing usable left, use a generic ID
-			if(image) {
-				if(url != null) {
-					Matcher m = LINK_FILENAME.matcher(url);
-					if(m.find()) {
-						ret = cleanLinkId(null, m.group(1), true);
-					} else {
-						genericImageUrlCounter++;
-						ret = "Image " + genericImageUrlCounter;
-					}
-				} else {
-					genericImageUrlCounter++;
-					ret = "Image " + genericImageUrlCounter;
-				}
-			} else {
-				genericLinkUrlCounter++;
-				ret = "Link " + genericLinkUrlCounter;
-			}
-		} // else, use the cleaned id
-		return ret;
-	}
+        if (!linkIds.isEmpty()) {
+            // Add links
+            output.startBlock();
+            for (final Map.Entry<String, String> link : linkIds.entrySet()) {
+                output.printf("\n[%s]: %s", link.getKey(), link.getValue());
+            }
+            output.endBlock();
+        }
+        if (!abbreviations.isEmpty()) {
+            // Add abbreviations
+            output.startBlock();
+            for (final Map.Entry<String, String> abbr : abbreviations.entrySet()) {
+                output.printf("\n*[%s]: %s", abbr.getKey(), cleaner.clean(abbr.getValue()));
+            }
+            output.endBlock();
+        }
+
+        // free up unused properties
+        linkIds = null;
+        linkUrls = null;
+        abbreviations = null;
+        output = null;
+    }
+
+    /**
+     * Loops over the children of an HTML Element, handling TextNode and child Elements.
+     *
+     * @param currentNode The default node handler for TextNodes and IgnoredHTMLElements.
+     * @param el          The parent HTML Element whose children are being looked at.
+     */
+    public void walkNodes(NodeHandler currentNode, Element el) {
+        walkNodes(currentNode, el, lastNodeset);
+    }
+
+    /**
+     * Loops over the children of an HTML Element, handling TextNode and child Elements.
+     *
+     * @param currentNodeHandler The default node handler for TextNodes and IgnoredHTMLElements.
+     * @param el                 The parent HTML Element whose children are being looked at.
+     * @param nodeList           The list of valid nodes at this level.  Should be one of <b>blockNodes</b> or <b>inlineNodes</b>
+     */
+    public void walkNodes(NodeHandler currentNodeHandler, Element el, Map<String, NodeHandler> nodeList) {
+        Map<String, NodeHandler> backupLastNodeset = lastNodeset;
+        lastNodeset = nodeList;
+        for (final Node n : el.childNodes()) {
+            if (n instanceof TextNode) {
+                // It's just text!
+                currentNodeHandler.handleTextNode((TextNode) n, this);
+
+            } else if (n instanceof Element) {
+                // figure out who can handle this
+                Element node = (Element) n;
+                String tagName = node.tagName();
+
+                if (nodeList.containsKey(tagName)) {
+                    // OK, we know how to handle this node
+                    nodeList.get(tagName).handleNode(currentNodeHandler, node, this);
+
+                } else if (ignoredHtmlTags.contains(tagName)) {
+                    // User wants to leave this tag in the output.  Naughty user.
+                    currentNodeHandler.handleIgnoredHTMLElement(node, this);
+
+                } else {
+                    // No-can-do, just remove the node, and keep on walkin'
+                    // The only thing we'll do is add block status in if the unknown node
+                    // usually renders as a block.
+                    // Due to BlockWriter's intelligent tracking, we shouldn't get a whole bunch
+                    // of empty lines for empty nodes.
+                    if (node.isBlock()) {
+                        output.startBlock();
+                    }
+                    walkNodes(currentNodeHandler, node, nodeList);
+                    if (node.isBlock()) {
+                        output.endBlock();
+                    }
+                }
+            } // else: not a node we care about (e.g.: comment nodes)
+        }
+        lastNodeset = backupLastNodeset;
+    }
+
+    /**
+     * Recursively processes child nodes and returns the potential output string.
+     *
+     * @param currentNode The default node handler for TextNodes and IgnoredHTMLElements.
+     * @param el          The parent HTML Element whose children are being looked at.
+     * @return The potential output string.
+     */
+    public String getInlineContent(NodeHandler currentNode, Element el) {
+        return this.getInlineContent(currentNode, el, false);
+    }
+
+    /**
+     * Recursively processes child nodes and returns the potential output string.
+     *
+     * @param currentNode        The default node handler for TextNodes and IgnoredHTMLElements.
+     * @param el                 The parent HTML Element whose children are being looked at.
+     * @param undoLeadingEscapes If true, leading escapes are removed
+     * @return The potential output string.
+     */
+    public String getInlineContent(NodeHandler currentNode, Element el, boolean undoLeadingEscapes) {
+        BlockWriter oldOutput = output;
+        output = BlockWriter.create(1000);
+        walkNodes(currentNode, el, inlineNodes);
+        String ret = output.toString();
+        output = oldOutput;
+        if (undoLeadingEscapes) {
+            ret = cleaner.unescapeLeadingCharacters(ret);
+        }
+        return ret;
+    }
+
+    /**
+     * Adds a link to the link set, and returns the actual ID for the link.
+     *
+     * @param url             URL for link
+     * @param recommendedName A recommended name for non-simple link IDs. This might be modified.
+     * @param image           If true, use "img-" instead of "link-" for simple link IDs.
+     * @return The actual link ID for this URL.
+     */
+    public String addLink(String url, String recommendedName, boolean image) {
+        String linkId;
+        if (linkUrls.containsKey(url)) {
+            linkId = linkUrls.get(url);
+        } else {
+            if (options.simpleLinkIds) {
+                linkId = (image ? "image-" : "") + String.valueOf(linkUrls.size() + 1);
+            } else {
+                recommendedName = cleanLinkId(url, recommendedName, image);
+                if (linkIds.containsKey(recommendedName)) {
+                    int incr = 1;
+                    while (linkIds.containsKey(String.format("%s %d", recommendedName, incr))) {
+                        incr++;
+                    }
+                    recommendedName = String.format("%s %d", recommendedName, incr);
+                }
+                linkId = recommendedName;
+            }
+            linkUrls.put(url, linkId);
+            linkIds.put(linkId, url);
+        }
+        return linkId;
+    }
+
+    /**
+     * Adds an abbreviation to the abbreviation set.
+     *
+     * @param abbr       The abbreviation to be used
+     * @param definition The definition for the abbreviation, should NOT be pre-escaped.
+     */
+    void addAbbreviation(String abbr, String definition) {
+        if (!abbreviations.containsKey(abbr)) {
+            abbreviations.put(abbr, definition);
+        }
+    }
+
+    String cleanLinkId(String url, String linkId, boolean image) {
+        // no newlines
+        String ret = linkId.replace('\n', ' ');
+        // multiple spaces should be a single space
+        ret = LINK_MULTIPLE_SPACES.matcher(ret).replaceAll(" ");
+        // remove all characters except letters, numbers, spaces, and some basic punctuation
+        ret = LINK_SAFE_CHARS.matcher(ret).replaceAll(LINK_REPLACEMENT);
+        // replace multiple underscores with a single underscore
+        ret = LINK_MULTIPLE_REPLACE.matcher(ret).replaceAll(LINK_REPLACEMENT);
+        // replace underscores on the left or right with nothing
+        ret = LINK_EDGE_REPLACE.matcher(ret).replaceAll("");
+        // trim any leading or trailing spaces
+        ret = ret.trim();
+        if (ret.length() == 0 || ret.equals(LINK_REPLACEMENT)) {
+            // if we have nothing usable left, use a generic ID
+            if (image) {
+                if (url != null) {
+                    Matcher m = LINK_FILENAME.matcher(url);
+                    if (m.find()) {
+                        ret = cleanLinkId(null, m.group(1), true);
+                    } else {
+                        genericImageUrlCounter++;
+                        ret = "Image " + genericImageUrlCounter;
+                    }
+                } else {
+                    genericImageUrlCounter++;
+                    ret = "Image " + genericImageUrlCounter;
+                }
+            } else {
+                genericLinkUrlCounter++;
+                ret = "Link " + genericLinkUrlCounter;
+            }
+        } // else, use the cleaned id
+        return ret;
+    }
 }

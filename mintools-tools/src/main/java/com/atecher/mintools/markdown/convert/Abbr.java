@@ -20,26 +20,27 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles abbr and acronym tags
+ *
  * @author Phil DeJarnett
  */
 public class Abbr extends AbstractNodeHandler {
 
-	/**
-	 * Handles abbreviations.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
-	public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		String abbr = converter.cleaner.clean(node);
-		if(abbr.length() > 0) {
-			converter.output.print(abbr);
-			String desc = node.attr("title");
-			if(desc.length() > 0) {
-				converter.addAbbreviation(abbr, desc);
-			}
-		}
-	}
+    /**
+     * Handles abbreviations.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
+    public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
+        String abbr = converter.cleaner.clean(node);
+        if (abbr.length() > 0) {
+            converter.output.print(abbr);
+            String desc = node.attr("title");
+            if (desc.length() > 0) {
+                converter.addAbbreviation(abbr, desc);
+            }
+        }
+    }
 }

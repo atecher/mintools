@@ -19,6 +19,7 @@ jQuery(function ($) {
         oldEl.parentNode.replaceChild(newEl, oldEl);
         return newEl
     };
+
     function replaceOuterHtml(el, html) {
         el = replaceHtml(el, "");
         if (el.outerHTML) {
@@ -33,6 +34,7 @@ jQuery(function ($) {
         ;
         return el
     };
+
     function getElementsByClassName(className, tagName, parentNode) {
         var els = ($(parentNode) || document).getElementsByTagName(tagName || "*"),
             results = [];
@@ -42,19 +44,23 @@ jQuery(function ($) {
         ;
         return results
     };
+
     function hasClass(className, el) {
         return XRegExp.cache("(?:^|\\s)" + className + "(?:\\s|$)").test($(el).className)
     };
+
     function addClass(className, el) {
         el = $(el);
         if (!hasClass(className, el)) {
             el.className = trim(el.className + " " + className)
         }
     };
+
     function removeClass(className, el) {
         el = $(el);
         el.className = trim(el.className.replace(XRegExp.cache("(?:^|\\s)" + className + "(?:\\s|$)", "g"), " "))
     };
+
     function toggleClass(className, el) {
         if (hasClass(className, el)) {
             removeClass(className, el)
@@ -62,10 +68,12 @@ jQuery(function ($) {
             addClass(className, el)
         }
     };
+
     function swapClass(oldClass, newClass, el) {
         removeClass(oldClass, el);
         addClass(newClass, el)
     };
+
     function replaceSelection(textbox, str) {
         if (textbox.setSelectionRange) {
             var start = textbox.selectionStart,
@@ -79,10 +87,12 @@ jQuery(function ($) {
             range.select()
         }
     };
+
     function extend(to, from) {
         for (var property in from) to[property] = from[property];
         return to
     };
+
     function purge(d) {
         var a = d.attributes,
             i, l, n;
@@ -184,6 +194,7 @@ jQuery(function ($) {
         function errorStr(str) {
             return '<b class="err">' + str + '</b>'
         };
+
         function getTokenCharCode(token) {
             if (token.length > 1 && token.charAt(0) === "\\") {
                 var t = token.slice(1);
@@ -219,6 +230,7 @@ jQuery(function ($) {
             ;
             return false
         };
+
         function parseCharacterClass(value) {
             var output = "",
                 parts = re.characterClassParts.exec(value),
@@ -399,7 +411,7 @@ jQuery(function ($) {
                         if (re.quantifier.test(m)) {
                             if (lastToken.quantifiable) {
                                 var interval = XRegExp.cache("^\\{([0-9]+)(?:,([0-9]*))?").exec(m);
-                                if (interval && ((interval[1] > 65535) || (interval[2] && ((interval[2] > 65535) || ( +interval[1] > +interval[2]))))) {
+                                if (interval && ((interval[1] > 65535) || (interval[2] && ((interval[2] > 65535) || (+interval[1] > +interval[2]))))) {
                                     output += errorStr(m)
                                 } else {
                                     output += (lastToken.style ? '<b class="' + lastToken.style + '">' : '<b>') + m + '</b>'
@@ -587,6 +599,7 @@ jQuery(function ($) {
         o.highlightSyntax.onclick = RegexPal.highlightSearchSyntax;
         o.highlightMatches.onclick = RegexPal.highlightMatches;
         o.invertMatches.onclick = RegexPal.highlightMatches;
+
         function makeResetter(field) {
             return function () {
                 field.clearBg();

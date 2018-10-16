@@ -6,7 +6,7 @@ import java.util.List;
  * desc:
  *
  * @author hanhongwei
- *         2016/8/3.
+ * 2016/8/3.
  */
 public class RestResponse {
     private List<RestHeaderParam> headers;

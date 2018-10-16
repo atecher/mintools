@@ -17,6 +17,7 @@ function bindCodeMirror() {
         matchBrackets: true
     });
 }
+
 function bindMD5Encode16Action() {
     $(document).on("click", "#btnEncode16", function () {
         var contentValue = editor.getValue();

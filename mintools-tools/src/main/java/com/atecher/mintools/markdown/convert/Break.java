@@ -20,24 +20,25 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles manual breaks (br)
+ *
  * @author Phil DeJarnett
  */
 public class Break extends AbstractNodeHandler {
 
-	/**
-	 * Renders out forced linebreaks.  If hardwraps are enabled, then this
-	 * simply prints a newline.  Otherwise, it prints two spaces and a newline.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
+    /**
+     * Renders out forced linebreaks.  If hardwraps are enabled, then this
+     * simply prints a newline.  Otherwise, it prints two spaces and a newline.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		if(!converter.options.hardwraps) {
-			converter.output.println("  ");
-		} else {
-			converter.output.println();
-		}
-	}
+        if (!converter.options.hardwraps) {
+            converter.output.println("  ");
+        } else {
+            converter.output.println();
+        }
+    }
 }

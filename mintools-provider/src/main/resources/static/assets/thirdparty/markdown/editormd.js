@@ -418,7 +418,7 @@
 
             var appendElements = [
                 (!settings.readOnly) ? "<a href=\"javascript:;\" class=\"fa fa-close " + classPrefix + "preview-close-btn\"></a>" : "",
-                ( (settings.saveHTMLToTextarea) ? "<textarea class=\"" + classNames.textarea.html + "\" name=\"" + id + "-html-code\"></textarea>" : "" ),
+                ((settings.saveHTMLToTextarea) ? "<textarea class=\"" + classNames.textarea.html + "\" name=\"" + id + "-html-code\"></textarea>" : ""),
                 "<div class=\"" + classPrefix + "preview\"><div class=\"markdown-body " + classPrefix + "preview-container\"></div></div>",
                 "<div class=\"" + classPrefix + "container-mask\" style=\"display:block;\"></div>",
                 "<div class=\"" + classPrefix + "mask\"></div>"
@@ -694,7 +694,7 @@
                 styleSelectedText: settings.styleSelectedText,
                 autoCloseBrackets: settings.autoCloseBrackets,
                 showTrailingSpace: settings.showTrailingSpace,
-                highlightSelectionMatches: ( (!settings.matchWordHighlight) ? false : {showToken: (settings.matchWordHighlight === "onselected") ? false : /\w/} )
+                highlightSelectionMatches: ((!settings.matchWordHighlight) ? false : {showToken: (settings.matchWordHighlight === "onselected") ? false : /\w/})
             };
 
             this.codeEditor = this.cm = editormd.$CodeMirror.fromTextArea(this.markdownTextarea[0], codeMirrorConfig);
@@ -978,7 +978,7 @@
             this.resize();
 
             $.proxy(callback || function () {
-                }, this)();
+            }, this)();
 
             return this;
         },
@@ -999,7 +999,7 @@
             this.resize();
 
             $.proxy(callback || function () {
-                }, this)();
+            }, this)();
 
             return this;
         },
@@ -1126,7 +1126,7 @@
                     }
                     else {
                         menuItem += "<a href=\"javascript:;\" title=\"" + title + "\" unselectable=\"on\">";
-                        menuItem += "<i class=\"fa " + iconClass + "\" name=\"" + name + "\" unselectable=\"on\">" + ((isHeader) ? name.toUpperCase() : ( (iconClass === "") ? iconTexts : "") ) + "</i>";
+                        menuItem += "<i class=\"fa " + iconClass + "\" name=\"" + name + "\" unselectable=\"on\">" + ((isHeader) ? name.toUpperCase() : ((iconClass === "") ? iconTexts : "")) + "</i>";
                         menuItem += "</a>";
                     }
 
@@ -2269,7 +2269,7 @@
 
             if (!settings.onwatch) {
                 settings.onwatch = callback || function () {
-                    };
+                };
             }
 
             $.proxy(settings.onwatch, this)();
@@ -2304,7 +2304,7 @@
 
             if (!settings.onunwatch) {
                 settings.onunwatch = callback || function () {
-                    };
+                };
             }
 
             $.proxy(settings.onunwatch, this)();
@@ -2322,7 +2322,7 @@
 
         show: function (callback) {
             callback = callback || function () {
-                };
+            };
 
             var _this = this;
             this.editor.show(0, function () {
@@ -2342,7 +2342,7 @@
 
         hide: function (callback) {
             callback = callback || function () {
-                };
+            };
 
             var _this = this;
             this.editor.hide(0, function () {
@@ -3443,8 +3443,8 @@
 
             var tocHTML = "<div class=\"markdown-toc editormd-markdown-toc\">" + text + "</div>";
 
-            return (isToC) ? ( (isToCMenu) ? "<div class=\"editormd-toc-menu\">" + tocHTML + "</div><br/>" : tocHTML )
-                : ( (pageBreakReg.test(text)) ? this.pageBreak(text) : "<p" + isTeXAddClass + ">" + this.atLink(this.emoji(text)) + "</p>\n" );
+            return (isToC) ? ((isToCMenu) ? "<div class=\"editormd-toc-menu\">" + tocHTML + "</div><br/>" : tocHTML)
+                : ((pageBreakReg.test(text)) ? this.pageBreak(text) : "<p" + isTeXAddClass + ">" + this.atLink(this.emoji(text)) + "</p>\n");
         };
 
         markedRenderer.code = function (code, lang, escaped) {
@@ -3885,7 +3885,7 @@
 
     editormd.loadPlugin = function (fileName, callback, into) {
         callback = callback || function () {
-            };
+        };
 
         this.loadScript(fileName, function () {
             editormd.loadFiles.plugin.push(fileName);
@@ -3905,7 +3905,7 @@
     editormd.loadCSS = function (fileName, callback, into) {
         into = into || "head";
         callback = callback || function () {
-            };
+        };
 
         var css = document.createElement("link");
         css.type = "text/css";
@@ -3940,7 +3940,7 @@
 
         into = into || "head";
         callback = callback || function () {
-            };
+        };
 
         var script = null;
         script = document.createElement("script");
@@ -3992,7 +3992,7 @@
     editormd.loadKaTeX = function (callback) {
         editormd.loadCSS(editormd.katexURL.css, function () {
             editormd.loadScript(editormd.katexURL.js, callback || function () {
-                });
+            });
         });
     };
 
@@ -4041,13 +4041,13 @@
         var editor = this.editor;
         var classPrefix = editormd.classPrefix;
         var guid = (new Date()).getTime();
-        var dialogName = ( (options.name === "") ? classPrefix + "dialog-" + guid : options.name);
+        var dialogName = ((options.name === "") ? classPrefix + "dialog-" + guid : options.name);
         var mouseOrTouch = editormd.mouseOrTouch;
 
         var html = "<div class=\"" + classPrefix + "dialog " + dialogName + "\">";
 
         if (options.title !== "") {
-            html += "<div class=\"" + classPrefix + "dialog-header\"" + ( (options.drag) ? " style=\"cursor: move;\"" : "" ) + ">";
+            html += "<div class=\"" + classPrefix + "dialog-header\"" + ((options.drag) ? " style=\"cursor: move;\"" : "") + ">";
             html += "<strong class=\"" + classPrefix + "dialog-title\">" + options.title + "</strong>";
             html += "</div>";
         }
@@ -4059,7 +4059,7 @@
         html += "<div class=\"" + classPrefix + "dialog-container\">" + options.content;
 
         if (options.footer || typeof options.footer === "string") {
-            html += "<div class=\"" + classPrefix + "dialog-footer\">" + ( (typeof options.footer === "boolean") ? "" : options.footer) + "</div>";
+            html += "<div class=\"" + classPrefix + "dialog-footer\">" + ((typeof options.footer === "boolean") ? "" : options.footer) + "</div>";
         }
 
         html += "</div>";

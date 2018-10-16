@@ -28,6 +28,7 @@ this.onmessage = function (e) {
 };
 
 var nextId = 0, pending = {};
+
 function getFile(file, c) {
     postMessage({type: "getFile", name: file, id: ++nextId});
     pending[nextId] = c;

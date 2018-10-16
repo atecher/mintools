@@ -7,6 +7,7 @@ $(function () {
 });
 var editor;
 var result;
+
 function bindCodeMirror() {
     editor = CodeMirror.fromTextArea(document.getElementById("content"), {
         lineNumbers: true,

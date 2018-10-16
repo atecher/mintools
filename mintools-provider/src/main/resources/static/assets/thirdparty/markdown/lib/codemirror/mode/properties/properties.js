@@ -34,7 +34,7 @@
                 }
 
                 if (sol) {
-                    while (stream.eatSpace());
+                    while (stream.eatSpace()) ;
                 }
 
                 var ch = stream.next();

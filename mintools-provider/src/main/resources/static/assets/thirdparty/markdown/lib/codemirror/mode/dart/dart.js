@@ -12,10 +12,10 @@
     "use strict";
 
     var keywords = ("this super static final const abstract class extends external factory " +
-    "implements get native operator set typedef with enum throw rethrow " +
-    "assert break case continue default in return new deferred async await " +
-    "try catch finally do else for if switch while import library export " +
-    "part of show hide is").split(" ");
+        "implements get native operator set typedef with enum throw rethrow " +
+        "assert break case continue default in return new deferred async await " +
+        "try catch finally do else for if switch while import library export " +
+        "part of show hide is").split(" ");
     var blockKeywords = "try catch finally do else for if switch while".split(" ");
     var atoms = "true false null".split(" ");
     var builtins = "void bool num int double dynamic var String".split(" ");

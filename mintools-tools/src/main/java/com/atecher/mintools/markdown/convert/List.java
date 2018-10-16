@@ -21,47 +21,48 @@ import org.jsoup.nodes.Element;
 
 /**
  * Handles ol and ul lists.
+ *
  * @author Phil DeJarnett
  */
 public class List extends AbstractNodeHandler {
 
-	@Override
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		// the first node doesn't get a linebreak
-		boolean first = true;
-		// if this is an ol, it's numbered.
-		boolean numericList = "ol".equals(node.tagName());
-		// keep track of where we are in the list.
-		int listCounter = 1;
+        // the first node doesn't get a linebreak
+        boolean first = true;
+        // if this is an ol, it's numbered.
+        boolean numericList = "ol".equals(node.tagName());
+        // keep track of where we are in the list.
+        int listCounter = 1;
 
-		// we need to store this, because we're going to replace it for each li below (for padding).
-		BlockWriter parentWriter = converter.output;
-		parentWriter.startBlock();
-		for(final Element child : node.children()) {
-			// handle linebreaks between li's
-			if(first) {
-				first = false;
-			} else {
-				parentWriter.println();
-			}
-			// handle starting character
-			if(numericList) {
-				parentWriter.print(listCounter);
-				parentWriter.print(". ");
-				if(listCounter < 10) {
-					parentWriter.print(' ');
-				}
-			} else {
-				parentWriter.print(" *  ");
-			}
+        // we need to store this, because we're going to replace it for each li below (for padding).
+        BlockWriter parentWriter = converter.output;
+        parentWriter.startBlock();
+        for (final Element child : node.children()) {
+            // handle linebreaks between li's
+            if (first) {
+                first = false;
+            } else {
+                parentWriter.println();
+            }
+            // handle starting character
+            if (numericList) {
+                parentWriter.print(listCounter);
+                parentWriter.print(". ");
+                if (listCounter < 10) {
+                    parentWriter.print(' ');
+                }
+            } else {
+                parentWriter.print(" *  ");
+            }
 
-			// now, recurse downward, padding the beginning of each line so it looks nice.
-			converter.output = new BlockWriter(parentWriter).setPrependNewlineString("    ", true);
-			converter.walkNodes(this, child, converter.blockNodes);
-			listCounter++;
-		}
-		// cleanup
-		parentWriter.endBlock();
-		converter.output = parentWriter;
-	}
+            // now, recurse downward, padding the beginning of each line so it looks nice.
+            converter.output = new BlockWriter(parentWriter).setPrependNewlineString("    ", true);
+            converter.walkNodes(this, child, converter.blockNodes);
+            listCounter++;
+        }
+        // cleanup
+        parentWriter.endBlock();
+        converter.output = parentWriter;
+    }
 }

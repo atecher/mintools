@@ -14,6 +14,7 @@ function StringStream(string) {
     this.string = string;
     this.lineStart = 0;
 }
+
 StringStream.prototype = {
     eol: function () {
         return this.pos >= this.string.length;

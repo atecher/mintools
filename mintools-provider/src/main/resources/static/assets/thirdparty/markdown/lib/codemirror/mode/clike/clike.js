@@ -159,7 +159,7 @@
                 else if (curPunc == ctx.type) popContext(state);
                 else if (indentStatements &&
                     (((ctx.type == "}" || ctx.type == "top") && curPunc != ';') ||
-                    (ctx.type == "statement" && curPunc == "newstatement")))
+                        (ctx.type == "statement" && curPunc == "newstatement")))
                     pushContext(state, stream.column(), "statement");
                 state.startOfLine = false;
                 return style;

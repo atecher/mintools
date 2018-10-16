@@ -27,9 +27,13 @@
             <div class="form-group"><textarea id="content"></textarea></div>
             <div class="form-group">
                 <button id="format" class="btn btn-danger">格式化</button>
-                <label class="checkbox-inline" for="type-mysql"><input type="radio" value="mysql" name="type" id="type-mysql" checked="checked"/> Mysql </label>
-                <label class="checkbox-inline" for="type-oracle"><input type="radio" value="oracle" name="type" id="type-oracle"/> Oracle </label>
-                <label class="checkbox-inline" for="type-sqlserver"><input type="radio" value="sqlserver" name="type" id="type-sqlserver"/> SqlServer </label>
+                <label class="checkbox-inline" for="type-mysql"><input type="radio" value="mysql" name="type"
+                                                                       id="type-mysql" checked="checked"/> Mysql
+                </label>
+                <label class="checkbox-inline" for="type-oracle"><input type="radio" value="oracle" name="type"
+                                                                        id="type-oracle"/> Oracle </label>
+                <label class="checkbox-inline" for="type-sqlserver"><input type="radio" value="sqlserver" name="type"
+                                                                           id="type-sqlserver"/> SqlServer </label>
             </div>
             <div class="form-group"><textarea id="result"></textarea></div>
             <div th:include="module :: comment"></div>

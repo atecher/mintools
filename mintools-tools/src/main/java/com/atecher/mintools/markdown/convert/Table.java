@@ -30,88 +30,88 @@ import java.util.regex.Pattern;
  */
 public class Table extends AbstractNodeHandler {
 
-	private static final Pattern STYLE_ALIGNMENT_PATTERN =
-				Pattern.compile("text-align:\\s*([a-z]+)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern STYLE_ALIGNMENT_PATTERN =
+            Pattern.compile("text-align:\\s*([a-z]+)", Pattern.CASE_INSENSITIVE);
 
-	@Override
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		MarkdownTable table = new MarkdownTable();
+        MarkdownTable table = new MarkdownTable();
 
-		// loop over every direct child of the table node.
-		for(final Element child : node.children()) {
+        // loop over every direct child of the table node.
+        for (final Element child : node.children()) {
 
-			if("thead".equals(child.tagName())) {
-				// handle explicitly declared header sections
-				for(final Element headerRow : child.children()) {
-					processRow(table.addHeaderRow(), headerRow, converter);
-				}
+            if ("thead".equals(child.tagName())) {
+                // handle explicitly declared header sections
+                for (final Element headerRow : child.children()) {
+                    processRow(table.addHeaderRow(), headerRow, converter);
+                }
 
-			} else if("tbody".equals(child.tagName()) || "tfoot".equals(child.tagName())) {
-				// handle body or foot sections - note: there's no special handling for tfoot
-				for(final Element bodyRow : child.children()) {
-					processRow(table.addBodyRow(), bodyRow, converter);
-				}
+            } else if ("tbody".equals(child.tagName()) || "tfoot".equals(child.tagName())) {
+                // handle body or foot sections - note: there's no special handling for tfoot
+                for (final Element bodyRow : child.children()) {
+                    processRow(table.addBodyRow(), bodyRow, converter);
+                }
 
-			} else if("tr".equals(child.tagName())) {
-				// Hrm, a row was added outside a valid table body or header...
-				if(!child.children().isEmpty()) {
-					if("th".equals(child.children().get(0).tagName())) {
-						// handle manual TH cells
-						processRow(table.addHeaderRow(), child, converter);
+            } else if ("tr".equals(child.tagName())) {
+                // Hrm, a row was added outside a valid table body or header...
+                if (!child.children().isEmpty()) {
+                    if ("th".equals(child.children().get(0).tagName())) {
+                        // handle manual TH cells
+                        processRow(table.addHeaderRow(), child, converter);
 
-					} else {
-						// OK, must be a table row.
-						processRow(table.addBodyRow(), child, converter);
+                    } else {
+                        // OK, must be a table row.
+                        processRow(table.addBodyRow(), child, converter);
 
-					}
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
 
-		// OK, now render this sucker
-		Options.Tables opts = converter.options.getTables();
-		converter.output.startBlock();
-		table.renderTable(converter.output, opts.isColspanEnabled(), opts.isRenderedAsCode());
-		converter.output.endBlock();
-	}
+        // OK, now render this sucker
+        Options.Tables opts = converter.options.getTables();
+        converter.output.startBlock();
+        table.renderTable(converter.output, opts.isColspanEnabled(), opts.isRenderedAsCode());
+        converter.output.endBlock();
+    }
 
-	private void processRow(List<MarkdownTableCell> row, Element tableRow, DocumentConverter converter) {
-		for(final Element cell : tableRow.children()) {
-			String contents = converter.getInlineContent(this, cell, true);
-			row.add(new MarkdownTableCell(contents, getAlignment(cell), getColspan(cell)));
-		}
-	}
+    private void processRow(List<MarkdownTableCell> row, Element tableRow, DocumentConverter converter) {
+        for (final Element cell : tableRow.children()) {
+            String contents = converter.getInlineContent(this, cell, true);
+            row.add(new MarkdownTableCell(contents, getAlignment(cell), getColspan(cell)));
+        }
+    }
 
-	private MarkdownTable.Alignment getAlignment(Element cell) {
-		MarkdownTable.Alignment alignment = MarkdownTable.Alignment.LEFT;
-		String alignmentString = null;
-		if(cell.hasAttr("align")) {
-			alignmentString = cell.attr("align").toLowerCase();
-		} else if(cell.hasAttr("style")) {
-			Matcher m = STYLE_ALIGNMENT_PATTERN.matcher(cell.attr("style"));
-			if(m.find()) {
-				alignmentString = m.group(1).toLowerCase();
-			}
-		}
-		if(alignmentString != null) {
-			if("center".equals(alignmentString)) {
-				alignment = MarkdownTable.Alignment.CENTER;
-			} else if("right".equals(alignmentString)) {
-				alignment = MarkdownTable.Alignment.RIGHT;
-			}
-		}
-		return alignment;
-	}
+    private MarkdownTable.Alignment getAlignment(Element cell) {
+        MarkdownTable.Alignment alignment = MarkdownTable.Alignment.LEFT;
+        String alignmentString = null;
+        if (cell.hasAttr("align")) {
+            alignmentString = cell.attr("align").toLowerCase();
+        } else if (cell.hasAttr("style")) {
+            Matcher m = STYLE_ALIGNMENT_PATTERN.matcher(cell.attr("style"));
+            if (m.find()) {
+                alignmentString = m.group(1).toLowerCase();
+            }
+        }
+        if (alignmentString != null) {
+            if ("center".equals(alignmentString)) {
+                alignment = MarkdownTable.Alignment.CENTER;
+            } else if ("right".equals(alignmentString)) {
+                alignment = MarkdownTable.Alignment.RIGHT;
+            }
+        }
+        return alignment;
+    }
 
-	private int getColspan(Element cell) {
-		int colspan = 1;
-		if(cell.hasAttr("colspan")) {
-			try {
-				colspan = Integer.parseInt(cell.attr("colspan"));
-			} catch(NumberFormatException ex) {
-				// ignore invalid numbers
-			}
-		}
-		return colspan;
-	}
+    private int getColspan(Element cell) {
+        int colspan = 1;
+        if (cell.hasAttr("colspan")) {
+            try {
+                colspan = Integer.parseInt(cell.attr("colspan"));
+            } catch (NumberFormatException ex) {
+                // ignore invalid numbers
+            }
+        }
+        return colspan;
+    }
 }

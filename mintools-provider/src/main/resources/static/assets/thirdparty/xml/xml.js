@@ -17,6 +17,7 @@ function bindCodeMirror() {
         matchBrackets: true
     });
 }
+
 function bindXmlFormatAction() {
     $(document).on("click", "#format", function () {
         var contentValue = editor.getValue();

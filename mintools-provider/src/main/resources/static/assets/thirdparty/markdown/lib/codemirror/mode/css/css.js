@@ -370,8 +370,8 @@
                 if (cx.type == "prop" && (ch == "}" || ch == ")")) cx = cx.prev;
                 if (cx.prev &&
                     (ch == "}" && (cx.type == "block" || cx.type == "top" || cx.type == "interpolation" || cx.type == "restricted_atBlock") ||
-                    ch == ")" && (cx.type == "parens" || cx.type == "atBlock_parens") ||
-                    ch == "{" && (cx.type == "at" || cx.type == "atBlock"))) {
+                        ch == ")" && (cx.type == "parens" || cx.type == "atBlock_parens") ||
+                        ch == "{" && (cx.type == "at" || cx.type == "atBlock"))) {
                     indent = cx.indent - indentUnit;
                     cx = cx.prev;
                 }

@@ -125,15 +125,15 @@ public class DeveloperController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Object obj = mapper.readValue(json, Object.class);
-            return new ResponseResult("success", pettyFormat ? mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj) :  mapper.writeValueAsString(obj));
+            return new ResponseResult("success", pettyFormat ? mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj) : mapper.writeValueAsString(obj));
         } catch (JsonParseException e) {
             JsonLocation location = e.getLocation();
             int column = location.getColumnNr();
-            int line=location.getLineNr();
-            String message=e.getOriginalMessage();
-            String respMessage="不合法的JSON：<br/>位置：第"+line+"行，第"+column+"列。<br/>原因："+message;
+            int line = location.getLineNr();
+            String message = e.getOriginalMessage();
+            String respMessage = "不合法的JSON：<br/>位置：第" + line + "行，第" + column + "列。<br/>原因：" + message;
             return new ResponseResult("error", respMessage);
-        }catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseResult("error", e.getMessage());
         }
     }

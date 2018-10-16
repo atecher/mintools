@@ -28,34 +28,34 @@ import org.jsoup.nodes.Element;
  */
 public class Codeblock extends AbstractNodeHandler {
 
-	/**
-	 * Converts a pre-formatted block of code.
-	 * Depending on the options, this may render as a block with four spaces added to the beginning,
-	 * or as a fenced code block.
-	 *
-	 * @param parent The previous node walker, in case we just want to remove an element.
-	 * @param node	  Node to handle
-	 * @param converter Parent converter for this object.
-	 */
-	@Override
+    /**
+     * Converts a pre-formatted block of code.
+     * Depending on the options, this may render as a block with four spaces added to the beginning,
+     * or as a fenced code block.
+     *
+     * @param parent    The previous node walker, in case we just want to remove an element.
+     * @param node      Node to handle
+     * @param converter Parent converter for this object.
+     */
+    @Override
     public void handleNode(NodeHandler parent, Element node, DocumentConverter converter) {
-		BlockWriter out;
-		Options.FencedCodeBlocks fenced = converter.options.getFencedCodeBlocks();
-		if(fenced.isEnabled()) {
-			String fence = StringUtils.multiply(fenced.getSeparatorCharacter(),
-													   converter.options.fencedCodeBlocksWidth);
-			out = converter.output;
-			converter.output.startBlock();
-			out.println(fence);
-			out.write(converter.cleaner.cleanCode(node));
-			out.println();
-			out.print(fence);
-			converter.output.endBlock();
-		} else {
-			converter.output.startBlock();
-			out = new BlockWriter(converter.output).setPrependNewlineString("    ");
-			out.write(converter.cleaner.cleanCode(node));
-			converter.output.endBlock();
-		}
-	}
+        BlockWriter out;
+        Options.FencedCodeBlocks fenced = converter.options.getFencedCodeBlocks();
+        if (fenced.isEnabled()) {
+            String fence = StringUtils.multiply(fenced.getSeparatorCharacter(),
+                    converter.options.fencedCodeBlocksWidth);
+            out = converter.output;
+            converter.output.startBlock();
+            out.println(fence);
+            out.write(converter.cleaner.cleanCode(node));
+            out.println();
+            out.print(fence);
+            converter.output.endBlock();
+        } else {
+            converter.output.startBlock();
+            out = new BlockWriter(converter.output).setPrependNewlineString("    ");
+            out.write(converter.cleaner.cleanCode(node));
+            converter.output.endBlock();
+        }
+    }
 }
