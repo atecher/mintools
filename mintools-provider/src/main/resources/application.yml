@@ -1,7 +1,7 @@
 mybatis:
   # config-locations: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.atecher.mintools.com.atecher.mintools.mapper.model
+  type-aliases-package: com.atecher.mintools.mapper.model
   type-handlers-package: com.atecher.mintools.mapper
 
 
@@ -39,8 +39,6 @@ spring:
     suffix: .html
     encoding: UTF-8
     mode: HTML5
-
-
 ---
 
 #开发环境
@@ -49,6 +47,12 @@ spring:
   datasource:
     url: jdbc:mysql://182.254.212.213:3306/mintools?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
 
+
+logging:
+  level.root: info
+  config: classpath:logback.xml
+  path: ../logs/mintools
+  file: ../logs/mintools/mintools.log
 ---
 
 #生产环境
@@ -57,4 +61,8 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/mintools?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
 
-
+logging:
+  level.root: info
+  config: classpath:logback.xml
+  path: /home/logs/mintools
+  file: /home/logs/mintools/mintools.log

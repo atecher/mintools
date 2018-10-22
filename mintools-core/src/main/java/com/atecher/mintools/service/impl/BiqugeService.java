@@ -112,6 +112,13 @@ public class BiqugeService {
         return text;
     }
 
+/*    public static void main(String[] args) throws IOException {
+        String listUrl = "https://www.xbiquge6.com/79_79502/";
+        String baseDir = "/Users/mark/novel";
+//        read(listUrl,baseDir);
+        write(baseDir);
+    }*/
+
 
     public static Document getDocument(String url) {
         try {
