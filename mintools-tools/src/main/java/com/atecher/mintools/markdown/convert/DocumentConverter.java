@@ -445,7 +445,7 @@ public class DocumentConverter {
         }
     }
 
-    String cleanLinkId(String url, String linkId, boolean image) {
+    private String cleanLinkId(String url, String linkId, boolean image) {
         // no newlines
         String ret = linkId.replace('\n', ' ');
         // multiple spaces should be a single space

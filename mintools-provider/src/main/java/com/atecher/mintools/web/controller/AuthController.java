@@ -15,7 +15,6 @@ public class AuthController {
     public String getGoogleCode(String scret){
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
         int code = gAuth.getTotpPassword(scret);
-        String format = String.format("%06d", code);
-        return format;
+        return String.format("%06d", code);
     }
 }

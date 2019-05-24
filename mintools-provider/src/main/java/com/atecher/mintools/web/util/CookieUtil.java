@@ -41,8 +41,8 @@ public class CookieUtil {
         setCookie(request, response, name, value, 0x278d00);
     }
 
-    public static void setCookie(HttpServletRequest request,
-                                 HttpServletResponse response, String name, String value, int maxAge) {
+    private static void setCookie(HttpServletRequest request,
+                                  HttpServletResponse response, String name, String value, int maxAge) {
         Cookie cookie = new Cookie(name, value == null ? "" : value);
         cookie.setMaxAge(maxAge);
         cookie.setPath(getPath(request));

@@ -7,5 +7,9 @@ import java.util.List;
  * Created by hanhongwei on 2017/8/14.
  */
 public interface DocMapper {
+    /**
+     *
+     * @return
+     */
     List<HashMap<String, Object>> findDocAll();
 }

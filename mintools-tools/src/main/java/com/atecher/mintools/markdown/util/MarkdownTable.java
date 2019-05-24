@@ -43,7 +43,7 @@ public class MarkdownTable {
             this.dir = dir;
         }
 
-        public int getDir() {
+        int getDir() {
             return dir;
         }
 
@@ -302,7 +302,7 @@ public class MarkdownTable {
      *
      * @return The total number of columns in this table.
      */
-    public int getNumberOfColumns() {
+    private int getNumberOfColumns() {
         int columns = 0;
         for (List<MarkdownTableCell> row : this.header) {
             columns = Math.max(columns, getNumberOfColumnsInRow(row));

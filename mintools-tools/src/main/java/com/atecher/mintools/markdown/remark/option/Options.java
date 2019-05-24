@@ -388,13 +388,13 @@ public class Options implements Cloneable {
      * If true, place the URLs for links inline.
      * <p>Otherwise, generate link IDs and place at the end (the default).</p>
      */
-    public boolean inlineLinks = false;
+    public final boolean inlineLinks = false;
 
     /**
      * If true, link IDs are simply incremented as they are found.
      * <p>Otherwise, Remark attempts to generate unique link IDs based on the link description.</p>
      */
-    public boolean simpleLinkIds = false;
+    public final boolean simpleLinkIds = false;
 
     /**
      * Configures how tables are handled.

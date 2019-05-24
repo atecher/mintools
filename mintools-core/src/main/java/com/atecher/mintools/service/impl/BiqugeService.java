@@ -49,11 +49,12 @@ public class BiqugeService {
         files.sort((o1, o2) -> {
             if (o1.isDirectory() && o2.isFile()) {
                 return -1;
-            }
-            if (o1.isFile() && o2.isDirectory()) {
+            }else if (o1.isFile() && o2.isDirectory()) {
                 return 1;
+            }else{
+                return Integer.valueOf(o1.getName().replace(".txt", "")) >= Integer.valueOf(o2.getName().replace(".txt", "")) ? 1 : -1;
             }
-            return Integer.valueOf(o1.getName().replace(".txt", "")) >= Integer.valueOf(o2.getName().replace(".txt", "")) ? 1 : -1;
+
         });
 
         File out = new File(base + "/out/out.txt");
@@ -64,10 +65,10 @@ public class BiqugeService {
     }
 
     static class MyCallable implements Callable {
-        private int taskNum;
-        private String url;
-        private String title;
-        private String base;
+        private final int taskNum;
+        private final String url;
+        private final String title;
+        private final String base;
 
         MyCallable(int taskNum, String title, String url, String base) {
             this.taskNum = taskNum;
@@ -93,7 +94,7 @@ public class BiqugeService {
         }
     }
 
-    public static String getContent(String url) {
+    private static String getContent(String url) {
         Document doc = getDocument(url);
         String content = Objects.requireNonNull(doc).getElementById("content").html();
         String text = Jsoup.parse(content.replaceAll("(?i)<br[^>]*>", "br2nl").replaceAll("\n", "br2nl")).text();
@@ -112,7 +113,7 @@ public class BiqugeService {
     }
 
 
-    public static Document getDocument(String url) {
+    private static Document getDocument(String url) {
         try {
             return Jsoup.connect(url).get();
         } catch (IOException e) {

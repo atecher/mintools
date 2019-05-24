@@ -104,7 +104,7 @@ public class Remark {
         for (final IgnoredHtmlElement el : options.getIgnoredHtmlElements()) {
             whitelist.addTags(el.getTagName());
             if (!el.getAttributes().isEmpty()) {
-                whitelist.addAttributes(el.getTagName(), el.getAttributes().toArray(new String[el.getAttributes().size()]));
+                whitelist.addAttributes(el.getTagName(), el.getAttributes().toArray(new String[0]));
             }
         }
         cleaner = new Cleaner(whitelist);
