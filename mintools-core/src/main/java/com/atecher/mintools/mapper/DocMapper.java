@@ -1,6 +1,7 @@
 package com.atecher.mintools.mapper;
 
-import java.util.HashMap;
+import com.atecher.mintools.model.MtResource;
+
 import java.util.List;
 
 /**
@@ -11,5 +12,5 @@ public interface DocMapper {
      *
      * @return
      */
-    List<HashMap<String, Object>> findDocAll();
+    List<MtResource> findDocAll();
 }

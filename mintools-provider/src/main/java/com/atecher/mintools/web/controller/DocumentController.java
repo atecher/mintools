@@ -1,5 +1,6 @@
 package com.atecher.mintools.web.controller;
 
+import com.atecher.mintools.model.MtResource;
 import com.atecher.mintools.service.IDocumentService;
 import com.atecher.mintools.web.util.WebForwardConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class DocumentController {
 
     @RequestMapping(value = "/doc", method = RequestMethod.GET)
     public String index(Model model) {
-        List<HashMap<String, Object>> docs = documentService.findDocAll();
+        List<MtResource> docs = documentService.findDocAll();
         model.addAttribute("docs", docs);
         return WebForwardConstants.DOCUMENT_INDEX;
     }

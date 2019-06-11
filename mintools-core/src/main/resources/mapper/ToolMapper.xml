@@ -6,10 +6,10 @@
         where t.type='tool'
     </sql>
 
-    <select id="findToolAll" resultType="java.util.HashMap">
+    <select id="findToolAll" resultType="com.atecher.mintools.model.MtResource">
         <include refid="base_tool_select"/>
     </select>
-    <select id="findToolsByCategory" parameterType="string" resultType="java.util.HashMap">
+    <select id="findToolsByCategory" parameterType="string" resultType="com.atecher.mintools.model.MtResource">
         <include refid="base_tool_select"/>
         and EXISTS (select 1 from sys_resource_category c where c.category_code=#{value} and c.resource_id=t.id)
     </select>

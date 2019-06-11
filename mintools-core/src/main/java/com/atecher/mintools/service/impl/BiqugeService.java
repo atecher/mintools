@@ -9,10 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /**
  * @description:
@@ -24,7 +21,7 @@ public class BiqugeService {
         Document doc = getDocument(url);
         Elements als = Objects.requireNonNull(doc).getElementById("list").getElementsByTag("a");
 
-        ExecutorService pool = Executors.newFixedThreadPool(50);
+        ExecutorService pool = new ThreadPoolExecutor(50, 50,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
         List list = new ArrayList();
         for (int i = 0; i < als.size(); i++) {
             String detailUrl = als.get(i).attr("abs:href");

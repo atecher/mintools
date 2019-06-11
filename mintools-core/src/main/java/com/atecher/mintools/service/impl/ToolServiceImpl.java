@@ -1,6 +1,7 @@
 package com.atecher.mintools.service.impl;
 
 import com.atecher.mintools.mapper.ToolMapper;
+import com.atecher.mintools.model.MtResource;
 import com.atecher.mintools.service.IToolService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,13 @@ public class ToolServiceImpl implements IToolService {
 
     @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName")
     @Override
-    public List<HashMap<String, Object>> findToolAll() {
+    public List<MtResource> findToolAll() {
         return toolMapper.findToolAll();
     }
 
     @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName + #param")
     @Override
-    public List<HashMap<String, Object>> findToolsByCategory(String param) {
+    public List<MtResource> findToolsByCategory(String param) {
         return toolMapper.findToolsByCategory(param);
     }
 }

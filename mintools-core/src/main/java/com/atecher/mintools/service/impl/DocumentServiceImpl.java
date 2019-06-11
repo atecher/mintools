@@ -1,12 +1,12 @@
 package com.atecher.mintools.service.impl;
 
 import com.atecher.mintools.mapper.DocMapper;
+import com.atecher.mintools.model.MtResource;
 import com.atecher.mintools.service.IDocumentService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ public class DocumentServiceImpl implements IDocumentService {
 
     @Cacheable(value = {"caffeineMintoolsCache"}, key = "#root.targetClass + #root.methodName")
     @Override
-    public List<HashMap<String, Object>> findDocAll() {
+    public List<MtResource> findDocAll() {
         return docMapper.findDocAll();
     }
 }

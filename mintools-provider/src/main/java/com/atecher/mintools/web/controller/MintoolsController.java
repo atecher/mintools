@@ -1,5 +1,6 @@
 package com.atecher.mintools.web.controller;
 
+import com.atecher.mintools.model.MtResource;
 import com.atecher.mintools.service.IToolService;
 import com.atecher.mintools.web.util.WebForwardConstants;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +24,14 @@ public class MintoolsController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
-        List<HashMap<String, Object>> tools = toolService.findToolAll();
+        List<MtResource> tools = toolService.findToolAll();
         model.addAttribute("tools", tools);
         return WebForwardConstants.INDEX;
     }
 
     @RequestMapping(value = "/category/{code}", method = RequestMethod.GET)
     public String category(@PathVariable("code") String code, Model model) {
-        List<HashMap<String, Object>> tools = toolService.findToolsByCategory(code);
+        List<MtResource> tools = toolService.findToolsByCategory(code);
         model.addAttribute("tools", tools);
         return WebForwardConstants.INDEX;
     }

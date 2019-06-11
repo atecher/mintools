@@ -6,7 +6,7 @@
         where t.type='doc'
     </sql>
 
-    <select id="findDocAll" resultType="java.util.HashMap">
+    <select id="findDocAll" resultType="com.atecher.mintools.model.MtResource">
         <include refid="base_doc_select"/>
     </select>
 

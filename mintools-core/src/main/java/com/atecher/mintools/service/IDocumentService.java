@@ -1,5 +1,7 @@
 package com.atecher.mintools.service;
 
+import com.atecher.mintools.model.MtResource;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,5 +12,5 @@ import java.util.List;
  */
 public interface IDocumentService {
 
-    List<HashMap<String, Object>> findDocAll();
+    List<MtResource> findDocAll();
 }

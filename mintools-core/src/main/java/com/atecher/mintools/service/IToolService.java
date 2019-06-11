@@ -1,5 +1,7 @@
 package com.atecher.mintools.service;
 
+import com.atecher.mintools.model.MtResource;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  */
 public interface IToolService {
 
-    List<HashMap<String, Object>> findToolAll();
+    List<MtResource> findToolAll();
 
-    List<HashMap<String, Object>> findToolsByCategory(String param);
+    List<MtResource> findToolsByCategory(String param);
 }
