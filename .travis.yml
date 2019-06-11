@@ -9,6 +9,5 @@ before_install:
   - chmod 600 ~/.ssh/id_rsa
 addons:
   ssh_known_hosts: 182.254.212.213:2222
-
 after_success:
   - ssh root@182.254.212.213 -p 2222 "./your_shell-script.sh"
