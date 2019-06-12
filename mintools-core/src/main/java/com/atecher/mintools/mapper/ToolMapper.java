@@ -2,7 +2,6 @@ package com.atecher.mintools.mapper;
 
 import com.atecher.mintools.model.MtResource;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

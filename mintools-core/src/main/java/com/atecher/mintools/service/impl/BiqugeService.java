@@ -21,7 +21,7 @@ public class BiqugeService {
         Document doc = getDocument(url);
         Elements als = Objects.requireNonNull(doc).getElementById("list").getElementsByTag("a");
 
-        ExecutorService pool = new ThreadPoolExecutor(50, 50,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
+        ExecutorService pool = new ThreadPoolExecutor(50, 50,0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
         List list = new ArrayList();
         for (int i = 0; i < als.size(); i++) {
             String detailUrl = als.get(i).attr("abs:href");
